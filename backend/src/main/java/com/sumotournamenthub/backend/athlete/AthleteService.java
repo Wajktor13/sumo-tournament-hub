@@ -1,6 +1,7 @@
 package com.sumotournamenthub.backend.athlete;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AthleteService {
 
@@ -14,8 +15,8 @@ public class AthleteService {
         return repository.findAll();
     }
 
-    public Athlete getAthleteById(int id) {
-        return repository.getById(id);
+    public Optional<Athlete> getAthleteById(int id) {
+        return repository.findById(id);
     }
 
     public void addAthlete(Athlete athlete) {

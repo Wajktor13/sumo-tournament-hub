@@ -2,6 +2,7 @@ package com.sumotournamenthub.backend.athlete;
 
 import com.sumotournamenthub.backend.Gender;
 
+import com.sumotournamenthub.backend.club.Club;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class Athlete {
     private String first_name;
     private String second_name;
     @ManyToOne
-    private String club;
+    private Club club;
     private Gender gender;
     private LocalDate birth_date;
 
