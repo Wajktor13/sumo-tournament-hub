@@ -1,16 +1,15 @@
 :root {
-    --primary-color: #288fb4;
-    --secondary-color: #1d556f;
+  --primary-color: #288fb4;
+  --secondary-color: #1d556f;
 }
 
-
 * {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 body {
-    margin: 0;
-    width: 100%;
-    min-width: 300px;
+  margin: 0;
+  width: 100%;
+  min-width: 300px;
 }
-
