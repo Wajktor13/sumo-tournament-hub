@@ -8,7 +8,7 @@ import { AppModule } from './app.module';
   standalone: true,
   imports: [RouterOutlet, AppModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'sumo-tournament-hub-frontend';
