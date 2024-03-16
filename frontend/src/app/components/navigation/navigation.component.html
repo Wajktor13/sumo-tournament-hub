@@ -1,11 +1,13 @@
 <nav>
-  <div class="nav-tile" id="nav-tile-logo">Sumo Tournament Hub</div>
+  <div class="nav-tile" id="nav-tile-logo" (click)="navigateTo('home')">
+    Sumo Tournament Hub
+  </div>
 
   <div id="nav-tiles-wrapper">
     <div class="nav-tile">Tile 1</div>
 
     <div class="nav-tile">Tile 2</div>
 
-    <div class="nav-tile">Tile 3</div>
+    <div class="nav-tile" (click)="navigateTo('login')">Account</div>
   </div>
 </nav>
