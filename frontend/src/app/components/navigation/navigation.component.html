@@ -8,6 +8,13 @@
 
     <div class="nav-tile" tabindex="2">Tile 2</div>
 
-    <div class="nav-tile" (click)="navigateTo('login')" (keydown.enter)="navigateTo('login')" tabindex="3">Account</div>
+    <div class="nav-tile" tabindex="3">
+      Account
+      <div class="dropdown-content">
+        <div (click)="navigateTo('login')" (keydown.enter)="navigateTo('login')" tabindex="4">Log In</div>
+        <div tabindex="5">opt1</div>
+        <div tabindex="5">opt2</div>
+      </div>
+    </div>
   </div>
 </nav>
