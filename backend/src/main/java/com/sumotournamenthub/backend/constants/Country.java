@@ -1,4 +1,4 @@
-package com.sumotournamenthub.backend;
+package com.sumotournamenthub.backend.constants;
 
 public enum Country {
 

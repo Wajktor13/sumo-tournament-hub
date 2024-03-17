@@ -1,6 +1,6 @@
 package com.sumotournamenthub.backend.athlete;
 
-import com.sumotournamenthub.backend.Gender;
+import com.sumotournamenthub.backend.constants.Gender;
 
 import com.sumotournamenthub.backend.club.Club;
 import jakarta.persistence.*;
@@ -23,11 +23,16 @@ public class Athlete {
     @Id
     @GeneratedValue
     private int id;
+
     private @NonNull String first_name;
+
     private @NonNull String second_name;
+
     @ManyToOne
     private @NonNull Club club;
+
     private @NonNull Gender gender;
+
     private @NonNull LocalDate birth_date;
 
 }
