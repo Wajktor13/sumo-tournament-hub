@@ -1,0 +1,15 @@
+div {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
+  color: var(--primary-color);
+  margin-top: 40px;
+  font-size: 35px;
+  text-align: center;
+  margin: 20px 10px 0 10px;
+}
