@@ -3,28 +3,29 @@ package com.sumotournamenthub.backend.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode
+@RequiredArgsConstructor
 @Entity
 @Table(name = "weight_range")
 public class WeightRange {
 
-    @EqualsAndHashCode.Exclude
     @Id
     @GeneratedValue
     private Integer id;
 
+    @NonNull
     @Column(name="lower_bound")
     private Integer lowerBound;
 
+    @NonNull
     @Column(name="upper_bound")
     private Integer upperBound;
 
-    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "weightRanges")
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
 
 }

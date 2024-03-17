@@ -1,15 +1,14 @@
 package com.sumotournamenthub.backend.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
 @Entity
 @Table(name = "season")
 public class Season {
@@ -18,12 +17,14 @@ public class Season {
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "name")
+    @NonNull
     private String name;
 
+    @NonNull
     @Column(name = "start_date")
     private LocalDate startDate;
 
+    @NonNull
     @Column(name = "end_date")
     private LocalDate endDate;
 

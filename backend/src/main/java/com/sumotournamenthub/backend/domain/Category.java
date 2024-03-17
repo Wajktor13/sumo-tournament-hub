@@ -1,36 +1,40 @@
 package com.sumotournamenthub.backend.domain;
 
+import com.sumotournamenthub.backend.constants.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode
+@RequiredArgsConstructor
 @Entity
 @Table(name = "category")
 public class Category {
 
-    @EqualsAndHashCode.Exclude
     @Id
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "name")
+    @NonNull
     private String name;
 
-    @Column(name = "age_lower_bound", nullable = false)
+    @NonNull
+    @Column(name = "age_lower_bound")
     private Integer ageLowerBound;
 
-    @Column(name = "age_upper_bound", nullable = false)
+    @NonNull
+    @Column(name = "age_upper_bound")
     private Integer ageUpperBound;
 
+    @NonNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender", nullable = false)
     private Gender gender;
 
     @ManyToMany
+    @NonNull
     @JoinTable(
         name = "category_weight_range", // Name of the join table
         joinColumns = @JoinColumn(name = "category_id"),
@@ -38,8 +42,7 @@ public class Category {
     )
     private Set<WeightRange> weightRanges;
 
-    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "categories")
-    private Set<Season> seasons;
+    private Set<Season> seasons = new HashSet<>();
 
 }
