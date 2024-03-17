@@ -5,21 +5,29 @@ import com.sumotournamenthub.backend.Gender;
 import com.sumotournamenthub.backend.club.Club;
 import jakarta.persistence.*;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
 
 @Entity
 @Table(name="Athlete")
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Athlete {
 
     @Id
     @GeneratedValue
     private int id;
-    private String first_name;
-    private String second_name;
+    private @NonNull String first_name;
+    private @NonNull String second_name;
     @ManyToOne
-    private Club club;
-    private Gender gender;
-    private LocalDate birth_date;
+    private @NonNull Club club;
+    private @NonNull Gender gender;
+    private @NonNull LocalDate birth_date;
 
 }
