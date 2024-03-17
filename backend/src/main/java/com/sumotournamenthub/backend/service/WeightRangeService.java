@@ -1,12 +1,10 @@
 package com.sumotournamenthub.backend.service;
 
-import com.sumotournamenthub.backend.domain.Category;
+import com.sumotournamenthub.backend.domain.WeightCategory;
 import com.sumotournamenthub.backend.domain.WeightRange;
 import com.sumotournamenthub.backend.repository.WeightRangeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,9 +12,9 @@ public class WeightRangeService {
 
     private WeightRangeRepository weightRangeRepository;
 
-    public WeightRange addCategoryAndSaveWeightRange(Category category, Integer lowerWeightBound, Integer upperWeightBound) {
+    public WeightRange addCategoryAndSaveWeightRange(WeightCategory category, Integer lowerWeightBound, Integer upperWeightBound) {
         WeightRange weightRange = createOrRetrieveWeightRange(lowerWeightBound, upperWeightBound);
-        weightRange.getCategories().add(category);
+        weightRange.getWeightCategories().add(category);
         return weightRangeRepository.save(weightRange);
     }
 

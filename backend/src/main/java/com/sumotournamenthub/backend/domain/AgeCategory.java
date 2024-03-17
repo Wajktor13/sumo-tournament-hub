@@ -1,5 +1,6 @@
 package com.sumotournamenthub.backend.domain;
 
+import com.sumotournamenthub.backend.constants.AgeCategoryName;
 import com.sumotournamenthub.backend.constants.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,15 +12,16 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "age_category")
+public class AgeCategory {
 
     @Id
     @GeneratedValue
     private Integer id;
 
     @NonNull
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private AgeCategoryName name;
 
     @NonNull
     @Column(name = "age_lower_bound")
@@ -33,14 +35,8 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToMany
-    @NonNull
-    @JoinTable(
-        name = "category_weight_range", // Name of the join table
-        joinColumns = @JoinColumn(name = "category_id"),
-        inverseJoinColumns = @JoinColumn(name = "weight_range_id")
-    )
-    private Set<WeightRange> weightRanges;
+    @OneToMany(mappedBy = "ageCategory")
+    private Set<WeightCategory> weightCategories;
 
     @ManyToMany(mappedBy = "categories")
     private Set<Season> seasons = new HashSet<>();
