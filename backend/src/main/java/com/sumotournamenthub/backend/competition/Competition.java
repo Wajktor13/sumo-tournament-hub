@@ -1,29 +1,36 @@
 package com.sumotournamenthub.backend.competition;
 
-import com.sumotournamenthub.backend.Athlete;
-import com.sumotournamenthub.backend.Category;
-import com.sumotournamenthub.backend.Season;
+import com.sumotournamenthub.backend.athlete.Athlete;
+import com.sumotournamenthub.backend.category.Category;
+import com.sumotournamenthub.backend.season.Season;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "Competition")
+@Table(name = "competition")
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Competition
 {
     @Id
     @GeneratedValue
     private int id;
-    private String name;
+    private @NonNull String name;
     @ManyToOne
-    private Season season;
-    private LocalDate startTime;
-    private LocalDate endTime;
+    private @NonNull Season season;
+    private @NonNull LocalDate startTime;
+    private @NonNull LocalDate endTime;
 
-    @ManyToMany
-    private Set<Athlete> signedAthletes;
+    @OneToMany
+    private @NonNull Set<Athlete> signedAthletes;
     private int maxAthletesPerCountry;
-    @ManyToMany
-    private Set<Category> availableCategories;
+    @OneToMany
+    private @NonNull Set<Category> availableCategories;
 }
