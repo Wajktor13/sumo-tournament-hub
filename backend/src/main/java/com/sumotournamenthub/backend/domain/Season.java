@@ -34,7 +34,7 @@ public class Season {
             joinColumns = @JoinColumn(name = "season_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories;
+    private Set<AgeCategory> categories;
 
 }
 

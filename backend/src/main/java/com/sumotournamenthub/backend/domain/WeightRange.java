@@ -26,6 +26,6 @@ public class WeightRange {
     private Integer upperBound;
 
     @ManyToMany(mappedBy = "weightRanges")
-    private Set<Category> categories = new HashSet<>();
+    private Set<WeightCategory> weightCategories = new HashSet<>();
 
 }
