@@ -43,7 +43,9 @@ section {
     border: 0;
     font-size: 19px;
     color: var(--primary-color);
+    background-color: white;
 }
+
 .input-wrapper label {
     font-size: 23px;
 }
@@ -62,9 +64,9 @@ section {
 }
 
 .checkbox-wrapper input[type="checkbox"] {
-    width: 25px;
-    height: 25px;
-    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+    margin: 4px 8px;
 }
 
 .checkbox-wrapper label {
@@ -112,6 +114,16 @@ button:active {
 
     .input-wrapper label {
         font-size: 20px;
+    }
+
+    .checkbox-wrapper label {
+        font-size: 16px;
+    }
+
+    .checkbox-wrapper input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin: 3px 4px;
     }
 
     button {
