@@ -10,7 +10,12 @@
   </div>
 
   <div id="nav-tiles-wrapper">
-    <div class="nav-tile" tabindex="1">Tile 1</div>
+    <div class="nav-tile" tabindex="1"
+      (click)="navigateTo('add-athlete')"
+      (keydown.enter)="navigateTo('add-athlete')"
+    >
+      Add Athlete
+    </div>
 
     <div class="nav-tile" tabindex="2">Tile 2</div>
 
