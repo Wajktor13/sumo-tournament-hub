@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddCompetitionComponent } from './add-competition.component';
+import { AddCompetitionModule } from './add-competition.module';
 
 describe('AddCompetitionComponent', () => {
   let component: AddCompetitionComponent;
@@ -8,7 +9,7 @@ describe('AddCompetitionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddCompetitionComponent]
+      imports: [AddCompetitionModule]
     })
     .compileComponents();
     
