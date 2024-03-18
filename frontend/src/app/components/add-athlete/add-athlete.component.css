@@ -25,36 +25,6 @@ section {
     display: flex;
     flex-direction: column;
   }
-
-  datalist {
-    position: absolute;
-    max-height: 20em;
-    border: 0 none;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-  
-  datalist option {
-    font-size: 0.8em;
-    padding: 0.3em 1em;
-    background-color: #ccc;
-    cursor: pointer;
-  }
-  
-  /* option active styles */
-  datalist option:hover,
-  datalist option:focus {
-    color: #fff;
-    background-color: #036;
-    outline: 0 none;
-  }
-  
-  #club-select option {
-    font-size: 1.8em;
-    padding: 0.3em 1em;
-    background-color: #ccc;
-    cursor: pointer;
-  }
   
   .input-wrapper input, .input-wrapper select {
     width: 300px;
