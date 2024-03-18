@@ -18,20 +18,45 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.25s ease;
+  position: relative;
+  transition: background-color 0.4s ease;
 }
 
 .nav-tile:hover {
-  opacity: 0.6;
   cursor: pointer;
-}
-
-.nav-tile:active {
-  opacity: 0.8;
+  background-color: var(--secondary-color);
 }
 
 #nav-tile-logo {
   width: 400px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--primary-color);
+  z-index: 1;
+  width: 100%;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+.nav-tile:hover .dropdown-content {
+  display: block;
+  opacity: 1;
+}
+
+.dropdown-content div {
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.4s ease;
+  padding: 8px 0 8px 0;
+}
+
+.dropdown-content div:hover {
+  background-color: var(--secondary-color);
 }
 
 @media (max-width: 768px) {
