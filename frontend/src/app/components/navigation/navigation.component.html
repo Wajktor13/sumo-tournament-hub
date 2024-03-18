@@ -1,27 +1,19 @@
 <nav>
-  <div
-    class="nav-tile"
-    id="nav-tile-logo"
-    (click)="navigateTo('home')"
-    (keydown.enter)="navigateTo('home')"
-    tabindex="0"
-  >
+  <div class="nav-tile" id="nav-tile-logo" (click)="navigateTo('home')" (keydown.enter)="navigateTo('home')"
+    tabindex="0">
     Sumo Tournament Hub
   </div>
 
   <div id="nav-tiles-wrapper">
     <div class="nav-tile" tabindex="1">Tile 1</div>
 
-    <div class="nav-tile" tabindex="2">Tile 2</div>
+    <div class="nav-tile" (click)="navigateTo('add-competition')" (keydown.enter)="navigateTo('add-competition')" tabindex="2">Add
+      Competition</div>
 
     <div class="nav-tile" tabindex="3">
       Account
       <div class="dropdown-content">
-        <div
-          (click)="navigateTo('login')"
-          (keydown.enter)="navigateTo('login')"
-          tabindex="4"
-        >
+        <div (click)="navigateTo('login')" (keydown.enter)="navigateTo('login')" tabindex="4">
           Log In
         </div>
         <div tabindex="5">opt1</div>
