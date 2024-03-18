@@ -18,7 +18,7 @@ export class AddSeasonComponent {
   addedCategories: Array<Category> = [];
 
   addCategory(): void {
-    let ageCategory = {
+    const ageCategory = {
       name: this.addAgeCategoryForm.get('ageCategoryName')!.value,
       lowerBound: this.addAgeCategoryForm.get('ageLowerBound')!.value,
       upperBound: this.addAgeCategoryForm.get('ageUpperBound')!.value,
