@@ -2,8 +2,8 @@ package com.sumotournamenthub.backend.competition;
 
 import com.sumotournamenthub.backend.athlete.Athlete;
 import com.sumotournamenthub.backend.constants.Country;
-import com.sumotournamenthub.backend.domain.AgeCategory;
 import com.sumotournamenthub.backend.domain.Season;
+import com.sumotournamenthub.backend.domain.WeightCategory;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
@@ -42,6 +42,6 @@ public class Competition
     private Map<Country, Integer> countryLimits;
 
     @OneToMany
-    private @NonNull Set<AgeCategory> availableCategories;
+    private @NonNull Set<WeightCategory> availableCategories;
 
 }
