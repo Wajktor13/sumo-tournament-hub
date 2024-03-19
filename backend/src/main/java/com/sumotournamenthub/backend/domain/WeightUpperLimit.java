@@ -10,22 +10,19 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "weight_range")
-public class WeightRange {
+@Table(name = "weight_upper_limit")
+public class WeightUpperLimit {
 
     @Id
     @GeneratedValue
     private Integer id;
 
-    @NonNull
-    @Column(name="lower_bound")
-    private Integer lowerBound;
-
+    // Open Weight Category is represented as 0
     @NonNull
     @Column(name="upper_bound")
     private Integer upperBound;
 
-    @ManyToMany(mappedBy = "weightRanges")
+    @ManyToMany(mappedBy = "weightUpperLimits")
     private Set<WeightCategory> weightCategories = new HashSet<>();
 
 }

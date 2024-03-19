@@ -1,4 +1,7 @@
-package com.sumotournamenthub.backend.athlete;
+package com.sumotournamenthub.backend.service;
+
+import com.sumotournamenthub.backend.domain.Athlete;
+import com.sumotournamenthub.backend.repository.AthleteRepository;
 
 import java.util.List;
 import java.util.Optional;
