@@ -5,10 +5,22 @@
   </div>
 
   <div id="nav-tiles-wrapper">
-    <div class="nav-tile" tabindex="1">Tile 1</div>
+    <div class="nav-tile" tabindex="1"
+      (click)="navigateTo('add-athlete')"
+      (keydown.enter)="navigateTo('add-athlete')"
+    >
+      Add Athlete
+    </div>
 
     <div class="nav-tile" (click)="navigateTo('add-competition')" (keydown.enter)="navigateTo('add-competition')" tabindex="2">Add
       Competition</div>
+  
+    <div class="nav-tile" tabindex="2"
+      (click)="navigateTo('add-season')"
+      (keydown.enter)="navigateTo('add-season')"
+      >
+        Add season
+      </div>
 
     <div class="nav-tile" tabindex="3">
       Account

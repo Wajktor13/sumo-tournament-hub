@@ -1,0 +1,57 @@
+<section>
+    <div id="add-season-div">
+        <div class="add-season-column-div">
+            <div class="input-wrapper">
+                <label for="name-input">Name</label>
+                <input type="text" name="name-input" id="name-input" />
+            </div>
+        
+            <div class="input-wrapper">
+                <label for="start-date-input">Start date</label>
+                <input type="date" name="start-date-input" id="start-date-input" />
+            </div>
+            
+            <div class="input-wrapper">
+                <label for="end-date-input">End date</label>
+                <input type="date" name="end-date-input" id="end-date-input" />
+            </div>
+
+            <button>Add season</button>
+        </div>
+        
+        <div class="add-season-column-div" [formGroup]="addAgeCategoryForm">
+            <div class="input-wrapper">
+                <label for="age-category-name-input">Age category name</label>
+                <input formControlName="ageCategoryName" type="text" name="age-category-name-input" id="age-category-name-input" />
+            </div>
+
+            <div class="input-wrapper">
+                <label for="age-lower-bound-input">Age lower bound</label>
+                <input formControlName="ageLowerBound" type="number" name="age-lower-bound-input" id="age-lower-bound-input" />
+            </div>
+
+            <div class="input-wrapper">
+                <label for="age-upper-bound-input">Age upper bound</label>
+                <input formControlName="ageUpperBound" type="number" name="age-upper-bound-input" id="age-upper-bound-input" />
+            </div>
+
+            <div class="input-wrapper">
+                <label for="gender-input">Gender</label>
+                <select formControlName="gender" name="gender-input" id="gender-input">
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+            </div>
+
+            <button (click)="addCategory()">Add category</button>
+
+        </div>
+
+        <div id="category-display-div">
+            <div *ngFor="let addedCategory of addedCategories" class="created-category">
+                {{ addedCategory.name }} ({{ addedCategory.gender }}) {{ addedCategory.lowerBound }}-{{ addedCategory.upperBound }}
+            </div>
+        </div>
+    </div>
+  </section>
+  
