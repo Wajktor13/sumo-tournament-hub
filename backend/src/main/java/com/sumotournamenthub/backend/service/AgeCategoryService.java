@@ -13,7 +13,7 @@ public class AgeCategoryService {
     private final AgeCategoryRepository ageCategoryRepository;
 
     public AgeCategory addSeasonAndSaveCategory(Season season, AgeCategoryDto dto) {
-        AgeCategory category = createOrRetrieveCategory(dto);
+        var category = createOrRetrieveCategory(dto);
         category.getSeasons().add(season);
         return ageCategoryRepository.save(category);
     }

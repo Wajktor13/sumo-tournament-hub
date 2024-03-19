@@ -1,10 +1,12 @@
-package com.sumotournamenthub.backend.competition;
+package com.sumotournamenthub.backend.service;
+
+import com.sumotournamenthub.backend.domain.Competition;
+import com.sumotournamenthub.backend.repository.CompetitionRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class CompetitionService
-{
+public class CompetitionService {
     private CompetitionRepository repository;
 
     public CompetitionService(CompetitionRepository repository)
