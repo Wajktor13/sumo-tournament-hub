@@ -23,6 +23,8 @@ section {
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: auto;
   } 
 
   #add-season-div {
@@ -46,7 +48,7 @@ section {
   }
   
   .input-wrapper input, .input-wrapper select {
-    width: 300px;
+    width: 245px;
     height: 50px;
     border-radius: 5px;
     border: 0;
@@ -96,12 +98,36 @@ section {
   }
   
   @media (max-width: 768px) {
-    #login-div {
-      width: 260px;
-      height: 350px;
+    section {
+      height: 1125px;
     }
+
+    #add-season-div {
+      flex-direction: column;
+      width: 600px;
+      height: 1075px;
+    }
+
+    .add-season-column-div {
+      width: 300px;
+      height: 32%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      color: white;
+    }
+
+    #category-display-div {
+      width: 275px;
+      height: 30%;
+      background-color: white;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+    } 
   
-    .input-wrapper input {
+    .input-wrapper input, .input-wrapper select {
       width: 220px;
       height: 35px;
       border-radius: 5px;
@@ -114,7 +140,7 @@ section {
     }
   
     button {
-      width: 110px;
+      width: 140px;
       height: 35px;
       background-color: white;
       color: var(--primary-color);
