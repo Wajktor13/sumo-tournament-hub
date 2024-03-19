@@ -1,0 +1,150 @@
+section {
+    width: 100%;
+    height: 775px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .add-season-column-div {
+    width: 30%;
+    height: 675px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+  }
+
+  #category-display-div {
+    width: 30%;
+    height: 550px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: auto;
+  } 
+
+  #add-season-div {
+    width: 1080px;
+    height: 675px;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 17px 0px rgb(55, 55, 55);
+    -moz-box-shadow: 0px 0px 17px 0px rgb(51, 51, 51);
+    box-shadow: 0px 0px 17px 0px rgb(54, 54, 54);
+  }
+  
+  .input-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-wrapper input, .input-wrapper select {
+    width: 245px;
+    height: 50px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 19px;
+    color: var(--primary-color);
+  }
+  
+  .input-wrapper label {
+    font-size: 23px;
+  }
+
+  .created-category {
+    color: var(--primary-color);
+    padding: 5px;
+    font-size: 19px;
+  }
+  
+  button {
+    width: 180px;
+    height: 40px;
+    background-color: white;
+    color: var(--primary-color);
+    font-size: 23px;
+    border-radius: 5px;
+    border: 0;
+    transition: transform 0.3s;
+  }
+  
+  button:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+  
+  button:active {
+    transform: scale(0.9);
+  }
+  
+  p {
+    font-size: 13px;
+    margin: 10px;
+    text-align: center;
+  }
+  
+  p a {
+    text-decoration: underline;
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    section {
+      height: 1125px;
+    }
+
+    #add-season-div {
+      flex-direction: column;
+      width: 600px;
+      height: 1075px;
+    }
+
+    .add-season-column-div {
+      width: 300px;
+      height: 32%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      color: white;
+    }
+
+    #category-display-div {
+      width: 275px;
+      height: 30%;
+      background-color: white;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+    } 
+  
+    .input-wrapper input, .input-wrapper select {
+      width: 220px;
+      height: 35px;
+      border-radius: 5px;
+      border: 0;
+      font-size: 16px;
+    }
+  
+    .input-wrapper label {
+      font-size: 20px;
+    }
+  
+    button {
+      width: 140px;
+      height: 35px;
+      background-color: white;
+      color: var(--primary-color);
+      font-size: 20px;
+    }
+  }
+  

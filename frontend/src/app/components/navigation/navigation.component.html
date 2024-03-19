@@ -17,7 +17,12 @@
       Add Athlete
     </div>
 
-    <div class="nav-tile" tabindex="2">Tile 2</div>
+    <div class="nav-tile" tabindex="2"
+      (click)="navigateTo('add-season')"
+      (keydown.enter)="navigateTo('add-season')"
+      >
+        Add season
+      </div>
 
     <div class="nav-tile" tabindex="3">
       Account
