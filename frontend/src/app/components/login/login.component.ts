@@ -17,11 +17,6 @@ export class LoginComponent implements OnDestroy {
   public isLoggedInSub: Subscription | null = null;
   public userSub: Subscription | null = null;
 
-  ngOnDestroy(): void {
-    this.isLoggedInSub?.unsubscribe();
-    this.userSub?.unsubscribe();
-  }
-
   constructor(private authService: AuthService) {
     this.authService.isLoggedIn$.subscribe({
       next: (value) => (this.isLoggedIn = value),
@@ -32,6 +27,11 @@ export class LoginComponent implements OnDestroy {
       next: (value) => (this.user = value),
       error: (e) => console.log(e),
     });
+  }
+
+  ngOnDestroy(): void {
+    this.isLoggedInSub?.unsubscribe();
+    this.userSub?.unsubscribe();
   }
 
   public login(): void {

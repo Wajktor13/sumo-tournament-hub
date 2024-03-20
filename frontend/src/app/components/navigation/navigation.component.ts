@@ -17,11 +17,6 @@ export class NavigationComponent implements OnDestroy {
   public isLoggedInSub: Subscription | null = null;
   public userSub: Subscription | null = null;
 
-  ngOnDestroy(): void {
-    this.isLoggedInSub?.unsubscribe();
-    this.userSub?.unsubscribe();
-  }
-
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -37,15 +32,20 @@ export class NavigationComponent implements OnDestroy {
     });
   }
 
-  public navigateTo(relativePath: string) {
+  ngOnDestroy(): void {
+    this.isLoggedInSub?.unsubscribe();
+    this.userSub?.unsubscribe();
+  }
+
+  public navigateTo(relativePath: string): void {
     this.router.navigate([relativePath]);
   }
 
-  public logout() {
+  public logout(): void {
     this.authService.logout();
   }
 
-  public getRoleString() {
+  public getRoleString(): string {
     const roles: UserRoles = this.user.roles;
     let roleString: string = '';
 
