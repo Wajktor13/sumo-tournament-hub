@@ -59,6 +59,16 @@ nav {
   background-color: var(--secondary-color);
 }
 
+#account-div p {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.user-title {
+  font-size: 13px;
+}
+
 @media (max-width: 768px) {
   .nav-tile {
     font-size: 18px;
