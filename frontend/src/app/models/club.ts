@@ -1,6 +1,6 @@
 import { Country } from "../enums/country";
 
-export type Season = {
+export type Club = {
     id: number;
     name: string;
     country: Country;
