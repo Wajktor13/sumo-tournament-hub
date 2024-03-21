@@ -36,7 +36,6 @@ export enum Country {
     CHAD = "Chad",
     CHILE = "Chile",
     CHINA = "Republic of China",
-    REPUBLIC_OF_CHINA = "Republic of China",
     COLOMBIA = "Colombia",
     COMOROS = "Comoros",
     DEMOCRATIC_REPUBLIC_OF_THE_CONGO = "Democratic Republic of the Congo",
