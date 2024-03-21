@@ -1,7 +1,6 @@
 package com.sumotournamenthub.backend.service;
 
 import com.sumotournamenthub.backend.domain.AgeCategory;
-import com.sumotournamenthub.backend.domain.Season;
 import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.repository.AgeCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +11,9 @@ import org.springframework.stereotype.Service;
 public class AgeCategoryService {
     private final AgeCategoryRepository ageCategoryRepository;
 
-    public AgeCategory addSeasonAndSaveCategory(Season season, AgeCategoryDto dto) {
+    public AgeCategory addSeasonAndSaveCategory(AgeCategoryDto dto) {
         var category = createOrRetrieveCategory(dto);
-        category.getSeasons().add(season);
+        category.getSeasons().add(dto.getSeason());
         return ageCategoryRepository.save(category);
     }
 

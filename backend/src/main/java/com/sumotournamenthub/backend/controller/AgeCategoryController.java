@@ -1,12 +1,15 @@
-package com.sumotournamenthub.backend.controllers;
+package com.sumotournamenthub.backend.controller;
 
+import com.sumotournamenthub.backend.service.AgeCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.sumotournamenthub.backend.repository.AgeCategoryRepository;
 import com.sumotournamenthub.backend.domain.AgeCategory;
-
+import com.sumotournamenthub.backend.dto.AgeCategoryDto;
+import static com.sumotournamenthub.backend.utils.ExceptionUtils.notExist;
+import static java.lang.String.format;
 import java.util.List;
 
 @RestController
@@ -15,25 +18,24 @@ public class AgeCategoryController {
 
     @Autowired
     private AgeCategoryRepository ageCategoryRepository;
+    @Autowired
+    private AgeCategoryService ageCategoryService;
 
     @GetMapping
     public List<AgeCategory> getAllCategories() {
         return ageCategoryRepository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/categories/{id}")
     public ResponseEntity<AgeCategory> getCategoryById(@PathVariable Integer id) {
-        AgeCategory category = ageCategoryRepository.findById(id).orElse(null);
-        if (category != null) {
-            return ResponseEntity.ok(category);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        var category = ageCategoryRepository.findById(id).
+                orElseThrow(() -> notExist(format("Age category with id %d does not exist", id)));
+        return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<AgeCategory> createCategory(@RequestBody AgeCategory category) {
-        AgeCategory savedCategory = ageCategoryRepository.save(category);
+    public ResponseEntity<AgeCategory> createCategory(@RequestBody AgeCategoryDto categoryDto) {
+        AgeCategory savedCategory = ageCategoryService.addSeasonAndSaveCategory(categoryDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
 

@@ -1,4 +1,4 @@
-package com.sumotournamenthub.backend.controllers;
+package com.sumotournamenthub.backend.controller;
 
 import com.sumotournamenthub.backend.domain.WeightCategory;
 import com.sumotournamenthub.backend.repository.WeightCategoryRepository;
@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import static com.sumotournamenthub.backend.utils.ExceptionUtils.notExist;
+import static java.lang.String.format;
 import java.util.List;
 
 @RestController
@@ -21,14 +22,10 @@ public class WeightCategoryController {
         return weightCategoryRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<WeightCategory> getWeightCategoryById(@PathVariable Integer id) {
-        WeightCategory weightCategory = weightCategoryRepository.findById(id).orElse(null);
-        if (weightCategory != null) {
-            return ResponseEntity.ok(weightCategory);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<WeightCategory> getCategoryById(@PathVariable Integer id) {
+        var category = weightCategoryRepository.findById(id).
+                orElseThrow(() -> notExist(format("Weight category with id %d does not exist", id)));
+        return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @PostMapping
