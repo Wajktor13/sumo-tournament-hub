@@ -2,10 +2,14 @@ package com.sumotournamenthub.backend.service;
 
 import com.sumotournamenthub.backend.domain.Competition;
 import com.sumotournamenthub.backend.repository.CompetitionRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@RequiredArgsConstructor
 public class CompetitionService {
     private CompetitionRepository repository;
 
