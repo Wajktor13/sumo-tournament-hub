@@ -4,26 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.sumotournamenthub.backend.domain.Category;
-import com.sumotournamenthub.backend.repositories.CategoryRepository;
+import com.sumotournamenthub.backend.repository.AgeCategoryRepository;
+import com.sumotournamenthub.backend.domain.AgeCategory;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
-public class CategoryController {
+@RequestMapping("/agecategories")
+public class AgeCategoryController {
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private AgeCategoryRepository ageCategoryRepository;
 
     @GetMapping
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<AgeCategory> getAllCategories() {
+        return ageCategoryRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) {
-        Category category = categoryRepository.findById(id).orElse(null);
+    public ResponseEntity<AgeCategory> getCategoryById(@PathVariable Integer id) {
+        AgeCategory category = ageCategoryRepository.findById(id).orElse(null);
         if (category != null) {
             return ResponseEntity.ok(category);
         } else {
@@ -32,17 +32,17 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        Category savedCategory = categoryRepository.save(category);
+    public ResponseEntity<AgeCategory> createCategory(@RequestBody AgeCategory category) {
+        AgeCategory savedCategory = ageCategoryRepository.save(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Integer id, @RequestBody Category updatedCategory) {
-        Category category = categoryRepository.findById(id).orElse(null);
+    public ResponseEntity<AgeCategory> updateCategory(@PathVariable Integer id, @RequestBody AgeCategory updatedCategory) {
+        AgeCategory category = ageCategoryRepository.findById(id).orElse(null);
         if (category != null) {
             updatedCategory.setId(id);
-            Category savedCategory = categoryRepository.save(updatedCategory);
+            AgeCategory savedCategory = ageCategoryRepository.save(updatedCategory);
             return ResponseEntity.ok(savedCategory);
         } else {
             return ResponseEntity.notFound().build();
@@ -51,9 +51,9 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Integer id) {
-        Category category = categoryRepository.findById(id).orElse(null);
+        AgeCategory category = ageCategoryRepository.findById(id).orElse(null);
         if (category != null) {
-            categoryRepository.deleteById(id);
+            ageCategoryRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
