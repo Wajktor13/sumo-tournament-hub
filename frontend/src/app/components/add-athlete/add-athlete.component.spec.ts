@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddAthleteComponent } from './add-athlete.component';
-import { AddAthleteModule } from './add-athlere.module';
+import { AddAthleteModule } from './add-athlete.module';
 
 describe('AddAthleteComponent', () => {
   let component: AddAthleteComponent;
