@@ -24,7 +24,7 @@ public class AthleteService {
                 .orElseThrow(() -> notExist(format("Club with %d id does not exist", dto.getClubId())));
         var athlete = new Athlete(
                 dto.getFirstName(),
-                dto.getLastName(),
+                dto.getSecondName(),
                 club,
                 Gender.fromString(dto.getGender()),
                 dto.getBirthdate());

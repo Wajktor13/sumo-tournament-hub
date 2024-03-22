@@ -23,15 +23,15 @@ public class Athlete {
     @GeneratedValue
     private int id;
 
-    private @NonNull String first_name;
+    private @NonNull String firstName;
 
-    private @NonNull String second_name;
+    private @NonNull String secondName;
 
     @ManyToOne
     private @NonNull Club club;
 
     private @NonNull Gender gender;
 
-    private @NonNull LocalDate birth_date;
+    private @NonNull LocalDate birthDate;
 
 }
