@@ -18,7 +18,7 @@ public class AthleteController {
         this.service = service;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping()
     public ResponseEntity<Athlete> addAthlete(@RequestBody AthleteDto athleteDto) {
         var savedAthlete = service.createAthlete(athleteDto);
         return new ResponseEntity<>(savedAthlete, HttpStatus.CREATED);
