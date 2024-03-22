@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class AthleteDto {
 
     String firstName;
-    String lastName;
+    String secondName;
     Integer clubId;
     String gender;
     LocalDate birthdate;
