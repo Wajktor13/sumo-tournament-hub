@@ -1,39 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Competition } from '../../models/competition';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CompetitionService {
-  constructor() {}
+  private apiResource = "competitions";
+
+  constructor(private httpClient: HttpClient) { }
 
   public getAll(): Observable<Competition[]> {
-    return of([
-      {
-        id: 1,
-        name: 'Mock Competition 1',
-        startTime: new Date(),
-        endTime: new Date(),
-        countryLimits: { USA: 10, UK: 15 },
-      },
-      {
-        id: 2,
-        name: 'Mock Competition 2',
-        startTime: new Date(),
-        endTime: new Date(),
-        countryLimits: { USA: 20, UK: 25 },
-      },
-    ]);
+    return this.httpClient.get<Competition[]>(`${environment.apiUrl}/${this.apiResource}`);
   }
 
   public getOne(id: number): Observable<Competition | undefined> {
-    return of({
-      id: id,
-      name: 'Mock Competition 1',
-      startTime: new Date(),
-      endTime: new Date(),
-      countryLimits: { USA: 10, UK: 15 },
-    });
+    return this.httpClient.get<Competition>(`${environment.apiUrl}/${this.apiResource}/${id}`);
+  }
+
+  public add(ageCategory: Competition): Observable<Competition | undefined> {    
+    return this.httpClient.post<Competition>(`${environment.apiUrl}/${this.apiResource}`, ageCategory);
   }
 }
