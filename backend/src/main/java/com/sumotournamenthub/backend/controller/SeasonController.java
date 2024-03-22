@@ -1,8 +1,7 @@
 package com.sumotournamenthub.backend.controller;
 
-import com.sumotournamenthub.backend.domain.AgeCategory;
+import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.dto.SeasonDto;
-import com.sumotournamenthub.backend.repository.SeasonRepository;
 import com.sumotournamenthub.backend.service.SeasonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,25 +11,27 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.sumotournamenthub.backend.utils.ExceptionUtils.notExist;
-import static java.lang.String.format;
-
 @RestController
 @RequestMapping("/seasons")
 public class SeasonController {
+    private final SeasonService seasonService;
 
-    private final SeasonRepository repository;
-
-    private SeasonService seasonService;
-
-    public SeasonController(SeasonRepository repository) {
-        this.repository = repository;
+    public SeasonController(SeasonService seasonService) {
+        this.seasonService = seasonService;
     }
 
-    @GetMapping("/{seasonId}/categories")
-    public ResponseEntity<Set<AgeCategory>> getCategoriesBySeasonId(@PathVariable Integer id) {
-        var season = repository.findById(id).orElseThrow(() -> notExist(format("Season with %d id does not exist", id)));
-        return ResponseEntity.ok(season.getCategories());
+    @GetMapping("/{id}/categories")
+    public ResponseEntity<Set<AgeCategoryDto>> getCategoriesBySeasonId(@PathVariable Integer id) {
+        Optional<Set<AgeCategoryDto>> categoryDtos = seasonService.getCategoriesBySeasonId(id);
+
+        if (categoryDtos.isPresent())
+        {
+            return ResponseEntity.ok(categoryDtos.get());
+        }
+        else
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/upcoming")
