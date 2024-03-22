@@ -24,5 +24,23 @@ public class AgeCategoryService {
                 .orElseGet(() -> new AgeCategory(dto.getName(), dto.getAgeLowerBound(), dto.getAgeUpperBound(), dto.getGender()));
     }
 
+    public AgeCategoryDto convertToDto(AgeCategory ageCategory)
+    {
+        return AgeCategoryDto.builder()
+                .id(ageCategory.getId())
+                .name(ageCategory.getName())
+                .ageLowerBound(ageCategory.getAgeLowerBound())
+                .ageUpperBound(ageCategory.getAgeUpperBound())
+                .gender(ageCategory.getGender())
+                .build();
+    }
+
+    public AgeCategory convertToEntity(AgeCategoryDto ageCategoryDto)
+    {
+        AgeCategory ageCategory = new AgeCategory(ageCategoryDto.getName(), ageCategoryDto.getAgeLowerBound(), ageCategoryDto.getAgeUpperBound(), ageCategoryDto.getGender());
+        ageCategory.setId(ageCategory.getId());
+
+        return ageCategory;
+    }
 }
 
