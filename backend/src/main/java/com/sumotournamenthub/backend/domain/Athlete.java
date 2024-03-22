@@ -1,8 +1,7 @@
-package com.sumotournamenthub.backend.athlete;
+package com.sumotournamenthub.backend.domain;
 
 import com.sumotournamenthub.backend.constants.Gender;
 
-import com.sumotournamenthub.backend.club.Club;
 import jakarta.persistence.*;
 
 import lombok.Getter;

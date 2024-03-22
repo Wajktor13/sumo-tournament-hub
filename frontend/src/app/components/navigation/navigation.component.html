@@ -1,35 +1,71 @@
 <nav>
-  <div class="nav-tile" id="nav-tile-logo" (click)="navigateTo('home')" (keydown.enter)="navigateTo('home')"
-    tabindex="0">
+  <div
+    class="nav-tile"
+    id="nav-tile-logo"
+    (click)="navigateTo('home')"
+    (keydown.enter)="navigateTo('home')"
+    tabindex="0"
+  >
     Sumo Tournament Hub
   </div>
 
   <div id="nav-tiles-wrapper">
-    <div class="nav-tile" tabindex="1"
+    <div
+      class="nav-tile"
+      tabindex="1"
       (click)="navigateTo('add-athlete')"
       (keydown.enter)="navigateTo('add-athlete')"
     >
       Add Athlete
     </div>
 
-    <div class="nav-tile" (click)="navigateTo('add-competition')" (keydown.enter)="navigateTo('add-competition')" tabindex="2">Add
-      Competition</div>
-  
-    <div class="nav-tile" tabindex="2"
+    <div
+      class="nav-tile"
+      (click)="navigateTo('add-competition')"
+      (keydown.enter)="navigateTo('add-competition')"
+      tabindex="2"
+    >
+      Add Competition
+    </div>
+
+    <div
+      class="nav-tile"
+      tabindex="2"
       (click)="navigateTo('add-season')"
       (keydown.enter)="navigateTo('add-season')"
-      >
-        Add season
-      </div>
+    >
+      Add season
+    </div>
 
     <div class="nav-tile" tabindex="3">
-      Account
+      <div id="account-div">
+        <p>Account</p>
+        <p *ngIf="isLoggedIn" class="user-title">
+          Logged in as {{ user.email }}
+        </p>
+        <p *ngIf="isLoggedIn" class="user-title">({{ getRoleString() }})</p>
+      </div>
       <div class="dropdown-content">
-        <div (click)="navigateTo('login')" (keydown.enter)="navigateTo('login')" tabindex="4">
-          Log In
+        <div>
+          <div
+            *ngIf="!isLoggedIn"
+            (click)="navigateTo('login')"
+            (keydown.enter)="navigateTo('login')"
+            tabindex="4"
+          >
+            Log In
+          </div>
+          <div
+            *ngIf="isLoggedIn"
+            (click)="logout()"
+            (keydown.enter)="logout()"
+            tabindex="5"
+          >
+            Log Out
+          </div>
         </div>
-        <div tabindex="5">opt1</div>
-        <div tabindex="5">opt2</div>
+        <div tabindex="6">opt1</div>
+        <div tabindex="7">opt2</div>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-package com.sumotournamenthub.backend.club;
+package com.sumotournamenthub.backend.domain;
 
 import com.sumotournamenthub.backend.constants.Country;
 import jakarta.persistence.Entity;

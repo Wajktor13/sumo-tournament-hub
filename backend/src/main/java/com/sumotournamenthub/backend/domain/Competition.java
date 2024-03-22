@@ -1,9 +1,6 @@
-package com.sumotournamenthub.backend.competition;
+package com.sumotournamenthub.backend.domain;
 
-import com.sumotournamenthub.backend.athlete.Athlete;
 import com.sumotournamenthub.backend.constants.Country;
-import com.sumotournamenthub.backend.domain.Season;
-import com.sumotournamenthub.backend.domain.WeightCategory;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;

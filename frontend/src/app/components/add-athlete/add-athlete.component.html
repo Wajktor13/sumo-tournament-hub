@@ -1,18 +1,18 @@
 <section>
-    <div id="add-athlete-div">
+    <div id="add-athlete-div" [formGroup]="addAthleteForm">
         <div class="input-wrapper">
             <label for="first-name-input">First name</label>
-            <input type="text" name="first-name-input" id="first-name-input">
+            <input formControlName="firstName" type="text" name="first-name-input" id="first-name-input">
         </div>
 
         <div class="input-wrapper">
             <label for="second-name-input">Second name</label>
-            <input type="text" name="second-name-input" id="second-name-input">
+            <input formControlName="secondName" type="text" name="second-name-input" id="second-name-input">
         </div>
 
         <div class="input-wrapper">
             <label for="club-input">Club</label>
-            <select name="club-input" id="club-input">
+            <select formControlName="club" name="club-input" id="club-input">
                 <option>Club 1</option>
                 <option>Club 2</option>
                 <option>Club 3</option>
@@ -21,7 +21,7 @@
 
         <div class="input-wrapper">
             <label for="gender-input">Gender</label>
-            <select name="gender-input" id="gender-input">
+            <select formControlName="gender" name="gender-input" id="gender-input">
                 <option>Male</option>
                 <option>Female</option>
             </select>
@@ -29,9 +29,9 @@
         
         <div class="input-wrapper">
             <label for="birth-date-input">Birth date</label>
-            <input type="date" name="birth-date-input" id="birth-date-input">
+            <input formControlName="birthDate" type="date" max="{{date}}" name="birth-date-input" id="birth-date-input">
         </div>
 
-        <button>Add Athlete</button>
+        <button (click)="submitForm()">Add Athlete</button>
     </div>
 </section>
