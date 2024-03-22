@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Club } from '../../models/club';
-import { Observable, of } from 'rxjs';
-import { Country } from '../../enums/country';
+import { Observable } from 'rxjs';
 import { User } from '../../models/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
