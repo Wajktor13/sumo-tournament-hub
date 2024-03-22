@@ -23,6 +23,10 @@ public class WeightCategory {
     @JoinColumn(name = "age_category_id")
     private AgeCategory ageCategory;
 
+    @ManyToOne
+    @JoinColumn(name = "competition_id")
+    private Competition competition;
+
     @ManyToMany
     @NonNull
     @JoinTable(
