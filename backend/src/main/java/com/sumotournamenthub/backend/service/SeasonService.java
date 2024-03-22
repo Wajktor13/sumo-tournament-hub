@@ -8,6 +8,7 @@ import com.sumotournamenthub.backend.repository.SeasonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +57,12 @@ public class SeasonService
         return season;
     }
 
+    public List<SeasonDto> getUpcomingSeasons()
+    {
+        return repository.findByStartDateGreaterThanEqual(LocalDate.now())
+                .stream().map(season -> convertToDto(season)).collect(Collectors.toList());
+    }
+
     public Optional<Set<AgeCategoryDto>> getCategoriesBySeasonId(int id)
     {
         Optional<Season> season = repository.findById(id);
@@ -79,7 +86,8 @@ public class SeasonService
 
     public List<SeasonDto> getAllSeasons()
     {
-        return repository.findAll().stream().map(season -> convertToDto(season)).collect(Collectors.toList());
+        return repository.findAll()
+                .stream().map(season -> convertToDto(season)).collect(Collectors.toList());
     }
 
     public Optional<SeasonDto> getSeasonById(int id)

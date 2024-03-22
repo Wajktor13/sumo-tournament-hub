@@ -34,6 +34,12 @@ public class SeasonController {
         }
     }
 
+    @GetMapping("/upcoming")
+    public List<SeasonDto> getUpcomingSeasons()
+    {
+        return seasonService.getUpcomingSeasons();
+    }
+
     @GetMapping
     public List<SeasonDto> getAllSeasons()
     {
