@@ -4,11 +4,15 @@ import com.sumotournamenthub.backend.domain.AgeCategory;
 import com.sumotournamenthub.backend.domain.Season;
 import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.dto.SeasonDto;
+import com.sumotournamenthub.backend.repository.SeasonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +20,9 @@ public class SeasonService
 {
     private final AgeCategoryService ageCategoryService;
 
-    public SeasonDto convertToDto(Season season)
+    private final SeasonRepository repository;
+
+    private SeasonDto convertToDto(Season season)
     {
         Set<AgeCategoryDto> DtoCategories = new HashSet<>();
 
@@ -34,7 +40,7 @@ public class SeasonService
                 .build();
     }
 
-    public Season convertToEntity(SeasonDto seasonDto)
+    private Season convertToEntity(SeasonDto seasonDto)
     {
         Set<AgeCategory> categories = new HashSet<>();
 
@@ -48,5 +54,68 @@ public class SeasonService
         season.setCategories(categories);
 
         return season;
+    }
+
+    public List<SeasonDto> getAllSeasons()
+    {
+        return repository.findAll().stream().map(season -> convertToDto(season)).collect(Collectors.toList());
+    }
+
+    public Optional<SeasonDto> getSeasonById(int id)
+    {
+        Optional<Season> season = repository.findById(id);
+
+        if (season.isPresent())
+        {
+            return Optional.of(convertToDto(season.get()));
+        }
+        else
+        {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<SeasonDto> updateSeason(int id, SeasonDto seasonDto)
+    {
+        Optional<Season> season = repository.findById(id);
+
+        if (season.isPresent())
+        {
+            Season seasonToSave = convertToEntity(seasonDto);
+            seasonToSave.setId(id);
+
+            Season saved = repository.save(seasonToSave);
+
+            return Optional.of(convertToDto(saved));
+        }
+        else
+        {
+            return Optional.empty();
+        }
+    }
+
+    public SeasonDto createSeason(SeasonDto seasonDto)
+    {
+        Season seasonToSave = convertToEntity(seasonDto);
+
+        Season saved = repository.save(seasonToSave);
+
+        return convertToDto(saved);
+    }
+
+    public boolean deleteSeason(int id)
+    {
+        Optional<Season> season = repository.findById(id);
+
+        if (season.isPresent())
+        {
+            repository.deleteById(id);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
