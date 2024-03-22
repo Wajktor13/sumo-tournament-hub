@@ -16,6 +16,7 @@ export class CompetitionService {
         startTime: new Date(),
         endTime: new Date(),
         countryLimits: { USA: 10, UK: 15 },
+        seasonId: 0
       },
       {
         id: 2,
@@ -23,6 +24,7 @@ export class CompetitionService {
         startTime: new Date(),
         endTime: new Date(),
         countryLimits: { USA: 20, UK: 25 },
+        seasonId: 1
       },
     ]);
   }
@@ -34,6 +36,7 @@ export class CompetitionService {
       startTime: new Date(),
       endTime: new Date(),
       countryLimits: { USA: 10, UK: 15 },
+      seasonId: 0
     });
   }
 }
