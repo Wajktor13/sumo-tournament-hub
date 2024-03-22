@@ -1,6 +1,5 @@
 import { AgeCategoryName } from "../enums/age-category-name";
 import { Gender } from "../enums/gender";
-import { WeightCategory } from "./weight-category";
 
 export type AgeCategory = {
     id: number;
@@ -9,5 +8,4 @@ export type AgeCategory = {
     ageUpperBound: number;
     gender: Gender;
     openWeightAvailable: boolean;
-    weightCategories?: WeightCategory[];
 };
