@@ -5,5 +5,6 @@ export type Athlete = {
   firstName: string;
   secondName: string;
   gender: Gender;
-  birthDate: Date;
+  birthdate: Date;
+  clubId: number;
 };
