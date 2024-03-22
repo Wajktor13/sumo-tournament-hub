@@ -8,7 +8,6 @@ import { User } from '../../models/user';
 import { Subscription } from 'rxjs';
 import { AthleteService } from '../../services/athlete/athlete.service';
 import { Athlete } from '../../models/athlete';
-import { Gender } from '../../enums/gender';
 
 @Component({
   selector: 'app-add-athlete',
@@ -72,9 +71,9 @@ export class AddAthleteComponent implements OnInit, OnDestroy {
 
   submitForm() {
     if (this.addAthleteForm.valid) {
-      let data: any = this.addAthleteForm.value;
+      const data: any = this.addAthleteForm.value;
       
-      let athlete: Athlete = {
+      const athlete: Athlete = {
         id: 0,
         firstName: data.firstName,
         secondName: data.secondName,

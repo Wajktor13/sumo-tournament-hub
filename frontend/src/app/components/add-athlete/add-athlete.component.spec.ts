@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddAthleteComponent } from './add-athlete.component';
 import { AddAthleteModule } from './add-athlete.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AddAthleteComponent', () => {
   let component: AddAthleteComponent;
@@ -9,7 +10,8 @@ describe('AddAthleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddAthleteModule]
+      imports: [AddAthleteModule,
+      HttpClientTestingModule]
     })
     .compileComponents();
     
