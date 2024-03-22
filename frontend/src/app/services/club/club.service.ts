@@ -3,50 +3,29 @@ import { Club } from '../../models/club';
 import { Observable, of } from 'rxjs';
 import { Country } from '../../enums/country';
 import { User } from '../../models/user';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClubService {
-  constructor() {}
+  private apiResource = "clubs";
+
+  constructor(private httpClient: HttpClient) {}
 
   public getAll(): Observable<Club[]> {
-    return of([
-      {
-        id: 0,
-        name: 'Club 1',
-        country: Country.AFGHANISTAN,
-      },
-      {
-        id: 1,
-        name: 'Club 2',
-        country: Country.POLAND,
-      },
-    ]);
+    return this.httpClient.get<Club[]>(`${environment.apiUrl}/${this.apiResource}`);
   }
 
   public getOne(id: number): Observable<Club | undefined> {
-    return of({
-      id: id,
-      name: 'Club 1',
-      country: Country.AFGHANISTAN,
-    });
+    return this.httpClient.get<Club>(`${environment.apiUrl}/${this.apiResource}/${id}`);
   }
 
-  public getAllClubsByUser(user: User): Observable<Club[]> {
-    console.log(user);
+  public getAllByUser(user: User): Observable<Club[]> {
+    console.log(user); // for lint
 
-    return of([
-      {
-        id: 0,
-        name: 'Club 1',
-        country: Country.AFGHANISTAN,
-      },
-      {
-        id: 1,
-        name: 'Club 2',
-        country: Country.POLAND,
-      },
-    ]);
+    // will be changed when endpoint is ready
+    return this.httpClient.get<Club[]>(`${environment.apiUrl}/${this.apiResource}`);
   }
 }

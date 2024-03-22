@@ -12,18 +12,16 @@
 
         <div class="input-wrapper">
             <label for="club-input">Club</label>
-            <select formControlName="club" name="club-input" id="club-input">
-                <option>Club 1</option>
-                <option>Club 2</option>
-                <option>Club 3</option>
+            <select formControlName="clubId" name="club-input" id="club-input">
+                <option *ngFor="let club of availableClubs" [value]="club.id">{{ club.name }}</option>
             </select>
         </div>
 
         <div class="input-wrapper">
             <label for="gender-input">Gender</label>
             <select formControlName="gender" name="gender-input" id="gender-input">
-                <option>Male</option>
-                <option>Female</option>
+                <option>M</option>
+                <option>F</option>
             </select>
         </div>
         

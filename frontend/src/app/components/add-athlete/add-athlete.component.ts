@@ -1,6 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ClubService } from '../../services/club/club.service';
+import { Club } from '../../models/club';
+import { AuthService } from '../../services/auth/auth.service';
+import { User } from '../../models/user';
+import { Subscription } from 'rxjs';
+import { AthleteService } from '../../services/athlete/athlete.service';
+import { Athlete } from '../../models/athlete';
+import { Gender } from '../../enums/gender';
 
 @Component({
   selector: 'app-add-athlete',
@@ -8,11 +16,38 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   templateUrl: './add-athlete.component.html',
   styleUrl: './add-athlete.component.css'
 })
-export class AddAthleteComponent implements OnInit {
+export class AddAthleteComponent implements OnInit, OnDestroy {
   date?: string;
+  availableClubs: Club[] = [];
+
+  // subs
+  currentUserSub: Subscription | undefined;
+  availableClubsSub: Subscription | undefined;
+
+  constructor (private clubService: ClubService, private authService: AuthService, private athleteService: AthleteService) { }
 
   ngOnInit() {
     this.date = new Date().toISOString().slice(0, 10);
+
+    this.currentUserSub = this.authService.currentUser$.subscribe(
+      {
+        next: (user: User) => 
+        {
+          this.availableClubsSub = this.clubService.getAllByUser(user).subscribe(
+            {
+              next: (clubs: Club[]) => this.availableClubs = clubs,
+              error: e => console.log(e)
+            }
+          )
+        },
+        error: e => console.log(e)
+      }
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.currentUserSub?.unsubscribe();
+    this.availableClubsSub?.unsubscribe();
   }
 
   addAthleteForm = new FormGroup({
@@ -24,7 +59,7 @@ export class AddAthleteComponent implements OnInit {
       Validators.required,
       Validators.pattern(/^[\p{L}\s\-.']+$/u)
     ]),
-    club: new FormControl('', [
+    clubId: new FormControl('', [
       Validators.required
     ]),
     gender: new FormControl('', [
@@ -36,6 +71,27 @@ export class AddAthleteComponent implements OnInit {
   })
 
   submitForm() {
-    console.log(this.addAthleteForm.valid);
+    if (this.addAthleteForm.valid) {
+      let data: any = this.addAthleteForm.value;
+      
+      let athlete: Athlete = {
+        id: 0,
+        firstName: data.firstName,
+        secondName: data.secondName,
+        gender: data.gender,
+        birthdate: new Date(data.birthDate),
+        clubId: parseInt(data.clubId)
+      }
+      
+      this.athleteService.add(athlete).subscribe(
+        {
+          next: v => console.log(v),
+          error: e => console.log(e)  
+        }
+      )
+      
+    } else {
+      alert("invalid input")
+    }
   }
 }
