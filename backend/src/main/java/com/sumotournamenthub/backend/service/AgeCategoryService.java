@@ -36,10 +36,7 @@ public class AgeCategoryService {
 
     public AgeCategory convertToEntity(AgeCategoryDto ageCategoryDto)
     {
-        AgeCategory ageCategory = new AgeCategory(ageCategoryDto.getName(), ageCategoryDto.getAgeLowerBound(), ageCategoryDto.getAgeUpperBound(), ageCategoryDto.getGender());
-        ageCategory.setId(ageCategory.getId());
-
-        return ageCategory;
+        return createOrRetrieveCategory(ageCategoryDto);
     }
 }
 

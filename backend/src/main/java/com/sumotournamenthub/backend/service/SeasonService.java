@@ -50,7 +50,7 @@ public class SeasonService
         }
 
         Season season = new Season(seasonDto.getName(), seasonDto.getStartDate(), seasonDto.getEndDate());
-        season.setId(season.getId());
+        season.setId(seasonDto.getId());
         season.setCategories(categories);
 
         return season;
@@ -82,7 +82,6 @@ public class SeasonService
         if (season.isPresent())
         {
             Season seasonToSave = convertToEntity(seasonDto);
-            seasonToSave.setId(id);
 
             Season saved = repository.save(seasonToSave);
 
