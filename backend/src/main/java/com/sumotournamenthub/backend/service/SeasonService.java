@@ -56,6 +56,27 @@ public class SeasonService
         return season;
     }
 
+    public Optional<Set<AgeCategoryDto>> getCategoriesBySeasonId(int id)
+    {
+        Optional<Season> season = repository.findById(id);
+
+        if (season.isPresent())
+        {
+            Set<AgeCategoryDto> ageCategoryDtos = new HashSet<>();
+
+            for (AgeCategory ageCategory : season.get().getCategories())
+            {
+                ageCategoryDtos.add(ageCategoryService.convertToDto(ageCategory));
+            }
+
+            return Optional.of(ageCategoryDtos);
+        }
+        else
+        {
+            return Optional.empty();
+        }
+    }
+
     public List<SeasonDto> getAllSeasons()
     {
         return repository.findAll().stream().map(season -> convertToDto(season)).collect(Collectors.toList());
