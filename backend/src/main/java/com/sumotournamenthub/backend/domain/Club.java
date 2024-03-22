@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.NonNull;
@@ -13,6 +14,7 @@ import org.springframework.lang.NonNull;
 @Entity
 @Table(name = "club")
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Getter @Setter
 public class Club {
 
