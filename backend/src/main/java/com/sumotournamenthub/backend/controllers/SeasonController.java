@@ -1,7 +1,9 @@
 package com.sumotournamenthub.backend.controllers;
 
 import com.sumotournamenthub.backend.domain.Season;
+import com.sumotournamenthub.backend.dto.SeasonDto;
 import com.sumotournamenthub.backend.repository.SeasonRepository;
+import com.sumotournamenthub.backend.service.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/seasons")
@@ -17,20 +20,22 @@ public class SeasonController
     @Autowired
     private SeasonRepository seasonRepository;
 
+    private SeasonService seasonService;
+
     @GetMapping
-    public List<Season> getAllSeasons()
+    public List<SeasonDto> getAllSeasons()
     {
-        return seasonRepository.findAll();
+        return seasonRepository.findAll().stream().map(season -> seasonService.convertToDto(season)).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Season> getSeasonById(@PathVariable int id)
+    public ResponseEntity<SeasonDto> getSeasonById(@PathVariable int id)
     {
         Optional<Season> season = seasonRepository.findById(id);
 
         if (season.isPresent())
         {
-            return ResponseEntity.ok(season.get());
+            return ResponseEntity.ok(seasonService.convertToDto(season.get()));
         }
         else
         {
@@ -39,16 +44,18 @@ public class SeasonController
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Season> updateSeason(@PathVariable int id, @RequestBody Season updatedSeason)
+    public ResponseEntity<SeasonDto> updateSeason(@PathVariable int id, @RequestBody SeasonDto seasonDto)
     {
         Optional<Season> season = seasonRepository.findById(id);
 
         if (season.isPresent())
         {
-            updatedSeason.setId(id);
-            Season saved = seasonRepository.save(updatedSeason);
+            Season seasonToSave = seasonService.convertToEntity(seasonDto);
+            seasonToSave.setId(id);
 
-            return ResponseEntity.ok(saved);
+            Season saved = seasonRepository.save(seasonToSave);
+
+            return ResponseEntity.ok(seasonService.convertToDto(saved));
         }
         else
         {
@@ -57,11 +64,13 @@ public class SeasonController
     }
 
     @PostMapping
-    public ResponseEntity<Season> createSeason(@RequestBody Season season)
+    public ResponseEntity<SeasonDto> createSeason(@RequestBody SeasonDto seasonDto)
     {
-        Season saved = seasonRepository.save(season);
+        Season seasonToSave = seasonService.convertToEntity(seasonDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        Season saved = seasonRepository.save(seasonToSave);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(seasonService.convertToDto(saved));
     }
 
     @DeleteMapping("/{id}")
