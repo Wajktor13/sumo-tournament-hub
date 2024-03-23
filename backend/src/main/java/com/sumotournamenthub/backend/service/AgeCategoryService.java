@@ -24,6 +24,15 @@ public class AgeCategoryService {
                 .orElseGet(() -> new AgeCategory(dto.getAgeCategoryName(), dto.getAgeLowerBound(), dto.getAgeUpperBound(), dto.getGender()));
     }
 
+    public AgeCategoryDto createAgeCategory(AgeCategoryDto ageCategoryDto)
+    {
+        AgeCategory newAgeCategory = convertToEntity(ageCategoryDto);
+
+        AgeCategory created = ageCategoryRepository.save(newAgeCategory);
+
+        return convertToDto(created);
+    }
+
     public AgeCategoryDto convertToDto(AgeCategory ageCategory)
     {
         return AgeCategoryDto.builder()

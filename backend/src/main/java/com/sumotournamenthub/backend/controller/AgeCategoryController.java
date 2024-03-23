@@ -34,8 +34,8 @@ public class AgeCategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<AgeCategory> createCategory(@RequestBody AgeCategoryDto categoryDto) {
-        AgeCategory savedCategory = ageCategoryService.addSeasonAndSaveCategory(categoryDto);
+    public ResponseEntity<AgeCategoryDto> createCategory(@RequestBody AgeCategoryDto categoryDto) {
+        AgeCategoryDto savedCategory = ageCategoryService.createAgeCategory(categoryDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
 
