@@ -11,23 +11,24 @@ import org.springframework.stereotype.Service;
 public class AgeCategoryService {
     private final AgeCategoryRepository ageCategoryRepository;
 
-    public AgeCategory addSeasonAndSaveCategory(AgeCategoryDto dto) {
+    //Is this method needed after changes?
+    /*public AgeCategory addSeasonAndSaveCategory(AgeCategoryDto dto) {
         var category = createOrRetrieveCategory(dto);
         category.getSeasons().add(dto.getSeason());
         return ageCategoryRepository.save(category);
-    }
+    }*/
 
     private AgeCategory createOrRetrieveCategory(AgeCategoryDto dto) {
         return ageCategoryRepository.findByNameAndAgeLowerBoundAndAgeUpperBoundAndGender(
-                        dto.getName(), dto.getAgeLowerBound(), dto.getAgeUpperBound(), dto.getGender())
-                .orElseGet(() -> new AgeCategory(dto.getName(), dto.getAgeLowerBound(), dto.getAgeUpperBound(), dto.getGender()));
+                        dto.getAgeCategoryName(), dto.getAgeLowerBound(), dto.getAgeUpperBound(), dto.getGender())
+                .orElseGet(() -> new AgeCategory(dto.getAgeCategoryName(), dto.getAgeLowerBound(), dto.getAgeUpperBound(), dto.getGender()));
     }
 
     public AgeCategoryDto convertToDto(AgeCategory ageCategory)
     {
         return AgeCategoryDto.builder()
                 .id(ageCategory.getId())
-                .name(ageCategory.getName())
+                .ageCategoryName(ageCategory.getName())
                 .ageLowerBound(ageCategory.getAgeLowerBound())
                 .ageUpperBound(ageCategory.getAgeUpperBound())
                 .gender(ageCategory.getGender())

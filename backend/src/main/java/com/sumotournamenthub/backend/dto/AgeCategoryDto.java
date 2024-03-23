@@ -2,7 +2,6 @@ package com.sumotournamenthub.backend.dto;
 
 import com.sumotournamenthub.backend.constants.AgeCategoryName;
 import com.sumotournamenthub.backend.constants.Gender;
-import com.sumotournamenthub.backend.domain.Season;
 import lombok.Builder;
 import lombok.Value;
 
@@ -10,9 +9,9 @@ import lombok.Value;
 @Builder
 public class AgeCategoryDto {
     Integer id;
-    AgeCategoryName name;
+    AgeCategoryName ageCategoryName;
     Integer ageLowerBound;
     Integer ageUpperBound;
     Gender gender;
-    Season season;
+    boolean openWeightAvailable;
 }
