@@ -8,11 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ClubService } from './services/club/club.service';
 import { AthleteService } from './services/athlete/athlete.service';
 import { CompetitionService } from './services/competition/competition.service';
+import { SeasonService } from './services/season/season.service';
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, HttpClientModule, NavigationModule, AddSeasonModule, AddAthleteModule, LoginModule],
   exports: [NavigationModule, HttpClientModule],
-  providers: [ClubService, AthleteService, CompetitionService]
+  providers: [ClubService, AthleteService, CompetitionService, SeasonService]
 })
 export class AppModule {}
