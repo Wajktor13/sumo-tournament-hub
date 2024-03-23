@@ -4,4 +4,5 @@ export type Competition = {
   startTime: Date;
   endTime: Date;
   countryLimits: { [key: string]: number };
+  seasonId: number;
 };

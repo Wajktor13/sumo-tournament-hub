@@ -1,108 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { AgeCategory } from '../../models/age-category';
-import { AgeCategoryName } from '../../enums/age-category-name';
-import { Gender } from '../../enums/gender';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AgeCategoryService {
-  constructor() {}
+  private apiResource = "agecategories";
+
+  constructor(private httpClient: HttpClient) { }
 
   public getAll(): Observable<AgeCategory[]> {
-    return of([
-      {
-        id: 0,
-        ageCategoryName: AgeCategoryName.CADET,
-        ageLowerBound: 10,
-        ageUpperBound: 15,
-        gender: Gender.F,
-        weightCategories: [
-          {
-            id: 0,
-            weightUpperLimit: 40,
-          },
-          {
-            id: 1,
-            weightUpperLimit: 80,
-          },
-          {
-            id: 2,
-            weightUpperLimit: 100,
-          },
-        ],
-        openWeightAvailable: true,
-      },
-      {
-        id: 1,
-        ageCategoryName: AgeCategoryName.YOUTH,
-        ageLowerBound: 20,
-        ageUpperBound: 25,
-        gender: Gender.M,
-        weightCategories: [
-          {
-            id: 3,
-            weightUpperLimit: 40,
-          },
-          {
-            id: 4,
-            weightUpperLimit: 120,
-          },
-          {
-            id: 5,
-            weightUpperLimit: 200,
-          },
-        ],
-        openWeightAvailable: false,
-      },
-      {
-        id: 0,
-        ageCategoryName: AgeCategoryName.SENIOR,
-        ageLowerBound: 30,
-        ageUpperBound: 90,
-        gender: Gender.M,
-        weightCategories: [
-          {
-            id: 6,
-            weightUpperLimit: 60,
-          },
-          {
-            id: 7,
-            weightUpperLimit: 90,
-          },
-          {
-            id: 8,
-            weightUpperLimit: 150,
-          },
-        ],
-        openWeightAvailable: true,
-      },
-    ]);
+    return this.httpClient.get<AgeCategory[]>(`${environment.apiUrl}/${this.apiResource}`);
   }
 
   public getOne(id: number): Observable<AgeCategory | undefined> {
-    return of({
-      id: id,
-      ageCategoryName: AgeCategoryName.CADET,
-      ageLowerBound: 10,
-      ageUpperBound: 15,
-      gender: Gender.F,
-      weightCategories: [
-        {
-          id: 0,
-          weightUpperLimit: 40,
-        },
-        {
-          id: 1,
-          weightUpperLimit: 80,
-        },
-        {
-          id: 2,
-          weightUpperLimit: 100,
-        },
-      ],
-      openWeightAvailable: true,
-    });
+    return this.httpClient.get<AgeCategory>(`${environment.apiUrl}/${this.apiResource}/${id}`);
+  }
+
+  public add(ageCategory: AgeCategory): Observable<AgeCategory | undefined> {    
+    return this.httpClient.post<AgeCategory>(`${environment.apiUrl}/${this.apiResource}`, ageCategory);
   }
 }
