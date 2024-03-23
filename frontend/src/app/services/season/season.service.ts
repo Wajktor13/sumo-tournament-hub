@@ -1,36 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Season } from '../../models/season';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SeasonService {
-  constructor() {}
+  private apiResource = "seasons";
+
+  constructor(private httpClient: HttpClient) {}
 
   public getAll(): Observable<Season[]> {
-    return of([
-      {
-        id: 1,
-        name: 'Spring 2024',
-        startDate: new Date(2024, 2, 20),
-        endDate: new Date(2024, 5, 20),
-      },
-      {
-        id: 2,
-        name: 'Summer 2024',
-        startDate: new Date(2024, 5, 21),
-        endDate: new Date(2024, 8, 22),
-      },
-    ]);
+    return this.httpClient.get<Season[]>(`${environment.apiUrl}/${this.apiResource}`);
   }
 
   public getOne(id: number): Observable<Season | undefined> {
-    return of({
-      id: id,
-      name: 'Spring 2024',
-      startDate: new Date(2024, 2, 20),
-      endDate: new Date(2024, 5, 20),
-    });
+    return this.httpClient.get<Season>(`${environment.apiUrl}/${this.apiResource}/${id}`);
+  }
+
+  public getUpcoming(): Observable<Season[]> {
+    return this.httpClient.get<Season[]>(`${environment.apiUrl}/${this.apiResource}/upcoming`);
+  }
+
+  public add(athlete: Season): Observable<Season | undefined> {    
+    return this.httpClient.post<Season>(`${environment.apiUrl}/${this.apiResource}`, athlete);
   }
 }

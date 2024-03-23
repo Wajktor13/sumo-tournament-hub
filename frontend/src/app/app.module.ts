@@ -9,11 +9,13 @@ import { ClubService } from './services/club/club.service';
 import { AthleteService } from './services/athlete/athlete.service';
 import { AgeCategoryService } from './services/age-category/age-category.service';
 import { WeightCategoryService } from './services/weight-category/weight-category.service';
+import { CompetitionService } from './services/competition/competition.service';
+import { SeasonService } from './services/season/season.service';
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, HttpClientModule, NavigationModule, AddSeasonModule, AddAthleteModule, LoginModule],
   exports: [NavigationModule, HttpClientModule],
-  providers: [ClubService, AthleteService, AgeCategoryService, WeightCategoryService]
+  providers: [ClubService, AthleteService, CompetitionService, SeasonService, AgeCategoryService, WeightCategoryService]
 })
 export class AppModule {}
