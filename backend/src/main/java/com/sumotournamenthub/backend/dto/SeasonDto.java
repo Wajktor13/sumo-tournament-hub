@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Value;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Value
 @Builder
@@ -17,6 +16,4 @@ public class SeasonDto
     LocalDate startDate;
 
     LocalDate endDate;
-
-    Set<AgeCategoryDto> categories;
 }

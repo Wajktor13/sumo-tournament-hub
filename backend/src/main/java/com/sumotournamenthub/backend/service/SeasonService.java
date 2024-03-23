@@ -25,34 +25,18 @@ public class SeasonService
 
     private SeasonDto convertToDto(Season season)
     {
-        Set<AgeCategoryDto> DtoCategories = new HashSet<>();
-
-        for (AgeCategory ageCategory : season.getCategories())
-        {
-            DtoCategories.add(ageCategoryService.convertToDto(ageCategory));
-        }
-
         return SeasonDto.builder()
                 .id(season.getId())
                 .name(season.getName())
                 .startDate(season.getStartDate())
                 .endDate(season.getEndDate())
-                .categories(DtoCategories)
                 .build();
     }
 
     private Season convertToEntity(SeasonDto seasonDto)
     {
-        Set<AgeCategory> categories = new HashSet<>();
-
-        for (AgeCategoryDto ageCategoryDto : seasonDto.getCategories())
-        {
-            categories.add(ageCategoryService.convertToEntity(ageCategoryDto));
-        }
-
         Season season = new Season(seasonDto.getName(), seasonDto.getStartDate(), seasonDto.getEndDate());
         season.setId(seasonDto.getId());
-        season.setCategories(categories);
 
         return season;
     }
