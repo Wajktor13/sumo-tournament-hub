@@ -2,10 +2,7 @@ package com.sumotournamenthub.backend.domain;
 
 import com.sumotournamenthub.backend.constants.Country;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name = "competition")
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class Competition

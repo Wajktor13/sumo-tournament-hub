@@ -1,16 +1,14 @@
 package com.sumotournamenthub.backend.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "weight_category")
 public class WeightCategory {
