@@ -1,1 +1,77 @@
-<p>competition-registration works!</p>
+<section>
+  <div id="main-div">
+    <div id="competition-info">
+      <p id="competition-name">{{ competition?.name }}</p>
+      <p>Season: {{ season?.name }}</p>
+      <p>From: {{ competition?.startTime | date: "fullDate" }}</p>
+      <p>To: {{ competition?.endTime | date: "fullDate" }}</p>
+    </div>
+
+    <form>
+      <div class="input-wrapper">
+        <label for="club-input">Club</label>
+        <select
+          name="club-input"
+          id="club-input"
+          [(ngModel)]="selectedClubId"
+          (ngModelChange)="onClubSelectionChange()"
+        >
+          <option *ngFor="let club of userClubs" [value]="club.id">
+            {{ club.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="input-wrapper">
+        <label for="athlete-input">Athlete</label>
+        <select
+          name="athlete-input"
+          id="athlete-input"
+          [(ngModel)]="selectedAthleteId"
+          (ngModelChange)="onAthleteSelectionChange()"
+        >
+          <option *ngFor="let athlete of athletesFromClub" [value]="athlete.id">
+            {{ athlete.firstName }} {{ athlete.secondName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="input-wrapper">
+        <label for="age-category-input">Age Category</label>
+        <select
+          name="age-category-input"
+          id="age-category-input"
+          [(ngModel)]="selectedAthleteAgeCategory"
+        >
+          <option [value]="selectedAthleteAgeCategory">
+            {{ selectedAthleteAgeCategory?.ageCategoryName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="input-wrapper">
+        <label for="weight-category-input">Weight Category</label>
+        <select
+          name="weight-category-input"
+          id="weight-category-input"
+          [(ngModel)]="selectedWeightCategory"
+        >
+          <ng-container
+            *ngFor="let weightCategory of availableWeightCategories"
+          >
+            <ng-container *ngIf="!weightCategory.openWeight">
+              <option [value]="weightCategory.id">
+                under {{ weightCategory.weightUpperLimit }}
+              </option>
+            </ng-container>
+            <ng-container *ngIf="weightCategory.openWeight">
+              <option [value]="weightCategory.id">open</option>
+            </ng-container>
+          </ng-container>
+        </select>
+      </div>
+
+      <button (click)="onButtonClick()">Register Athlete</button>
+    </form>
+  </div>
+</section>

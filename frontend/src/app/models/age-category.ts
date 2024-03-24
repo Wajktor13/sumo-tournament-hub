@@ -7,5 +7,4 @@ export type AgeCategory = {
     ageLowerBound: number;
     ageUpperBound: number;
     gender: Gender;
-    openWeightAvailable: boolean;
 };
