@@ -13,5 +13,4 @@ public class AgeCategoryDto {
     Integer ageLowerBound;
     Integer ageUpperBound;
     Gender gender;
-    boolean openWeightAvailable;
 }
