@@ -26,7 +26,7 @@ public class AthleteService {
                 dto.getFirstName(),
                 dto.getSecondName(),
                 club,
-                Gender.fromString(dto.getGender()),
+                dto.getGender(),
                 dto.getBirthdate());
         return repository.save(athlete);
     }
