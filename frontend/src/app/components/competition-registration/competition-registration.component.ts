@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Competition } from '../../models/competition';
 import { CompetitionService } from '../../services/competition/competition.service';
 import { Season } from '../../models/season';
@@ -58,8 +58,8 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const routeParams = this.route.snapshot.paramMap;
-    const competitionId = Number(routeParams.get('competitionId'));
+    const routeParams: ParamMap = this.route.snapshot.paramMap;
+    const competitionId: number = Number(routeParams.get('competitionId'));
 
     this.subscribeToCompetitionService(competitionId);
     this.subscribeToSeasonService();

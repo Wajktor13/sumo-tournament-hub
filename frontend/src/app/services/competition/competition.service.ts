@@ -53,6 +53,9 @@ export class CompetitionService {
     weightCategoryId: number,
     athleteId: number,
   ) {
+
+    console.log(competitionId, ageCategoryId, weightCategoryId, athleteId); // for lint
+    
     return true;
   }
 }
