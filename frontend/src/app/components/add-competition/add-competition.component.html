@@ -40,8 +40,7 @@
                     <label for="category-input">Category</label>
                     <div id="category-input">
                         <div class="checkbox-wrapper" *ngFor="let category of ageCategories">
-                            <input type="checkbox" [formControl]="addCompetitionForm.controls.ageCategories" [value]="category">
-                            <label>{{ category }}</label>
+                            <label ><input type="checkbox" [formControl]="addCompetitionForm.controls.ageCategories" [value]="category">{{ category }}</label>
                         </div>
                     </div>    
                 </div>                
