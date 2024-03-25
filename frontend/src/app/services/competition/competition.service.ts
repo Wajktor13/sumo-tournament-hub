@@ -4,6 +4,7 @@ import { Competition } from '../../models/competition';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Country } from '../../enums/country';
+import { CompetitionRank } from '../../enums/competition-rank';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +38,7 @@ export class CompetitionService {
       endTime: new Date(2024, 7, 15),
       countryLimits: defaultLimits as { [key in Country]: number },
       seasonId: 2,
+      rank: CompetitionRank.European
     });
   }
 
