@@ -5,11 +5,15 @@ import com.sumotournamenthub.backend.domain.Season;
 import com.sumotournamenthub.backend.dto.CompetitionDto;
 import com.sumotournamenthub.backend.repository.CompetitionRepository;
 import com.sumotournamenthub.backend.repository.SeasonRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
+@RequiredArgsConstructor
 public class CompetitionService {
     private final CompetitionRepository repository;
     private final SeasonRepository seasonRepository;
@@ -46,12 +50,6 @@ public class CompetitionService {
         {
             return Optional.empty();
         }
-    }
-
-    public CompetitionService(CompetitionRepository repository, SeasonRepository seasonRepository)
-    {
-        this.repository = repository;
-        this.seasonRepository = seasonRepository;
     }
 
     public List<CompetitionDto> getAllCompetitions()
