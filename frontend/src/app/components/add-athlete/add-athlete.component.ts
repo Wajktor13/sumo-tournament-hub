@@ -1,13 +1,12 @@
-import { Component, OnDestroy } from '@angular/core';
-import { OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ClubService } from '../../services/club/club.service';
-import { Club } from '../../models/club';
+import { AthleteService } from '../../services/athlete/athlete.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { Club } from '../../models/club';
+import { Athlete } from '../../models/athlete';
 import { User } from '../../models/user';
 import { Subscription } from 'rxjs';
-import { AthleteService } from '../../services/athlete/athlete.service';
-import { Athlete } from '../../models/athlete';
 
 @Component({
   selector: 'app-add-athlete',
