@@ -68,7 +68,6 @@ export class AddSeasonComponent implements OnInit {
       ageLowerBound: data.ageLowerBound,
       ageUpperBound: data.ageUpperBound,
       gender: data.gender,
-      openWeightAvailable: false
     }
 
     this.createdAgeCategories.push(createdAgeCategory);
