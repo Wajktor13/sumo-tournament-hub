@@ -2,6 +2,7 @@ package com.sumotournamenthub.backend.controller;
 
 import com.sumotournamenthub.backend.domain.Competition;
 import com.sumotournamenthub.backend.service.CompetitionService;
+import com.sumotournamenthub.backend.dto.CompetitionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,9 @@ public class CompetitionController {
     }
 
     @PostMapping
-    public ResponseEntity<Competition> createCompetition(@RequestBody Competition competition) {
+    public ResponseEntity<CompetitionDto> createCompetition(@RequestBody Competition competition) {
         Competition createdCompetition = competitionService.addCompetition(competition);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCompetition);
+        CompetitionDto competitionDto = CompetitionDto.from(createdCompetition);
+        return new ResponseEntity<>(competitionDto, HttpStatus.CREATED);
     }
 }

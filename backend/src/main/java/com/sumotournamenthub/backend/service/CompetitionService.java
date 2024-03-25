@@ -30,8 +30,7 @@ public class CompetitionService {
 
     public Competition addCompetition(Competition competition)
     {
-        repository.save(competition);
-        return competition;
+        return repository.save(competition);
     }
 
     public void deleteCompetition(Competition competition)
