@@ -9,6 +9,7 @@ public class WeightCategoryDto
 {
     int id;
     int weightUpperLimit;
+    boolean openWeight;
     int competitionId;
     int ageCategoryId;
 }
