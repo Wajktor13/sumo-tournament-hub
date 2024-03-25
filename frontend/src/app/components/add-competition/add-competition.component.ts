@@ -9,8 +9,13 @@ import { AgeCategoryName } from '../../enums/age-category-name';
   styleUrls: ['./add-competition.component.css']
 })
 export class AddCompetitionComponent {
+  todayDate?: string;
   public competitionRanks = Object.values(CompetitionRank);
   public ageCategories = Object.values(AgeCategoryName);
+
+  ngOnInit() {
+    this.todayDate = new Date().toISOString().slice(0, 10);
+  }
 
   addCompetitionForm = new FormGroup({
     competitionName: new FormControl('', [
