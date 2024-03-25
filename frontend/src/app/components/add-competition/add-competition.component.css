@@ -94,6 +94,12 @@ button:active {
     transform: scale(0.9);
 }
 
+button:disabled {
+    background-color: grey;
+    color: white;
+    transform: none;
+  }
+
 @media (max-width: 768px) {
     #add-competition-div {
         width: 260px;
