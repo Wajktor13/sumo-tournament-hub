@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AgeCategory } from '../../models/age-category';
+import { OnInit } from '@angular/core';
+import { AgeCategoryName } from '../../enums/age-category-name';
 
 @Component({
   selector: 'app-add-season',
@@ -7,33 +10,67 @@ import { FormGroup, FormControl } from '@angular/forms';
   templateUrl: './add-season.component.html',
   styleUrl: './add-season.component.css'
 })
-export class AddSeasonComponent {
-  addAgeCategoryForm = new FormGroup({
-    ageCategoryName: new FormControl('', []),
-    ageLowerBound: new FormControl('', []),
-    ageUpperBound: new FormControl('', []),
-    gender: new FormControl('', [])
+export class AddSeasonComponent implements OnInit {
+  todayDate?: string;
+  ageCategoryNames: Array<string> = Object.values(AgeCategoryName);
+
+  createdAgeCategories:Array<AgeCategory> = [];
+
+  ngOnInit() {
+    this.todayDate = new Date().toISOString().slice(0, 10);
+  }
+
+  addSeasonForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    startDate: new FormControl('', [
+      Validators.required
+    ]),
+    endDate: new FormControl('', [
+      Validators.required
+    ])
   })
 
-  addedCategories: Array<Category> = [];
+  addAgeCategoryForm = new FormGroup({
+    ageCategoryName: new FormControl('', [
+      Validators.required
+    ]),
+    ageLowerBound: new FormControl('', [
+      Validators.required
+    ]),
+    ageUpperBound: new FormControl('', [
+      Validators.required
+    ]),
+    gender: new FormControl('', [
+      Validators.required
+    ])
+  })
+
+  checkForAlreadyExistingCategory(): boolean {
+    return this.createdAgeCategories.filter((ageCategory) => ageCategory.ageCategoryName === this.addAgeCategoryForm.value.ageCategoryName && 
+    ageCategory.gender === this.addAgeCategoryForm.value.gender).length === 0
+  }
+
+  deleteCreatedAgeCategory(ageCategory: AgeCategory): void {
+    const index = this.createdAgeCategories.indexOf(ageCategory, 0);
+    if (index > -1) {
+      this.createdAgeCategories.splice(index, 1);
+    }
+  }
 
   addCategory(): void {
-    const ageCategory = {
-      name: this.addAgeCategoryForm.get('ageCategoryName')!.value,
-      lowerBound: this.addAgeCategoryForm.get('ageLowerBound')!.value,
-      upperBound: this.addAgeCategoryForm.get('ageUpperBound')!.value,
-      gender: this.addAgeCategoryForm.get('gender')!.value
-    } as unknown as Category;
+    const data: any = this.addAgeCategoryForm.value
 
-    console.log('%d', ageCategory.lowerBound);
+    const createdAgeCategory: AgeCategory = {
+      id: 0,
+      ageCategoryName: data.ageCategoryName,
+      ageLowerBound: data.ageLowerBound,
+      ageUpperBound: data.ageUpperBound,
+      gender: data.gender,
+      openWeightAvailable: false
+    }
 
-    this.addedCategories.push(ageCategory);
+    this.createdAgeCategories.push(createdAgeCategory);
   }
-}
-
-export interface Category {
-  name: string;
-  lowerBound: number;
-  upperBound: number;
-  gender: string;
 }
