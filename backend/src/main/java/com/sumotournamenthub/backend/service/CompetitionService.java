@@ -1,36 +1,108 @@
 package com.sumotournamenthub.backend.service;
 
 import com.sumotournamenthub.backend.domain.Competition;
+import com.sumotournamenthub.backend.domain.Season;
+import com.sumotournamenthub.backend.dto.CompetitionDto;
 import com.sumotournamenthub.backend.repository.CompetitionRepository;
+import com.sumotournamenthub.backend.repository.SeasonRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CompetitionService {
-    private CompetitionRepository repository;
+    private final CompetitionRepository repository;
+    private final SeasonRepository seasonRepository;
 
-    public CompetitionService(CompetitionRepository repository)
+    public CompetitionDto convertToDto(Competition competition)
+    {
+        return CompetitionDto.builder()
+                .id(competition.getId())
+                .name(competition.getName())
+                .startTime(competition.getStartTime())
+                .endTime(competition.getEndTime())
+                .countryLimits(competition.getCountryLimits())
+                .seasonId(competition.getSeason().getId())
+                .build();
+    }
+
+    public Optional<Competition> convertToEntity(CompetitionDto competitionDto)
+    {
+        Optional<Season> season = seasonRepository.findById(competitionDto.getSeasonId());
+
+        if (season.isPresent())
+        {
+            Competition competition = new Competition();
+            competition.setId(competitionDto.getId());
+            competition.setName(competitionDto.getName());
+            competition.setSeason(season.get());
+            competition.setStartTime(competitionDto.getStartTime());
+            competition.setEndTime(competitionDto.getEndTime());
+            competition.setCountryLimits(competitionDto.getCountryLimits());
+
+            return Optional.of(competition);
+        }
+        else
+        {
+            return Optional.empty();
+        }
+    }
+
+    public CompetitionService(CompetitionRepository repository, SeasonRepository seasonRepository)
     {
         this.repository = repository;
+        this.seasonRepository = seasonRepository;
     }
 
-    public List<Competition> getCompetitions()
+    public List<CompetitionDto> getAllCompetitions()
     {
-        return repository.findAll();
+        return repository.findAll()
+                .stream().map(competition -> convertToDto(competition)).collect(Collectors.toList());
     }
 
-    public Optional<Competition> getCompetitionById(int id)
+    public Optional<CompetitionDto> getCompetitionById(int id)
     {
-        return repository.findById(id);
+        Optional<Competition> competition = repository.findById(id);
+
+        if (competition.isPresent())
+        {
+            return Optional.of(convertToDto(competition.get()));
+        }
+        else
+        {
+            return Optional.empty();
+        }
     }
 
-    public void addCompetition(Competition competition)
+    public Optional<CompetitionDto> createCompetition(CompetitionDto competitionDto)
     {
-        repository.save(competition);
+        Optional<Competition> competitionToSave = convertToEntity(competitionDto);
+
+        if (competitionToSave.isPresent())
+        {
+            Competition saved = repository.save(competitionToSave.get());
+
+            return Optional.of(convertToDto(saved));
+        }
+        else
+        {
+            return Optional.empty();
+        }
     }
 
-    public void deleteCompetition(Competition competition)
+    public boolean deleteCompetition(int id)
     {
-        repository.delete(competition);
+        Optional<Competition> competition = repository.findById(id);
+
+        if (competition.isPresent())
+        {
+            repository.deleteById(id);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

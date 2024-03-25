@@ -23,7 +23,7 @@ public class SeasonService
 
     private final SeasonRepository repository;
 
-    private SeasonDto convertToDto(Season season)
+    public SeasonDto convertToDto(Season season)
     {
         return SeasonDto.builder()
                 .id(season.getId())
@@ -33,7 +33,7 @@ public class SeasonService
                 .build();
     }
 
-    private Season convertToEntity(SeasonDto seasonDto)
+    public Season convertToEntity(SeasonDto seasonDto)
     {
         Season season = new Season(seasonDto.getName(), seasonDto.getStartDate(), seasonDto.getEndDate());
         season.setId(seasonDto.getId());
