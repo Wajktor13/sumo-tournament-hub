@@ -9,6 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "weight_upper_limit")
 public class WeightUpperLimit {

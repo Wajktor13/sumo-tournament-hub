@@ -10,6 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "season")
 public class Season {

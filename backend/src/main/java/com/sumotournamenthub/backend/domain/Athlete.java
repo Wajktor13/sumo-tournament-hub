@@ -11,7 +11,8 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name="Athlete")
-@RequiredArgsConstructor @NoArgsConstructor
+@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class Athlete {
