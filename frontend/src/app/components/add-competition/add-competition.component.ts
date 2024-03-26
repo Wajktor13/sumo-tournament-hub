@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { FormGroup, Validators, FormControl, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CompetitionRank } from '../../enums/competition-rank';
 import { AgeCategoryName } from '../../enums/age-category-name';
@@ -8,7 +8,7 @@ import { AgeCategoryName } from '../../enums/age-category-name';
   templateUrl: './add-competition.component.html',
   styleUrls: ['./add-competition.component.css']
 })
-export class AddCompetitionComponent {
+export class AddCompetitionComponent implements OnInit {
   todayDate?: string;
   public competitionRanks = Object.values(CompetitionRank);
   public ageCategories = Object.values(AgeCategoryName);
