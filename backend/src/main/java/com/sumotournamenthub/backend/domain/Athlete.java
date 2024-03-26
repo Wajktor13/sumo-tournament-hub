@@ -4,17 +4,14 @@ import com.sumotournamenthub.backend.constants.Gender;
 
 import jakarta.persistence.*;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 
 @Entity
 @Table(name="Athlete")
-@RequiredArgsConstructor
+@RequiredArgsConstructor @NoArgsConstructor
 @Getter
 @Setter
 public class Athlete {
