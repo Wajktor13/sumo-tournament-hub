@@ -19,6 +19,7 @@ public class ClubService {
     public List<Club> getAllClubs() {
         return repository.findAll();
     }
+
     public Club getClubById(Integer id) {
         return repository.findById(id)
                 .orElseThrow(() -> notExist(format("Club with %d id does not exist", id)));

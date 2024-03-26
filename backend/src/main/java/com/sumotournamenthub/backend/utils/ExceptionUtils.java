@@ -9,4 +9,8 @@ public class ExceptionUtils {
         return new ResponseStatusException(HttpStatus.NOT_FOUND, message);
     }
 
+    public static ResponseStatusException notExist() {
+        return new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
 }

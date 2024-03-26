@@ -6,8 +6,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class ClubDto
-{
+public class ClubDto {
     int id;
     String name;
     Country country;

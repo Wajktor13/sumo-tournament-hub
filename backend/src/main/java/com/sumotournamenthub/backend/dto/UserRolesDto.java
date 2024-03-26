@@ -5,8 +5,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class UserRolesDto
-{
+public class UserRolesDto {
     boolean admin;
     boolean staffCoach;
     boolean coach;

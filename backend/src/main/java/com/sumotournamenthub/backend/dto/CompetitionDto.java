@@ -9,8 +9,7 @@ import java.util.Map;
 
 @Value
 @Builder
-public class CompetitionDto
-{
+public class CompetitionDto {
     int id;
     String name;
     LocalDate startTime;

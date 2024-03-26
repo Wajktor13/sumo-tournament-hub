@@ -5,8 +5,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class WeightCategoryDto
-{
+public class WeightCategoryDto {
     int id;
     int weightUpperLimit;
     boolean openWeight;

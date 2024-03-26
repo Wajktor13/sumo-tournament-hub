@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,11 +26,7 @@ public class ClubController {
 
     @GetMapping
     public List<ClubDto> getAll() {
-        List<ClubDto> clubDtoList = new ArrayList<>();
-        for (Club club : clubService.getAllClubs()) {
-            clubDtoList.add(convertToDto(club));
-        }
-        return clubDtoList;
+        return clubService.getAllClubs().stream().map(this::convertToDto).toList();
     }
 
     @GetMapping("/{id}")
