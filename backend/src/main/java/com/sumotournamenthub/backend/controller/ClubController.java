@@ -1,7 +1,8 @@
 package com.sumotournamenthub.backend.controller;
 
 import com.sumotournamenthub.backend.domain.Club;
-import com.sumotournamenthub.backend.repository.ClubRepository;
+import com.sumotournamenthub.backend.service.ClubService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,29 +12,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.sumotournamenthub.backend.utils.ExceptionUtils.notExist;
-import static java.lang.String.format;
-
 @RestController
 @RequestMapping("/clubs")
 public class ClubController {
 
-    private final ClubRepository repository;
+    private final ClubService clubService;
 
-    public ClubController(ClubRepository repository) {
-        this.repository = repository;
+    @Autowired
+    public ClubController(ClubService clubService) {
+        this.clubService = clubService;
     }
 
     @GetMapping
     public List<Club> getAll() {
-        return repository.findAll();
+        return clubService.getAllClubs();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Club> getById(@PathVariable Integer id) {
-        var club = repository.findById(id).
-                orElseThrow(() -> notExist(format("Club with id %d does not exist", id)));
+        Club club = clubService.getClubById(id);
         return new ResponseEntity<>(club, HttpStatus.OK);
     }
-
 }
