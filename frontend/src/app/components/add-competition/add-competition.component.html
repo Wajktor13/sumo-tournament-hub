@@ -20,10 +20,7 @@
                 <div class="input-wrapper">
                     <label for="competition-rank-input">Competition Rank</label>
                     <select name="competition-rank-input" id="competition-rank-input">
-                        <option value="first">First</option>
-                        <option value="second">Second</option>
-                        <option value="third">Third</option>
-                        <option value="other">Other</option>
+                        <option *ngFor="let rank of competitionRanks" [value]="rank">{{ rank }}</option>
                     </select>
                 </div>
             </div>

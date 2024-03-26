@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "season")
 public class Season {
@@ -34,7 +36,7 @@ public class Season {
             joinColumns = @JoinColumn(name = "season_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<AgeCategory> categories;
+    private Set<AgeCategory> categories = new HashSet<>();
 
 }
 

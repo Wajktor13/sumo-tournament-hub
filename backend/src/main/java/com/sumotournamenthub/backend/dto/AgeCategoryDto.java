@@ -9,7 +9,7 @@ import lombok.Value;
 @Builder
 public class AgeCategoryDto {
     Integer id;
-    AgeCategoryName name;
+    AgeCategoryName ageCategoryName;
     Integer ageLowerBound;
     Integer ageUpperBound;
     Gender gender;

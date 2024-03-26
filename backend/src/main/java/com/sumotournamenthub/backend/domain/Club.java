@@ -1,18 +1,20 @@
 package com.sumotournamenthub.backend.domain;
 
 import com.sumotournamenthub.backend.constants.Country;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.NonNull;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "club")
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Getter @Setter
 public class Club {
 
@@ -23,6 +25,10 @@ public class Club {
     private @NonNull String name;
 
     private @NonNull Country country;
+
+    @OneToMany(mappedBy = "club")
+    private Set<Athlete> athletes = new HashSet<>();
+
 //    TODO: club coach
 
 }
