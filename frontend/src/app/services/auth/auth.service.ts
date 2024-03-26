@@ -9,13 +9,22 @@ export class AuthService {
   public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public currentUser$: BehaviorSubject<User> = new BehaviorSubject({} as User);
 
-  constructor() {}
+  constructor() {
+    const userString: string | null = localStorage.getItem('user');
+
+    if (userString != null) {
+      this.currentUser$.next(JSON.parse(userString));
+      this.isLoggedIn$.next(true);
+    }
+  }
 
   public login(email: string, password: string): void {
     const user: User = this.authenticate(email, password);
 
     this.currentUser$.next(user);
     this.isLoggedIn$.next(true);
+
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   private authenticate(email: string, password: string): User {
@@ -37,5 +46,6 @@ export class AuthService {
   public logout(): void {
     this.currentUser$.next({} as User);
     this.isLoggedIn$.next(false);
+    localStorage.removeItem('user');
   }
 }

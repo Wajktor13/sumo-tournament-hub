@@ -19,9 +19,10 @@ public class AthleteController {
     }
 
     @PostMapping()
-    public ResponseEntity<Athlete> addAthlete(@RequestBody AthleteDto athleteDto) {
-        var savedAthlete = service.createAthlete(athleteDto);
-        return new ResponseEntity<>(savedAthlete, HttpStatus.CREATED);
+    public ResponseEntity<AthleteDto> addAthlete(@RequestBody AthleteDto athleteDto) {
+        Athlete savedAthlete = service.createAthlete(athleteDto);
+        AthleteDto savedAthleteDto = AthleteDto.convertToDto(savedAthlete);
+        return new ResponseEntity<>(savedAthleteDto, HttpStatus.CREATED);
     }
 
 }

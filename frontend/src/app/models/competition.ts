@@ -1,3 +1,4 @@
+import { CompetitionRank } from "../enums/competition-rank";
 import { Country } from "../enums/country";
 
 export type Competition = {
@@ -7,4 +8,5 @@ export type Competition = {
   endTime: Date;
   countryLimits: { [key in Country]: number };
   seasonId: number;
+  rank: CompetitionRank;
 };

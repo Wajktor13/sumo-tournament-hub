@@ -1,29 +1,26 @@
 <section>
-    <div id="add-competition-div">
+    <div id="add-competition-div" [formGroup]="addCompetitionForm">
         <div class="form">
             <div class="left">
                 <div class="input-wrapper">
                     <label for="competition-name-input">Competition Name</label>
-                    <input type="text" name="competition-name-input" id="competition-name-input">
+                    <input type="text" formControlName="competitionName" id="competition-name-input">
                 </div>
         
                 <div class="input-wrapper">
                     <label for="start-date-input">Start Date</label>
-                    <input type="date" name="start-date-input" id="start-date-input">
+                    <input type="date" min="{{todayDate}}" max="{{this.addCompetitionForm.value.endDate}}" formControlName="startDate" id="start-date-input">
                 </div>
         
                 <div class="input-wrapper">
                     <label for="end-date-input">End Date</label>
-                    <input type="date" name="end-date-input" id="end-date-input">
+                    <input type="date" min="{{this.addCompetitionForm.value.startDate || todayDate}}" formControlName="endDate" id="end-date-input">
                 </div>
         
                 <div class="input-wrapper">
                     <label for="competition-rank-input">Competition Rank</label>
-                    <select name="competition-rank-input" id="competition-rank-input">
-                        <option value="first">First</option>
-                        <option value="second">Second</option>
-                        <option value="third">Third</option>
-                        <option value="other">Other</option>
+                    <select formControlName="competitionRank" id="competition-rank-input">
+                        <option *ngFor="let rank of competitionRanks" [value]="rank">{{ rank }}</option>
                     </select>
                 </div>
             </div>
@@ -31,7 +28,7 @@
             <div class="right">
                 <div class="input-wrapper">
                     <label for="season-input">Season</label>
-                    <select name="season-input" id="season-input">
+                    <select formControlName="season" id="season-input">
                         <option value="summer">Summer</option>
                         <option value="winter">Winter</option>
                         <option value="spring">Spring</option>
@@ -42,24 +39,15 @@
                 <div class="input-wrapper" >
                     <label for="category-input">Category</label>
                     <div id="category-input">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" name="category-input" id="category1" value="category1">
-                            <label for="category1">Category 1</label>
-                        </div>
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" name="category-input" id="category2" value="category2">
-                            <label for="category2">Category 2</label>
-                        </div>
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" name="category-input" id="category3" value="category3">
-                            <label for="category3">Category 3</label>
+                        <div class="checkbox-wrapper" *ngFor="let category of ageCategories">
+                            <label ><input type="checkbox" [formControl]="addCompetitionForm.controls.ageCategories" [value]="category">{{ category }}</label>
                         </div>
                     </div>    
-                </div>
+                </div>                
             </div>   
         </div>
         
 
-        <button>Add Competition</button>
+        <button [disabled]="!this.addCompetitionForm.valid" (click)="submitForm()">Add Competition</button>
     </div>
 </section>
