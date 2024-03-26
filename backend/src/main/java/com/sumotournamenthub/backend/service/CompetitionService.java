@@ -4,19 +4,19 @@ import com.sumotournamenthub.backend.domain.Competition;
 import com.sumotournamenthub.backend.domain.Season;
 import com.sumotournamenthub.backend.dto.CompetitionDto;
 import com.sumotournamenthub.backend.repository.CompetitionRepository;
-import com.sumotournamenthub.backend.repository.SeasonRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
 public class CompetitionService {
     private final CompetitionRepository repository;
-    private final SeasonRepository seasonRepository;
+    private final SeasonService seasonService;
 
     public CompetitionDto convertToDto(Competition competition)
     {
@@ -30,77 +30,41 @@ public class CompetitionService {
                 .build();
     }
 
-    public Optional<Competition> convertToEntity(CompetitionDto competitionDto)
+    public Competition convertToEntity(CompetitionDto competitionDto)
     {
-        Optional<Season> season = seasonRepository.findById(competitionDto.getSeasonId());
+        Season season = seasonService.getSeasonById(competitionDto.getSeasonId());
 
-        if (season.isPresent())
-        {
-            Competition competition = new Competition();
-            competition.setId(competitionDto.getId());
-            competition.setName(competitionDto.getName());
-            competition.setSeason(season.get());
-            competition.setStartTime(competitionDto.getStartTime());
-            competition.setEndTime(competitionDto.getEndTime());
-            competition.setCountryLimits(competitionDto.getCountryLimits());
+        Competition competition = new Competition();
+        competition.setId(competitionDto.getId());
+        competition.setName(competitionDto.getName());
+        competition.setSeason(season);
+        competition.setStartTime(competitionDto.getStartTime());
+        competition.setEndTime(competitionDto.getEndTime());
+        competition.setCountryLimits(competitionDto.getCountryLimits());
 
-            return Optional.of(competition);
-        }
-        else
-        {
-            return Optional.empty();
-        }
+        return competition;
     }
 
-    public List<CompetitionDto> getAllCompetitions()
+    public List<Competition> getAllCompetitions()
     {
-        return repository.findAll()
-                .stream().map(competition -> convertToDto(competition)).collect(Collectors.toList());
+        return repository.findAll();
     }
 
-    public Optional<CompetitionDto> getCompetitionById(int id)
+    public Competition getCompetitionById(int id)
     {
-        Optional<Competition> competition = repository.findById(id);
-
-        if (competition.isPresent())
-        {
-            return Optional.of(convertToDto(competition.get()));
-        }
-        else
-        {
-            return Optional.empty();
-        }
+        return findById(id);
     }
 
-    public Optional<CompetitionDto> createCompetition(CompetitionDto competitionDto)
+    @Transactional
+    public Competition createCompetition(Competition competition)
     {
-        Optional<Competition> competitionToSave = convertToEntity(competitionDto);
+        repository.save(competition);
 
-        if (competitionToSave.isPresent())
-        {
-            Competition saved = repository.save(competitionToSave.get());
-
-            return Optional.of(convertToDto(saved));
-        }
-        else
-        {
-            return Optional.empty();
-        }
+        return competition;
     }
 
-    public boolean deleteCompetition(int id)
+    private Competition findById(int id)
     {
-        Optional<Competition> competition = repository.findById(id);
-
-        if (competition.isPresent())
-        {
-            repository.deleteById(id);
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(format("Competition with id %d does not exist", id)));
     }
 }

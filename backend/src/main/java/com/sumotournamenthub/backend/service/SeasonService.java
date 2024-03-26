@@ -2,25 +2,22 @@ package com.sumotournamenthub.backend.service;
 
 import com.sumotournamenthub.backend.domain.AgeCategory;
 import com.sumotournamenthub.backend.domain.Season;
-import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.dto.SeasonDto;
 import com.sumotournamenthub.backend.repository.SeasonRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class SeasonService
 {
-    private final AgeCategoryService ageCategoryService;
-
     private final SeasonRepository repository;
 
     public SeasonDto convertToDto(Season season)
@@ -41,93 +38,38 @@ public class SeasonService
         return season;
     }
 
-    public List<SeasonDto> getUpcomingSeasons()
+    public List<Season> getUpcomingSeasons()
     {
-        return repository.findByStartDateGreaterThanEqual(LocalDate.now())
-                .stream().map(season -> convertToDto(season)).collect(Collectors.toList());
+        return repository.findByStartDateGreaterThanEqual(LocalDate.now());
     }
 
-    public Optional<Set<AgeCategoryDto>> getCategoriesBySeasonId(int id)
+    public Set<AgeCategory> getCategoriesBySeasonId(int id)
     {
-        Optional<Season> season = repository.findById(id);
+        Season season = findById(id);
 
-        if (season.isPresent())
-        {
-            Set<AgeCategoryDto> ageCategoryDtos = new HashSet<>();
-
-            for (AgeCategory ageCategory : season.get().getCategories())
-            {
-                ageCategoryDtos.add(ageCategoryService.convertToDto(ageCategory));
-            }
-
-            return Optional.of(ageCategoryDtos);
-        }
-        else
-        {
-            return Optional.empty();
-        }
+        return new HashSet<>(season.getCategories());
     }
 
-    public List<SeasonDto> getAllSeasons()
+    public List<Season> getAllSeasons()
     {
-        return repository.findAll()
-                .stream().map(season -> convertToDto(season)).collect(Collectors.toList());
+        return repository.findAll();
     }
 
-    public Optional<SeasonDto> getSeasonById(int id)
+    public Season getSeasonById(int id)
     {
-        Optional<Season> season = repository.findById(id);
-
-        if (season.isPresent())
-        {
-            return Optional.of(convertToDto(season.get()));
-        }
-        else
-        {
-            return Optional.empty();
-        }
+        return findById(id);
     }
 
-    public Optional<SeasonDto> updateSeason(int id, SeasonDto seasonDto)
+    @Transactional
+    public Season createSeason(Season season)
     {
-        Optional<Season> season = repository.findById(id);
+        repository.save(season);
 
-        if (season.isPresent())
-        {
-            Season seasonToSave = convertToEntity(seasonDto);
-
-            Season saved = repository.save(seasonToSave);
-
-            return Optional.of(convertToDto(saved));
-        }
-        else
-        {
-            return Optional.empty();
-        }
+        return season;
     }
 
-    public SeasonDto createSeason(SeasonDto seasonDto)
+    private Season findById(int id)
     {
-        Season seasonToSave = convertToEntity(seasonDto);
-
-        Season saved = repository.save(seasonToSave);
-
-        return convertToDto(saved);
-    }
-
-    public boolean deleteSeason(int id)
-    {
-        Optional<Season> season = repository.findById(id);
-
-        if (season.isPresent())
-        {
-            repository.deleteById(id);
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Season with id %d does not exist", id)));
     }
 }

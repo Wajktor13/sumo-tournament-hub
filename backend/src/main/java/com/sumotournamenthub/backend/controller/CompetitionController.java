@@ -1,13 +1,15 @@
 package com.sumotournamenthub.backend.controller;
 
+import com.sumotournamenthub.backend.domain.Competition;
 import com.sumotournamenthub.backend.dto.CompetitionDto;
 import com.sumotournamenthub.backend.service.CompetitionService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/competitions")
@@ -23,36 +25,28 @@ public class CompetitionController
     @GetMapping("getAllCompetitions")
     public List<CompetitionDto> getAllCompetitions()
     {
-        return competitionService.getAllCompetitions();
+        return competitionService.getAllCompetitions().stream().map(competitionService::convertToDto).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CompetitionDto> getCompetitionById(@PathVariable int id)
+    public ResponseEntity<?> getCompetitionById(@PathVariable int id)
     {
-        Optional<CompetitionDto> competitionDto = competitionService.getCompetitionById(id);
-
-        if (competitionDto.isPresent())
+        try
         {
-            return ResponseEntity.ok(competitionDto.get());
+            Competition competition = competitionService.getCompetitionById(id);
+            return ResponseEntity.ok(competitionService.convertToDto(competition));
         }
-        else
+        catch (EntityNotFoundException e)
         {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @PostMapping
     public ResponseEntity<CompetitionDto> createCompetition(@RequestBody CompetitionDto competitionDto)
     {
-        Optional<CompetitionDto> competitionResponse = competitionService.createCompetition(competitionDto);
+        Competition competition = competitionService.createCompetition(competitionService.convertToEntity(competitionDto));
 
-        if (competitionResponse.isPresent())
-        {
-            return ResponseEntity.status(HttpStatus.CREATED).body(competitionResponse.get());
-        }
-        else
-        {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(competitionService.convertToDto(competition));
     }
 }
