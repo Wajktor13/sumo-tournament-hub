@@ -36,24 +36,18 @@ public class WeightCategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<WeightCategory> updateWeightCategory(@PathVariable Integer id, @RequestBody WeightCategory updatedWeightCategory) {
-        WeightCategory weightCategory = weightCategoryRepository.findById(id).orElse(null);
-        if (weightCategory != null) {
-            updatedWeightCategory.setId(id);
-            WeightCategory savedWeightCategory = weightCategoryRepository.save(updatedWeightCategory);
-            return ResponseEntity.ok(savedWeightCategory);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return weightCategoryRepository.findById(id).map(existingWeightCategory -> {
+                updatedWeightCategory.setId(id);
+                WeightCategory savedWeightCategory = weightCategoryRepository.save(updatedWeightCategory);
+                return ResponseEntity.ok(savedWeightCategory);
+            }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteWeightCategory(@PathVariable Integer id) {
-        WeightCategory weightCategory = weightCategoryRepository.findById(id).orElse(null);
-        if (weightCategory != null) {
+    public ResponseEntity<Object> deleteWeightCategory(@PathVariable Integer id) {
+        return weightCategoryRepository.findById(id).map(existingWeightCategory -> {
             weightCategoryRepository.deleteById(id);
             return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

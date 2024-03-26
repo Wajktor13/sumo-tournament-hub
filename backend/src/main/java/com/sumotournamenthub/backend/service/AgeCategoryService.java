@@ -24,17 +24,12 @@ public class AgeCategoryService {
                 .orElseGet(() -> new AgeCategory(dto.getAgeCategoryName(), dto.getAgeLowerBound(), dto.getAgeUpperBound(), dto.getGender()));
     }
 
-    public AgeCategoryDto createAgeCategory(AgeCategoryDto ageCategoryDto)
-    {
-        AgeCategory newAgeCategory = convertToEntity(ageCategoryDto);
-
-        AgeCategory created = ageCategoryRepository.save(newAgeCategory);
-
-        return convertToDto(created);
+    public AgeCategoryDto createAgeCategory(AgeCategoryDto ageCategoryDto) {
+        AgeCategory newAgeCategory = createOrRetrieveCategory(ageCategoryDto);
+        return convertToDto(ageCategoryRepository.save(newAgeCategory));
     }
 
-    public AgeCategoryDto convertToDto(AgeCategory ageCategory)
-    {
+    public AgeCategoryDto convertToDto(AgeCategory ageCategory) {
         return AgeCategoryDto.builder()
                 .id(ageCategory.getId())
                 .ageCategoryName(ageCategory.getName())
@@ -42,11 +37,6 @@ public class AgeCategoryService {
                 .ageUpperBound(ageCategory.getAgeUpperBound())
                 .gender(ageCategory.getGender())
                 .build();
-    }
-
-    public AgeCategory convertToEntity(AgeCategoryDto ageCategoryDto)
-    {
-        return createOrRetrieveCategory(ageCategoryDto);
     }
 }
 

@@ -41,15 +41,15 @@ public class AgeCategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<AgeCategory> updateCategory(@PathVariable Integer id, @RequestBody AgeCategory updatedCategory) {
-        AgeCategory category = ageCategoryRepository.findById(id).orElse(null);
-        if (category != null) {
-            updatedCategory.setId(id);
-            AgeCategory savedCategory = ageCategoryRepository.save(updatedCategory);
-            return ResponseEntity.ok(savedCategory);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ageCategoryRepository.findById(id)
+                .map(category -> {
+                    updatedCategory.setId(id);
+                    AgeCategory savedCategory = ageCategoryRepository.save(updatedCategory);
+                    return ResponseEntity.ok(savedCategory);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Integer id) {
