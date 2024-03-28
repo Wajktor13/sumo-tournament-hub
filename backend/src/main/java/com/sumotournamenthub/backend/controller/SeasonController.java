@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/seasons")
@@ -27,46 +26,38 @@ public class SeasonController {
 
     @GetMapping("/{id}/categories")
     public ResponseEntity<?> getCategoriesBySeasonId(@PathVariable Integer id) {
-        try
-        {
+        try {
             Set<AgeCategory> categories = seasonService.getCategoriesBySeasonId(id);
-            return ResponseEntity.ok(categories.stream().map(ageCategoryService::convertToDto).collect(Collectors.toList()));
+            return ResponseEntity.ok(categories.stream().map(ageCategoryService::convertToDto).toList());
         }
-        catch (EntityNotFoundException e)
-        {
+        catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @GetMapping("/upcoming")
-    public List<SeasonDto> getUpcomingSeasons()
-    {
-        return seasonService.getUpcomingSeasons().stream().map(seasonService::convertToDto).collect(Collectors.toList());
+    public List<SeasonDto> getUpcomingSeasons() {
+        return seasonService.getUpcomingSeasons().stream().map(seasonService::convertToDto).toList();
     }
 
     @GetMapping
-    public List<SeasonDto> getAllSeasons()
-    {
-        return seasonService.getAllSeasons().stream().map(seasonService::convertToDto).collect(Collectors.toList());
+    public List<SeasonDto> getAllSeasons() {
+        return seasonService.getAllSeasons().stream().map(seasonService::convertToDto).toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getSeasonById(@PathVariable int id)
-    {
-        try
-        {
+    public ResponseEntity<?> getSeasonById(@PathVariable int id) {
+        try {
             Season season = seasonService.getSeasonById(id);
             return ResponseEntity.ok(seasonService.convertToDto(season));
         }
-        catch (EntityNotFoundException e)
-        {
+        catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity<SeasonDto> createSeason(@RequestBody SeasonDto seasonDto)
-    {
+    public ResponseEntity<SeasonDto> createSeason(@RequestBody SeasonDto seasonDto) {
         Season season = seasonService.createSeason(seasonService.convertToEntity(seasonDto));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(seasonService.convertToDto(season));

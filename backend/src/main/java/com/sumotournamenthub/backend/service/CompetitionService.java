@@ -17,8 +17,7 @@ public class CompetitionService {
     private final CompetitionRepository repository;
     private final SeasonService seasonService;
 
-    public CompetitionDto convertToDto(Competition competition)
-    {
+    public CompetitionDto convertToDto(Competition competition) {
         return CompetitionDto.builder()
                 .id(competition.getId())
                 .name(competition.getName())
@@ -29,8 +28,7 @@ public class CompetitionService {
                 .build();
     }
 
-    public Competition convertToEntity(CompetitionDto competitionDto)
-    {
+    public Competition convertToEntity(CompetitionDto competitionDto) {
         Season season = seasonService.getSeasonById(competitionDto.getSeasonId());
 
         Competition competition = new Competition();
@@ -44,23 +42,19 @@ public class CompetitionService {
         return competition;
     }
 
-    public List<Competition> getAllCompetitions()
-    {
+    public List<Competition> getAllCompetitions() {
         return repository.findAll();
     }
 
-    public Competition getCompetitionById(int id)
-    {
+    public Competition getCompetitionById(int id) {
         return findById(id);
     }
 
-    public Competition createCompetition(Competition competition)
-    {
+    public Competition createCompetition(Competition competition) {
         return repository.save(competition);
     }
 
-    private Competition findById(int id)
-    {
+    private Competition findById(int id) {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(format("Competition with id %d does not exist", id)));
     }
 }
