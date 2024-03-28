@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/competitions")
@@ -25,7 +24,7 @@ public class CompetitionController
     @GetMapping("getAllCompetitions")
     public List<CompetitionDto> getAllCompetitions()
     {
-        return competitionService.getAllCompetitions().stream().map(competitionService::convertToDto).collect(Collectors.toList());
+        return competitionService.getAllCompetitions().stream().map(competitionService::convertToDto).toList();
     }
 
     @GetMapping("/{id}")

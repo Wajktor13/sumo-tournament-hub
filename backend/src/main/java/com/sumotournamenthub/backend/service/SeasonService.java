@@ -5,7 +5,6 @@ import com.sumotournamenthub.backend.domain.Season;
 import com.sumotournamenthub.backend.dto.SeasonDto;
 import com.sumotournamenthub.backend.repository.SeasonRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,12 +59,9 @@ public class SeasonService
         return findById(id);
     }
 
-    @Transactional
     public Season createSeason(Season season)
     {
-        repository.save(season);
-
-        return season;
+        return repository.save(season);
     }
 
     private Season findById(int id)

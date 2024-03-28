@@ -5,7 +5,6 @@ import com.sumotournamenthub.backend.domain.Season;
 import com.sumotournamenthub.backend.dto.CompetitionDto;
 import com.sumotournamenthub.backend.repository.CompetitionRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -55,12 +54,9 @@ public class CompetitionService {
         return findById(id);
     }
 
-    @Transactional
     public Competition createCompetition(Competition competition)
     {
-        repository.save(competition);
-
-        return competition;
+        return repository.save(competition);
     }
 
     private Competition findById(int id)
