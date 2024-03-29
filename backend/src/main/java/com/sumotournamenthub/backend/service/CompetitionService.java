@@ -23,9 +23,9 @@ public class CompetitionService {
         return repository.findById(id);
     }
 
-    public void addCompetition(Competition competition)
+    public Competition addCompetition(Competition competition)
     {
-        repository.save(competition);
+        return repository.save(competition);
     }
 
     public void deleteCompetition(Competition competition)
