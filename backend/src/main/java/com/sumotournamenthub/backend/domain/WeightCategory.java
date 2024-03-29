@@ -3,8 +3,6 @@ package com.sumotournamenthub.backend.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
-
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -17,21 +15,21 @@ public class WeightCategory {
     @GeneratedValue
     private Integer id;
 
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "age_category_id")
     private AgeCategory ageCategory;
 
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "competition_id")
     private Competition competition;
 
-    @ManyToMany
     @NonNull
-    @JoinTable(
-            name = "category_weight_limit", // Name of the join table
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "weight_limit_id")
-    )
-    private Set<WeightUpperLimit> weightUpperLimits;
+    @Column(name = "weight_upper_limit")
+    private int weightUpperLimit;
+
+    @Column(name = "open_weight")
+    private boolean openWeight;
 
 }
