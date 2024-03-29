@@ -6,6 +6,8 @@ import com.sumotournamenthub.backend.dto.AthleteDto;
 import com.sumotournamenthub.backend.repository.AthleteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.Collections;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,10 @@ public class AthleteService {
                 dto.getGender(),
                 dto.getBirthdate());
         return repository.save(athlete);
+    }
+
+    public Set<Athlete> getAllByClubId(int clubId) {
+        return repository.findByClubId(clubId).map(Collections::singleton).orElse(Collections.emptySet());
     }
 
 }
