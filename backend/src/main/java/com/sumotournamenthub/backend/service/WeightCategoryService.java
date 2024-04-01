@@ -27,7 +27,7 @@ public class WeightCategoryService {
     }
 
     public List<WeightCategoryDto> getAllWeightCategories() {
-        return repository.findAll().stream().map(this::convertToDto).toList();
+        return repository.findAll().stream().map(WeightCategoryService::convertToDto).toList();
     }
 
     public WeightCategoryDto createWeightCategory(WeightCategoryDto dto) {
@@ -42,7 +42,7 @@ public class WeightCategoryService {
         repository.delete(getWeightCategoryEntity(id));
     }
 
-    public WeightCategoryDto convertToDto(WeightCategory category) {
+    public static WeightCategoryDto convertToDto(WeightCategory category) {
         return WeightCategoryDto.builder()
                 .id(category.getId())
                 .weightUpperLimit(category.getWeightUpperLimit())

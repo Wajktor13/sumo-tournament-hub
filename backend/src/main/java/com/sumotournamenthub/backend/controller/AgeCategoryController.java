@@ -1,5 +1,6 @@
 package com.sumotournamenthub.backend.controller;
 
+import com.sumotournamenthub.backend.dto.WeightCategoryDto;
 import com.sumotournamenthub.backend.service.AgeCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,12 @@ public class AgeCategoryController {
     public ResponseEntity<AgeCategoryDto> getCategoryById(@PathVariable Integer id) {
         var category = ageCategoryService.getAgeCategory(id);
         return new ResponseEntity<>(category, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/weightCategories")
+    public ResponseEntity<List<WeightCategoryDto>> getAllWeightCategories(@PathVariable Integer id) {
+        var weightCategories = ageCategoryService.getAllWeightCategories(id);
+        return new ResponseEntity<>(weightCategories, HttpStatus.OK);
     }
 
     @PostMapping

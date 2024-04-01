@@ -27,7 +27,7 @@ public class WeightCategory {
 
     @NonNull
     @Column(name = "weight_upper_limit")
-    private int weightUpperLimit;
+    private Integer weightUpperLimit;
 
     @Column(name = "open_weight")
     private boolean openWeight;
