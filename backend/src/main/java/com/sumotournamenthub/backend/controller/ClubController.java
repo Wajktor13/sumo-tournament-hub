@@ -1,10 +1,8 @@
 package com.sumotournamenthub.backend.controller;
 
-import com.sumotournamenthub.backend.domain.Athlete;
 import com.sumotournamenthub.backend.domain.Club;
 import com.sumotournamenthub.backend.dto.AthleteDto;
 import com.sumotournamenthub.backend.dto.ClubDto;
-import com.sumotournamenthub.backend.service.AthleteService;
 import com.sumotournamenthub.backend.service.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/clubs")
@@ -40,11 +35,10 @@ public class ClubController {
         return new ResponseEntity<>(clubdto, HttpStatus.OK);
     }
 
-    @GetMapping("/{clubId}")
-    public ResponseEntity<Set<AthleteDto>> getAllAthletesByClubId(@PathVariable int clubId) {
-        Set<Athlete> athletes = clubService.getAllByClubId(clubId);
-        Set<AthleteDto> athleteDto = athletes.stream().map(AthleteService::convertToDto).collect(Collectors.toSet());
-        return athleteDto.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(athleteDto);
+    @GetMapping("/{id}/athletes")
+    public ResponseEntity<List<AthleteDto>> getAllAthletesByClubId(@PathVariable int clubId) {
+        var athletesByClubId = clubService.getAllByClubId(clubId);
+        return new ResponseEntity<>(athletesByClubId, HttpStatus.OK);
     }
 
     private ClubDto convertToDto(Club club) {
