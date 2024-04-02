@@ -6,8 +6,6 @@ import com.sumotournamenthub.backend.dto.AthleteDto;
 import com.sumotournamenthub.backend.repository.AthleteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.Collections;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +26,14 @@ public class AthleteService {
         return repository.save(athlete);
     }
 
-    public Set<Athlete> getAllByClubId(int clubId) {
-        return repository.findByClubId(clubId).map(Collections::singleton).orElse(Collections.emptySet());
+    public static AthleteDto convertToDto(Athlete athlete) {
+        return AthleteDto.builder()
+                .id(athlete.getId())
+                .firstName(athlete.getFirstName())
+                .secondName(athlete.getSecondName())
+                .gender(athlete.getGender())
+                .birthdate(athlete.getBirthDate())
+                .clubId(athlete.getClub().getId())
+                .build();
     }
-
 }
