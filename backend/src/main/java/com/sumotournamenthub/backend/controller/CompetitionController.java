@@ -1,15 +1,14 @@
 package com.sumotournamenthub.backend.controller;
 
-import com.sumotournamenthub.backend.domain.AgeCategory;
 import com.sumotournamenthub.backend.domain.Competition;
+import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.service.CompetitionService;
 import com.sumotournamenthub.backend.dto.CompetitionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("/competitions")
@@ -29,9 +28,9 @@ public class CompetitionController {
         return new ResponseEntity<>(competitionDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{competitionId}/ageCategories")
-    public ResponseEntity<Set<AgeCategory>> getAllAgeCategoriesByCompetitionId(@PathVariable int competitionId) {
-        Set<AgeCategory> ageCategories = competitionService.getAllAgeCategoriesByCompetitionId(competitionId);
+    @GetMapping("/{id}/ageCategories")
+    public ResponseEntity<List<AgeCategoryDto>> getAllAgeCategoriesByCompetitionId(@PathVariable int competitionId) {
+        List<AgeCategoryDto> ageCategories = competitionService.getAllAgeCategoriesByCompetitionId(competitionId);
         return ResponseEntity.ok(ageCategories);
     }
 }
