@@ -81,7 +81,6 @@ public class SeasonService {
         AgeCategory ageCategory = ageCategoryService.getAgeCategoryEntity(ageCategoryId);
         season.getCategories().add(ageCategory);
         repository.save(season);
-        ageCategoryService.addSeasonToAgeCategory(ageCategory, season);
     }
 
     private SeasonDto convertToDto(Season season) {

@@ -35,12 +35,6 @@ public class AgeCategoryService {
         return repository.findAll().stream().map(this::convertToDto).toList();
     }
 
-    @Transactional
-    public void addSeasonToAgeCategory(AgeCategory ageCategory, Season season) {
-        ageCategory.getSeasons().add(season);
-        repository.save(ageCategory);
-    }
-
     public void deleteAgeCategory(int id) {
         repository.delete(getAgeCategoryEntity(id));
     }
