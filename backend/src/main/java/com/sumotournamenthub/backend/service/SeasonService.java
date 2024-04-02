@@ -1,9 +1,12 @@
 package com.sumotournamenthub.backend.service;
 
+import com.sumotournamenthub.backend.domain.AgeCategory;
 import com.sumotournamenthub.backend.domain.Season;
 import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.dto.SeasonDto;
 import com.sumotournamenthub.backend.repository.SeasonRepository;
+import com.sumotournamenthub.backend.utils.ExceptionUtils;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +69,19 @@ public class SeasonService {
                 return true;
             }).orElse(false);
 
+    }
+
+    public Season getSeasonEntity(int id) {
+        return repository.findById(id).orElseThrow(() -> ExceptionUtils.entityNotFound("Season", id));
+    }
+
+    @Transactional
+    public void addAgeCategoryToSeason(int seasonId, int ageCategoryId) {
+        Season season = getSeasonEntity(seasonId);
+        AgeCategory ageCategory = ageCategoryService.getAgeCategoryEntity(ageCategoryId);
+        season.getCategories().add(ageCategory);
+        repository.save(season);
+        ageCategoryService.addSeasonToAgeCategory(ageCategory, season);
     }
 
     private SeasonDto convertToDto(Season season) {

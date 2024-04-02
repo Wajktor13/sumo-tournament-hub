@@ -43,6 +43,12 @@ public class SeasonController {
         return seasonService.getUpcomingSeasons();
     }
 
+    @PutMapping("/{season_id}/addAgeCategory/{category_id}")
+    public ResponseEntity<Void> addAgeCategoryToSeason(@PathVariable Integer season_id, @PathVariable Integer category_id) {
+        seasonService.addAgeCategoryToSeason(season_id, category_id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<SeasonDto> updateSeason(@PathVariable int id, @RequestBody SeasonDto seasonDto) {
         return seasonService.updateSeason(id, seasonDto)
