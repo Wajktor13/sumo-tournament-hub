@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/competitions")
 public class CompetitionController {
@@ -17,6 +19,16 @@ public class CompetitionController {
     @Autowired
     public CompetitionController(CompetitionService competitionService) {
         this.competitionService = competitionService;
+    }
+
+    @GetMapping
+    public List<CompetitionDto> getAllCompetitions() {
+        return competitionService.getAllCompetitions().stream().map(CompetitionDto::from).toList();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CompetitionDto> getCompetitionById(@PathVariable Integer id) {
+        return ResponseEntity.ok(CompetitionDto.from(competitionService.getCompetitionEntity(id)));
     }
 
     @PostMapping

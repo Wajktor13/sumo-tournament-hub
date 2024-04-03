@@ -14,14 +14,9 @@ import java.util.Optional;
 public class CompetitionService {
     private final CompetitionRepository repository;
 
-    public List<Competition> getCompetitions()
+    public List<Competition> getAllCompetitions()
     {
         return repository.findAll();
-    }
-
-    public Optional<Competition> getCompetitionById(int id)
-    {
-        return repository.findById(id);
     }
 
     public Competition getCompetitionEntity(int id) {
