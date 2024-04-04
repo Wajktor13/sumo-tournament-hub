@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/seasons")
@@ -21,25 +19,24 @@ public class SeasonController {
     }
 
     @GetMapping
-    public List<SeasonDto> getAllSeasons()
-    {
+    public List<SeasonDto> getAllSeasons() {
         return seasonService.getAllSeasons();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SeasonDto> getSeasonById(@PathVariable int id) {
-        return seasonService.getSeasonById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<SeasonDto> getSeason(@PathVariable int id) {
+        var season = seasonService.getSeason(id);
+        return new ResponseEntity<>(season, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/categories")
-    public ResponseEntity<Set<AgeCategoryDto>> getCategoriesBySeasonId(@PathVariable Integer id) {
-        Optional<Set<AgeCategoryDto>> categoryDtos = seasonService.getCategoriesBySeasonId(id);
-        return categoryDtos.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<List<AgeCategoryDto>> getAllAgeCategories(@PathVariable Integer id) {
+        var ageCategories = seasonService.getAllAgeCategories(id);
+        return new ResponseEntity<>(ageCategories, HttpStatus.OK);
     }
 
     @GetMapping("/upcoming")
-    public List<SeasonDto> getUpcomingSeasons()
-    {
+    public List<SeasonDto> getUpcomingSeasons() {
         return seasonService.getUpcomingSeasons();
     }
 
@@ -49,22 +46,16 @@ public class SeasonController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SeasonDto> updateSeason(@PathVariable int id, @RequestBody SeasonDto seasonDto) {
-        return seasonService.updateSeason(id, seasonDto)
-                .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
-
     @PostMapping
     public ResponseEntity<SeasonDto> createSeason(@RequestBody SeasonDto seasonDto) {
-        SeasonDto seasonResponse = seasonService.createSeason(seasonDto);
+        var season = seasonService.createSeason(seasonDto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(seasonResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(season);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSeason(@PathVariable int id) {
-        return seasonService.deleteSeason(id) ?
-                ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+        seasonService.deleteSeason(id);
+        return ResponseEntity.noContent().build();
     }
 }

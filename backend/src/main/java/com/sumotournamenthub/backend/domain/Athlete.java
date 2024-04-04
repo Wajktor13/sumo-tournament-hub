@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 
 @Entity
@@ -27,6 +28,9 @@ public class Athlete {
 
     @ManyToOne
     private @NonNull Club club;
+
+    @OneToMany(mappedBy = "athlete")
+    private Set<Registration> registrations;
 
     private @NonNull Gender gender;
 

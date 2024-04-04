@@ -5,16 +5,14 @@ import com.sumotournamenthub.backend.domain.Season;
 import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.dto.SeasonDto;
 import com.sumotournamenthub.backend.repository.SeasonRepository;
-import com.sumotournamenthub.backend.utils.ExceptionUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+
+import static com.sumotournamenthub.backend.utils.ExceptionUtils.entityNotFound;
 
 @Service
 @RequiredArgsConstructor
@@ -27,51 +25,32 @@ public class SeasonService {
                 .stream().map(this::convertToDto).toList();
     }
 
-    public Optional<Set<AgeCategoryDto>> getCategoriesBySeasonId(int id) {
-        return repository.findById(id)
-                .map(season -> season.getCategories().stream()
-                        .map(ageCategoryService::convertToDto)
-                        .collect(Collectors.toSet()));
+    public List<AgeCategoryDto> getAllAgeCategories(int id) {
+        var season = getSeasonEntity(id);
+        return season.getCategories().stream().map(ageCategoryService::convertToDto).toList();
     }
 
     public List<SeasonDto> getAllSeasons() {
-        return repository.findAll()
-                .stream().map(this::convertToDto).collect(Collectors.toList());
+        return repository.findAll().stream().map(this::convertToDto).toList();
     }
 
-    public Optional<SeasonDto> getSeasonById(int id) {
-        Optional<Season> season = repository.findById(id);
-
-        return season.map(this::convertToDto);
-    }
-
-    public Optional<SeasonDto> updateSeason(int id, SeasonDto seasonDto) {
-        return repository.findById(id)
-            .map(existingSeason -> {
-                var saved = repository.save(convertToEntity(seasonDto));
-                return Optional.of(convertToDto(saved));
-            }).orElse(Optional.empty());
-    }
-
-    public SeasonDto createSeason(SeasonDto seasonDto) {
-        Season seasonToSave = convertToEntity(seasonDto);
-
-        Season saved = repository.save(seasonToSave);
-
-        return convertToDto(saved);
-    }
-
-    public boolean deleteSeason(int id) {
-        return repository.findById(id)
-            .map(s -> {
-                repository.deleteById(id);
-                return true;
-            }).orElse(false);
-
+    public SeasonDto getSeason(int id) {
+        return convertToDto(getSeasonEntity(id));
     }
 
     public Season getSeasonEntity(int id) {
-        return repository.findById(id).orElseThrow(() -> ExceptionUtils.entityNotFound("Season", id));
+        return repository.findById(id).orElseThrow(() -> entityNotFound("Season", id));
+    }
+
+    public SeasonDto createSeason(SeasonDto seasonDto) {
+        var season = new Season(seasonDto.getName(), seasonDto.getStartDate(), seasonDto.getEndDate());
+
+        return convertToDto(repository.save(season));
+    }
+
+    public void deleteSeason(int id) {
+        var season = getSeasonEntity(id);
+        repository.delete(season);
     }
 
     @Transactional
@@ -92,9 +71,4 @@ public class SeasonService {
                 .build();
     }
 
-    private Season convertToEntity(SeasonDto seasonDto) {
-        Season season = new Season(seasonDto.getName(), seasonDto.getStartDate(), seasonDto.getEndDate());
-        season.setId(seasonDto.getId());
-        return season;
-    }
 }

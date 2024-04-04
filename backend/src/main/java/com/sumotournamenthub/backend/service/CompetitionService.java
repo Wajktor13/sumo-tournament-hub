@@ -6,7 +6,6 @@ import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.repository.CompetitionRepository;
 import com.sumotournamenthub.backend.utils.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -14,8 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CompetitionService {
     private final CompetitionRepository repository;
-    @Autowired
-    private AgeCategoryService ageCategoryService;
+    private final SeasonService seasonService;
 
     public List<CompetitionDto> getAllCompetitions() {
         return repository.findAll().stream().map(CompetitionDto::from).toList();
@@ -29,16 +27,18 @@ public class CompetitionService {
         return repository.findById(id).orElseThrow(() -> ExceptionUtils.entityNotFound("Competition", id));
     }
 
-    public Competition addCompetition(Competition competition) {
-        return repository.save(competition);
+    public CompetitionDto createCompetition(CompetitionDto dto) {
+        var season = seasonService.getSeasonEntity(dto.getSeasonId());
+        var competition = new Competition(dto.getName(), season, dto.getStartTime(), dto.getEndTime());
+        return CompetitionDto.from(repository.save(competition));
+    }
+
+    public List<AgeCategoryDto> getAllAgeCategories(int competitionId) {
+        var seasonId = getCompetitionEntity(competitionId).getSeason().getId();
+        return seasonService.getAllAgeCategories(seasonId);
     }
 
     public void deleteCompetition(Competition competition) {
         repository.delete(competition);
-    }
-
-    public List<AgeCategoryDto> getAllAgeCategoriesByCompetitionId(int competitionId) {
-        return getCompetitionEntity(competitionId).getSeason().getCategories().stream()
-                .map(ageCategoryService::convertToDto).toList();
     }
 }
