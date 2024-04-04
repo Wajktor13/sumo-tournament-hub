@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/competitions")
 public class CompetitionController {
@@ -19,6 +21,16 @@ public class CompetitionController {
     @Autowired
     public CompetitionController(CompetitionService competitionService) {
         this.competitionService = competitionService;
+    }
+
+    @GetMapping
+    public List<CompetitionDto> getAllCompetitions() {
+        return competitionService.getAllCompetitions();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CompetitionDto> getCompetitionById(@PathVariable Integer id) {
+        return ResponseEntity.ok(competitionService.getCompetition(id));
     }
 
     @PostMapping
