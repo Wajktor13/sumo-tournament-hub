@@ -1,6 +1,7 @@
 package com.sumotournamenthub.backend.controller;
 
 import com.sumotournamenthub.backend.domain.Club;
+import com.sumotournamenthub.backend.dto.AthleteDto;
 import com.sumotournamenthub.backend.dto.ClubDto;
 import com.sumotournamenthub.backend.service.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
@@ -33,6 +33,12 @@ public class ClubController {
     public ResponseEntity<ClubDto> getById(@PathVariable Integer id) {
         ClubDto clubdto = convertToDto(clubService.getClubById(id));
         return new ResponseEntity<>(clubdto, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/athletes")
+    public ResponseEntity<List<AthleteDto>> getAllAthletesByClubId(@PathVariable int clubId) {
+        var athletesByClubId = clubService.getAllByClubId(clubId);
+        return new ResponseEntity<>(athletesByClubId, HttpStatus.OK);
     }
 
     private ClubDto convertToDto(Club club) {
