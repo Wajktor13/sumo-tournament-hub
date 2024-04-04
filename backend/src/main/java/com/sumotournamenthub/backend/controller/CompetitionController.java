@@ -23,12 +23,12 @@ public class CompetitionController {
 
     @GetMapping
     public List<CompetitionDto> getAllCompetitions() {
-        return competitionService.getAllCompetitions().stream().map(CompetitionDto::from).toList();
+        return competitionService.getAllCompetitions();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CompetitionDto> getCompetitionById(@PathVariable Integer id) {
-        return ResponseEntity.ok(CompetitionDto.from(competitionService.getCompetitionEntity(id)));
+        return ResponseEntity.ok(competitionService.getCompetition(id));
     }
 
     @PostMapping
