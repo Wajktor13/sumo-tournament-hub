@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SeasonService {
     private final AgeCategoryService ageCategoryService;
-
     private final SeasonRepository repository;
 
     public List<SeasonDto> getUpcomingSeasons() {
@@ -81,6 +80,7 @@ public class SeasonService {
         AgeCategory ageCategory = ageCategoryService.getAgeCategoryEntity(ageCategoryId);
         season.getCategories().add(ageCategory);
         repository.save(season);
+        ageCategoryService.addSeasonToAgeCategory(ageCategory, season);
     }
 
     private SeasonDto convertToDto(Season season) {
