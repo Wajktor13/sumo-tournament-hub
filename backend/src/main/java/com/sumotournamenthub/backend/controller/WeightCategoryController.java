@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/weightcategories")
+@RequestMapping("/weightCategories")
 public class WeightCategoryController {
 
     @Autowired
@@ -20,7 +20,8 @@ public class WeightCategoryController {
         return service.getAllWeightCategories();
     }
 
-    public ResponseEntity<WeightCategoryDto> getCategoryById(@PathVariable Integer id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<WeightCategoryDto> getWeightCategory(@PathVariable Integer id) {
         var category = service.getWeightCategory(id);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }

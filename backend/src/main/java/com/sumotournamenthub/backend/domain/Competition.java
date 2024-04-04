@@ -8,35 +8,36 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Set;
 
-@Entity
-@Table(name = "competition")
-@RequiredArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class Competition
-{
+@RequiredArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "competition")
+public class Competition {
+
     @Id
     @GeneratedValue
     private int id;
 
-    private @NonNull String name;
+    @NonNull
+    private String name;
 
+    @NonNull
     @ManyToOne
-    private @NonNull Season season;
+    private Season season;
 
-    private @NonNull LocalDate startTime;
+    @NonNull
+    private LocalDate startTime;
 
-    private @NonNull LocalDate endTime;
+    @NonNull
+    private LocalDate endTime;
 
-    @OneToMany
-    private @NonNull Set<Athlete> signedAthletes;
+    @OneToMany(mappedBy = "competition")
+    private Set<WeightCategory> availableCategories;
 
     @ElementCollection
     @MapKeyEnumerated(EnumType.STRING)
     private Map<Country, Integer> countryLimits;
-
-    @OneToMany
-    private @NonNull Set<WeightCategory> availableCategories;
 
 }
