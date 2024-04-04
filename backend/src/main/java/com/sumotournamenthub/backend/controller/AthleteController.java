@@ -1,6 +1,5 @@
 package com.sumotournamenthub.backend.controller;
 
-import com.sumotournamenthub.backend.domain.Athlete;
 import com.sumotournamenthub.backend.dto.AthleteDto;
 import com.sumotournamenthub.backend.service.AthleteService;
 import org.springframework.http.HttpStatus;
@@ -19,9 +18,7 @@ public class AthleteController {
 
     @PostMapping()
     public ResponseEntity<AthleteDto> addAthlete(@RequestBody AthleteDto athleteDto) {
-        Athlete savedAthlete = service.createAthlete(athleteDto);
-        AthleteDto savedAthleteDto = AthleteDto.convertToDto(savedAthlete);
-        return new ResponseEntity<>(savedAthleteDto, HttpStatus.CREATED);
+        var savedAthlete = service.createAthlete(athleteDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAthlete);
     }
-
 }
