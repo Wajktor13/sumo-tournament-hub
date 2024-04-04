@@ -3,6 +3,7 @@ package com.sumotournamenthub.backend.domain;
 import com.sumotournamenthub.backend.constants.Country;
 import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -39,4 +40,5 @@ public class Competition
     @OneToMany
     private @NonNull Set<WeightCategory> availableCategories;
 
+    private @NotNull String rank;
 }
