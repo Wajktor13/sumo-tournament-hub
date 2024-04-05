@@ -1,0 +1,20 @@
+<section id="competitions-list">
+  <div id="list-title">
+    <span class="list-item"> Name </span>
+    <span class="list-item"> Rank </span>
+    <span class="list-item"> Start Date </span>
+    <span class="list-item"> End Date </span>
+    <span class="list-item"></span>
+  </div>
+  <div *ngFor="let competition of competitions">
+    <span class="list-item">{{ competition.name }}</span>
+    <span class="list-item">{{ competition.rank }}</span>
+    <span class="list-item">{{ competition.startTime }}</span>
+    <span class="list-item">{{ competition.endTime }}</span>
+    <span class="list-item">
+      <button (click)="navigateToRegistration(competition.id)">
+        register athletes
+      </button>
+    </span>
+  </div>
+</section>
