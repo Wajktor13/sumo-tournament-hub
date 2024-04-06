@@ -29,7 +29,7 @@ public class CompetitionService {
 
     public CompetitionDto createCompetition(CompetitionDto dto) {
         var season = seasonService.getSeasonEntity(dto.getSeasonId());
-        var competition = new Competition(dto.getName(), season, dto.getStartTime(), dto.getEndTime());
+        var competition = new Competition(dto.getName(), season, dto.getStartTime(), dto.getEndTime(), dto.getRank());
         return CompetitionDto.from(repository.save(competition));
     }
 
