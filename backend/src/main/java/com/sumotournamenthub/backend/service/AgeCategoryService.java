@@ -1,11 +1,14 @@
 package com.sumotournamenthub.backend.service;
 
 import com.sumotournamenthub.backend.domain.AgeCategory;
+import com.sumotournamenthub.backend.domain.Season;
 import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.dto.WeightCategoryDto;
 import com.sumotournamenthub.backend.repository.AgeCategoryRepository;
 import com.sumotournamenthub.backend.utils.ExceptionUtils;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +39,12 @@ public class AgeCategoryService {
     public List<WeightCategoryDto> getAllWeightCategories(int id) {
         var ageCategory = getAgeCategoryEntity(id);
         return ageCategory.getWeightCategories().stream().map(WeightCategoryService::convertToDto).toList();
+    }
+
+    @Transactional
+    public void addSeasonToAgeCategory(AgeCategory ageCategory, Season season) {
+        ageCategory.getSeasons().add(season);
+        repository.save(ageCategory);
     }
 
     public void deleteAgeCategory(int id) {

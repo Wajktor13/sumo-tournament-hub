@@ -35,6 +35,7 @@ public class WeightCategoryService {
         var competition = competitionService.getCompetitionEntity(dto.getCompetitionId());
 
         var weightCategory = new WeightCategory(ageCategory, competition, dto.getWeightUpperLimit());
+        weightCategory.setOpenWeight(dto.isOpenWeight());
         return convertToDto(repository.save(weightCategory));
     }
 

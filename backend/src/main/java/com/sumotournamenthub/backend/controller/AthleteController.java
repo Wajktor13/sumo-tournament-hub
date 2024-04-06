@@ -17,7 +17,7 @@ public class AthleteController {
     }
 
     @PostMapping()
-    public ResponseEntity<AthleteDto> addAthlete(@RequestBody AthleteDto athleteDto) {
+    public ResponseEntity<AthleteDto> createAthlete(@RequestBody AthleteDto athleteDto) {
         var savedAthlete = service.createAthlete(athleteDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedAthlete);
     }
