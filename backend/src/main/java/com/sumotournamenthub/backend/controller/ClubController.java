@@ -28,8 +28,8 @@ public class ClubController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ClubDto> getClub(@PathVariable Integer id) {
-        var clubdto = clubService.getClub(id);
-        return new ResponseEntity<>(clubdto, HttpStatus.OK);
+        var clubDto = clubService.getClub(id);
+        return new ResponseEntity<>(clubDto, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/athletes")
