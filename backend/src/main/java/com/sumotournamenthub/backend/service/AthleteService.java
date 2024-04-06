@@ -16,7 +16,7 @@ public class AthleteService {
     private final ClubService clubService;
 
     public AthleteDto createAthlete(AthleteDto dto) {
-        var club = clubService.getClubById(dto.getClubId());
+        var club = clubService.getClubEntity(dto.getClubId());
 
         var athlete = new Athlete(
                 dto.getFirstName(),
