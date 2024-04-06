@@ -2,7 +2,6 @@ package com.sumotournamenthub.backend.controller;
 
 import com.sumotournamenthub.backend.dto.WeightCategoryDto;
 import com.sumotournamenthub.backend.service.AgeCategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,11 @@ import java.util.List;
 @RequestMapping("/ageCategories")
 public class AgeCategoryController {
 
-    @Autowired
-    private AgeCategoryService ageCategoryService;
+    private final AgeCategoryService ageCategoryService;
+
+    public AgeCategoryController(AgeCategoryService ageCategoryService) {
+        this.ageCategoryService = ageCategoryService;
+    }
 
     @GetMapping
     public List<AgeCategoryDto> getAllCategories() {

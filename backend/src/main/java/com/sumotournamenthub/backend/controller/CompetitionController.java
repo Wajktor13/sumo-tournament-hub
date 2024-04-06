@@ -3,7 +3,6 @@ package com.sumotournamenthub.backend.controller;
 import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.service.CompetitionService;
 import com.sumotournamenthub.backend.dto.CompetitionDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ public class CompetitionController {
 
     private final CompetitionService competitionService;
 
-    @Autowired
     public CompetitionController(CompetitionService competitionService) {
         this.competitionService = competitionService;
     }
@@ -38,8 +36,8 @@ public class CompetitionController {
     }
 
     @GetMapping("/{id}/ageCategories")
-    public ResponseEntity<List<AgeCategoryDto>> getAllAgeCategoriesByCompetitionId(@PathVariable int competitionId) {
-        List<AgeCategoryDto> ageCategories = competitionService.getAllAgeCategories(competitionId);
+    public ResponseEntity<List<AgeCategoryDto>> getAllAgeCategoriesByCompetitionId(@PathVariable Integer id) {
+        List<AgeCategoryDto> ageCategories = competitionService.getAllAgeCategories(id);
         return ResponseEntity.ok(ageCategories);
     }
 }
