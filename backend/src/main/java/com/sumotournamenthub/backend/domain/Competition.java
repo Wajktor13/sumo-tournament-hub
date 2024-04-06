@@ -40,4 +40,6 @@ public class Competition {
     @MapKeyEnumerated(EnumType.STRING)
     private Map<Country, Integer> countryLimits;
 
+    @NonNull
+    private String rank;
 }
