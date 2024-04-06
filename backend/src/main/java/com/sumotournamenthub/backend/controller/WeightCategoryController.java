@@ -1,13 +1,11 @@
 package com.sumotournamenthub.backend.controller;
 
-import com.sumotournamenthub.backend.domain.WeightCategory;
-import com.sumotournamenthub.backend.repository.WeightCategoryRepository;
+import com.sumotournamenthub.backend.dto.WeightCategoryDto;
+import com.sumotournamenthub.backend.service.WeightCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import static com.sumotournamenthub.backend.utils.ExceptionUtils.notExist;
-import static java.lang.String.format;
 import java.util.List;
 
 @RestController
@@ -15,45 +13,27 @@ import java.util.List;
 public class WeightCategoryController {
 
     @Autowired
-    private WeightCategoryRepository weightCategoryRepository;
+    private WeightCategoryService service;
 
     @GetMapping
-    public List<WeightCategory> getAllWeightCategories() {
-        return weightCategoryRepository.findAll();
+    public List<WeightCategoryDto> getAllWeightCategories() {
+        return service.getAllWeightCategories();
     }
 
-    public ResponseEntity<WeightCategory> getCategoryById(@PathVariable Integer id) {
-        var category = weightCategoryRepository.findById(id).
-                orElseThrow(() -> notExist(format("Weight category with id %d does not exist", id)));
+    public ResponseEntity<WeightCategoryDto> getCategoryById(@PathVariable Integer id) {
+        var category = service.getWeightCategory(id);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<WeightCategory> createWeightCategory(@RequestBody WeightCategory weightCategory) {
-        WeightCategory savedWeightCategory = weightCategoryRepository.save(weightCategory);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedWeightCategory);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<WeightCategory> updateWeightCategory(@PathVariable Integer id, @RequestBody WeightCategory updatedWeightCategory) {
-        WeightCategory weightCategory = weightCategoryRepository.findById(id).orElse(null);
-        if (weightCategory != null) {
-            updatedWeightCategory.setId(id);
-            WeightCategory savedWeightCategory = weightCategoryRepository.save(updatedWeightCategory);
-            return ResponseEntity.ok(savedWeightCategory);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<WeightCategoryDto> createWeightCategory(@RequestBody WeightCategoryDto dto) {
+        var savedWeightCategory = service.createWeightCategory(dto);
+        return new ResponseEntity<>(savedWeightCategory, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWeightCategory(@PathVariable Integer id) {
-        WeightCategory weightCategory = weightCategoryRepository.findById(id).orElse(null);
-        if (weightCategory != null) {
-            weightCategoryRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        service.deleteWeightCategory(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

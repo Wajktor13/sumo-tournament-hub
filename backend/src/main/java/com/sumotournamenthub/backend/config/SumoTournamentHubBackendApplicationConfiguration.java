@@ -1,4 +1,4 @@
-package com.sumotournamenthub.backend;
+package com.sumotournamenthub.backend.config;
 
 import com.sumotournamenthub.backend.constants.Country;
 import com.sumotournamenthub.backend.domain.Club;

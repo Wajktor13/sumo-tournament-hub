@@ -14,7 +14,7 @@ public class AthleteService {
     private final AthleteRepository repository;
     private final ClubService clubService;
 
-    public Athlete createAthlete(AthleteDto dto) {
+    public AthleteDto createAthlete(AthleteDto dto) {
         Club club = clubService.getClubById(dto.getClubId());
 
         var athlete = new Athlete(
@@ -23,7 +23,17 @@ public class AthleteService {
                 club,
                 dto.getGender(),
                 dto.getBirthdate());
-        return repository.save(athlete);
+        return convertToDto(repository.save(athlete));
     }
 
+    public static AthleteDto convertToDto(Athlete athlete) {
+        return AthleteDto.builder()
+                .id(athlete.getId())
+                .firstName(athlete.getFirstName())
+                .secondName(athlete.getSecondName())
+                .gender(athlete.getGender())
+                .birthdate(athlete.getBirthDate())
+                .clubId(athlete.getClub().getId())
+                .build();
+    }
 }

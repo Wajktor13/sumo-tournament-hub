@@ -7,13 +7,9 @@ import java.time.LocalDate;
 
 @Value
 @Builder
-public class SeasonDto
-{
+public class SeasonDto {
     int id;
-
     String name;
-
     LocalDate startDate;
-
     LocalDate endDate;
 }

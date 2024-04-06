@@ -1,12 +1,11 @@
 package com.sumotournamenthub.backend.utils;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import jakarta.persistence.EntityNotFoundException;
 
 public class ExceptionUtils {
 
-    public static ResponseStatusException notExist(String message) {
-        return new ResponseStatusException(HttpStatus.NOT_FOUND, message);
+    public static EntityNotFoundException entityNotFound(String entityName, int entityId) {
+        return new EntityNotFoundException(String.format(entityName + " with id %d does not exist", entityId));
     }
 
 }

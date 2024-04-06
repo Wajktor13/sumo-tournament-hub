@@ -1,10 +1,8 @@
 package com.sumotournamenthub.backend.controller;
 
-import com.sumotournamenthub.backend.domain.Athlete;
 import com.sumotournamenthub.backend.dto.AthleteDto;
 import com.sumotournamenthub.backend.service.AthleteService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +17,8 @@ public class AthleteController {
     }
 
     @PostMapping()
-    public ResponseEntity<Athlete> addAthlete(@RequestBody AthleteDto athleteDto) {
+    public ResponseEntity<AthleteDto> addAthlete(@RequestBody AthleteDto athleteDto) {
         var savedAthlete = service.createAthlete(athleteDto);
-        return new ResponseEntity<>(savedAthlete, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAthlete);
     }
-
 }
