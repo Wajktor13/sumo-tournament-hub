@@ -1,8 +1,10 @@
 package com.sumotournamenthub.backend.service;
 
 import com.sumotournamenthub.backend.domain.Registration;
+import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.dto.RegistrationDto;
 import com.sumotournamenthub.backend.repository.RegistrationRepository;
+import com.sumotournamenthub.backend.utils.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,11 @@ public class RegistrationService {
     private final AthleteService athleteService;
     private final WeightCategoryService weightCategoryService;
 
+    public Registration getRegistrationEntity(int id) {
+        return repository.findById(id)
+                .orElseThrow(() -> ExceptionUtils.entityNotFound("Registration", id));
+    }
+
     public RegistrationDto registerAthleteForWeightCategory(RegistrationDto dto) {
         ensureSingleRegistrationPerCategory(dto.getAthleteId(), dto.getWeightCategoryId());
         var athlete = athleteService.getAthleteEntity(dto.getAthleteId());
@@ -23,6 +30,11 @@ public class RegistrationService {
         registration.setRegistrationDate(dto.getRegistrationDate());
 
         return convertToDto(registration);
+    }
+
+    public AgeCategoryDto getAgeCategoryByRegistrationId(int registrationId) {
+        var registration = getRegistrationEntity(registrationId);
+        return weightCategoryService.getAgeCategoryByWeightCategoryId(registration.getWeightCategory().getId());
     }
 
     public static RegistrationDto convertToDto(Registration registration){
