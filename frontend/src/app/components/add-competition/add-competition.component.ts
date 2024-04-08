@@ -1,5 +1,5 @@
-import { Component, OnInit  } from '@angular/core';
-import { FormGroup, Validators, FormControl, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CompetitionRank } from '../../enums/competition-rank';
 import { AgeCategoryName } from '../../enums/age-category-name';
 
@@ -12,58 +12,47 @@ export class AddCompetitionComponent implements OnInit {
   todayDate?: string;
   public competitionRanks = Object.values(CompetitionRank);
   public ageCategories = Object.values(AgeCategoryName);
+  addCompetitionForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.addCompetitionForm = this.fb.group({
+      competitionName: ['', [Validators.required, Validators.pattern(/^[\p{L}\s\-.']+$/u)]],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      competitionRank: ['', Validators.required],
+      season: ['', Validators.required],
+      ageCategories: this.fb.array([]) // Initialize an empty FormArray
+    });
+  }
 
   ngOnInit() {
     this.todayDate = new Date().toISOString().slice(0, 10);
+    this.initCategoryCheckboxes();
   }
 
-  addCompetitionForm = new FormGroup({
-    competitionName: new FormControl('', [
-      Validators.required,
-      Validators.pattern(/^[\p{L}\s\-.']+$/u)
-    ]),
-    startDate: new FormControl('', [
-      Validators.required,
-    ]),
-    endDate: new FormControl('', [
-      Validators.required
-    ]),
-    competitionRank: new FormControl('', [
-      Validators.required
-    ]),
-    season: new FormControl('', [
-      Validators.required
-    ]),
-    // Note: AgeCategories does not currently have validation.
-    ageCategories: new FormControl()
-  }, { validators: startDateBeforeEndDateValidator });
+  // Initialize checkboxes for each category
+  private initCategoryCheckboxes(): void {
+    const categoryArray = this.addCompetitionForm.get('ageCategories') as FormArray;
+    this.ageCategories.forEach(() => {
+      categoryArray.push(this.fb.control(true)); // Initialize each checkbox as checked
+    });
+  }
 
-  
-  // Note: The AgeCategories function is currently incorrect. 
-  //Instead of returning which categories are selected,
-  // it returns whether you selected or deselected any of the checkboxes as the last change.
+  onCategoryChange(index: number, isChecked: boolean): void {
+    const categories = this.addCompetitionForm.get('ageCategories') as FormArray;
+    categories.at(index).setValue(isChecked);
+  }
+
   submitForm() {
     if (this.addCompetitionForm.valid) {
+      // Extract selected categories
+      const selectedCategories = this.addCompetitionForm.value.ageCategories
+        .map((checked: boolean, i: number) => checked ? this.ageCategories[i] : null)
+        .filter((v: string | null) => v !== null);
+      console.log(selectedCategories); 
       console.log(this.addCompetitionForm.value);
     } else {
-      console.log(this.addCompetitionForm.value);
-      alert("Invalid input.");
+      console.error("Invalid input.");
     }
   }
 }
-
-const startDateBeforeEndDateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  const startDate = control.get('startDate');
-  const endDate = control.get('endDate');
-
-  if (startDate && endDate && startDate.value && endDate.value) {
-    const startDateValue = new Date(startDate.value);
-    const endDateValue = new Date(endDate.value);
-
-    if (startDateValue >= endDateValue) {
-      return { 'startDateAfterEndDate': true };
-    }
-  }
-
-  return null;
-};

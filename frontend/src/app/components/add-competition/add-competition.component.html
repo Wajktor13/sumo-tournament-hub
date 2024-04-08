@@ -39,11 +39,17 @@
                 <div class="input-wrapper" >
                     <label for="category-input">Category</label>
                     <div id="category-input">
-                        <div class="checkbox-wrapper" *ngFor="let category of ageCategories">
-                            <label ><input type="checkbox" [formControl]="addCompetitionForm.controls.ageCategories" [value]="category">{{ category }}</label>
-                        </div>
+                      <ng-container formArrayName="ageCategories">
+                        <mat-checkbox *ngFor="let category of ageCategories; let i = index"
+                                      [formControlName]="i"
+                                      (change)="onCategoryChange(i, $event.checked)"
+                                      class="checkbox-wrapper">
+                          {{ category }}
+                        </mat-checkbox>
+                      </ng-container>
                     </div>    
-                </div>                
+                  </div>
+                    
             </div>   
         </div>
         
