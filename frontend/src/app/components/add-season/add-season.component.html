@@ -10,18 +10,16 @@
           id="name-input"
         />
       </div>
-
-      <div class="input-wrapper">
-        <label for="start-date-input">Start date</label>
-        <input
-          formControlName="startDate"
-          max="{{ this.addSeasonForm.value.endDate }}"
-          type="date"
-          name="start-date-input"
-          id="start-date-input"
-        />
-      </div>
-
+            <button [disabled]="!this.addSeasonForm.valid || this.createdAgeCategories.length !== 10" (click)="addSeason()">Add season</button>
+        </div>
+        
+        <div class="add-season-column-div" [formGroup]="addAgeCategoryForm">
+            <div class="input-wrapper">
+                <label for="age-category-name-input">Age category name</label>
+                <select [ngModel]="ageCategoryNames.at(0)" formControlName="ageCategoryName" name="age-category-name-input" id="age-category-name-input">
+                    <option *ngFor="let name of ageCategoryNames | keyvalue">{{name.value}}</option>
+                </select>
+            </div>
       <div class="input-wrapper">
         <label for="end-date-input">End date</label>
         <input

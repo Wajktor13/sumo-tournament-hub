@@ -36,4 +36,8 @@ export class SeasonService {
       athlete,
     );
   }
+
+  public addAgeCategoryToSeason(seasonId: number, ageCategoryId: number): Observable<any> {
+    return this.httpClient.put<number[]>(`${environment.apiUrl}/${this.apiResource}/${seasonId}/addAgeCategory/${ageCategoryId}`, Array.of(seasonId, ageCategoryId))
+  }
 }
