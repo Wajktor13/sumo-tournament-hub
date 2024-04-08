@@ -27,4 +27,8 @@ export class SeasonService {
   public add(athlete: Season): Observable<Season | undefined> {    
     return this.httpClient.post<Season>(`${environment.apiUrl}/${this.apiResource}`, athlete);
   }
+
+  public addAgeCategoryToSeason(seasonId: number, ageCategoryId: number): Observable<any> {
+    return this.httpClient.put<number[]>(`${environment.apiUrl}/${this.apiResource}/${seasonId}/addAgeCategory/${ageCategoryId}`, Array.of(seasonId, ageCategoryId))
+  }
 }

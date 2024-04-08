@@ -16,7 +16,7 @@
                 <input formControlName="endDate" min="{{this.addSeasonForm.value.startDate}}" type="date" name="end-date-input" id="end-date-input" />
             </div>
 
-            <button [disabled]="!this.addSeasonForm.valid || this.createdAgeCategories.length !== 10">Add season</button>
+            <button [disabled]="!this.addSeasonForm.valid || this.createdAgeCategories.length !== 10" (click)="addSeason()">Add season</button>
         </div>
         
         <div class="add-season-column-div" [formGroup]="addAgeCategoryForm">
