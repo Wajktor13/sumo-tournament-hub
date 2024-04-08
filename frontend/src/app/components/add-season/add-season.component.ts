@@ -11,13 +11,13 @@ import { Season } from '../../models/season';
   selector: 'app-add-season',
   standalone: false,
   templateUrl: './add-season.component.html',
-  styleUrl: './add-season.component.css',
+  styleUrl: './add-season.component.css'
 })
 export class AddSeasonComponent implements OnInit {
   todayDate?: string;
   ageCategoryNames: Array<string> = Object.values(AgeCategoryName);
 
-  createdAgeCategories: Array<AgeCategory> = [];
+  createdAgeCategories:Array<AgeCategory> = [];
 
   constructor(private seasonService: SeasonService, private ageCategoryService: AgeCategoryService) { }
 
@@ -26,17 +26,31 @@ export class AddSeasonComponent implements OnInit {
   }
 
   addSeasonForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    startDate: new FormControl('', [Validators.required]),
-    endDate: new FormControl('', [Validators.required]),
-  });
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    startDate: new FormControl('', [
+      Validators.required
+    ]),
+    endDate: new FormControl('', [
+      Validators.required
+    ])
+  })
 
   addAgeCategoryForm = new FormGroup({
-    ageCategoryName: new FormControl('', [Validators.required]),
-    ageLowerBound: new FormControl('', [Validators.required]),
-    ageUpperBound: new FormControl('', [Validators.required]),
-    gender: new FormControl('', [Validators.required]),
-  });
+    ageCategoryName: new FormControl('', [
+      Validators.required
+    ]),
+    ageLowerBound: new FormControl('', [
+      Validators.required
+    ]),
+    ageUpperBound: new FormControl('', [
+      Validators.required
+    ]),
+    gender: new FormControl('', [
+      Validators.required
+    ])
+  })
 
   checkForAlreadyExistingCategory(): boolean {
     return this.createdAgeCategories.filter((ageCategory) => ageCategory.ageCategoryName === this.addAgeCategoryForm.value.ageCategoryName?.toUpperCase() && 
@@ -55,7 +69,7 @@ export class AddSeasonComponent implements OnInit {
       const year: number = new Date(endDate).getFullYear();
       return year - Number(age);
     }
-    return '???';
+    return "???";
   }
 
   addCategory(): void {
@@ -67,7 +81,7 @@ export class AddSeasonComponent implements OnInit {
       ageLowerBound: data.ageLowerBound,
       ageUpperBound: data.ageUpperBound,
       gender: data.gender,
-    };
+    }
 
     this.createdAgeCategories.push(createdAgeCategory);
   }
