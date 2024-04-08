@@ -2,6 +2,8 @@ package com.sumotournamenthub.backend.controller;
 
 import com.sumotournamenthub.backend.dto.WeightCategoryDto;
 import com.sumotournamenthub.backend.service.AgeCategoryService;
+import com.sumotournamenthub.backend.service.SeasonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +15,12 @@ import java.util.List;
 public class AgeCategoryController {
 
     private final AgeCategoryService ageCategoryService;
+    private final SeasonService seasonService;
 
-    public AgeCategoryController(AgeCategoryService ageCategoryService) {
+    @Autowired
+    public AgeCategoryController(AgeCategoryService ageCategoryService, SeasonService seasonService) {
         this.ageCategoryService = ageCategoryService;
+        this.seasonService = seasonService;
     }
 
     @GetMapping
@@ -33,6 +38,13 @@ public class AgeCategoryController {
     public ResponseEntity<List<WeightCategoryDto>> getAllWeightCategories(@PathVariable Integer id) {
         var weightCategories = ageCategoryService.getAllWeightCategories(id);
         return new ResponseEntity<>(weightCategories, HttpStatus.OK);
+    }
+
+    @GetMapping("/athletes/{athleteId}/seasons/{seasonId}")
+    public ResponseEntity<AgeCategoryDto> getAthleteAgeCategoriesInSeason
+            (@PathVariable Integer athleteId, @PathVariable Integer seasonId) {
+        var ageCategory = seasonService.getAthleteAgeCategoriesInGivenSeason(seasonId, athleteId);
+        return new ResponseEntity<>(ageCategory, HttpStatus.OK);
     }
 
     @PostMapping
