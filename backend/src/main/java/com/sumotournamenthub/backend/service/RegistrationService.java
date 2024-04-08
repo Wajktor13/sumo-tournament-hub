@@ -4,12 +4,15 @@ import com.sumotournamenthub.backend.domain.Registration;
 import com.sumotournamenthub.backend.dto.RegistrationDto;
 import com.sumotournamenthub.backend.repository.RegistrationRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class RegistrationService {
 
+    private static final Logger log = LoggerFactory.getLogger(RegistrationService.class);
     private final RegistrationRepository repository;
     private final AthleteService athleteService;
     private final WeightCategoryService weightCategoryService;
@@ -21,6 +24,8 @@ public class RegistrationService {
 
         var registration = new Registration(athlete, weightCategory);
         registration.setRegistrationDate(dto.getRegistrationDate());
+
+        repository.save(registration);
 
         return convertToDto(registration);
     }
