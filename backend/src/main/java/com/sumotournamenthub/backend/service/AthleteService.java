@@ -6,6 +6,9 @@ import com.sumotournamenthub.backend.repository.AthleteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 import static com.sumotournamenthub.backend.utils.ExceptionUtils.entityNotFound;
 
 @Service
@@ -29,6 +32,11 @@ public class AthleteService {
 
     public Athlete getAthleteEntity(int id) {
         return repository.findById(id).orElseThrow(() -> entityNotFound("Athlete", id));
+    }
+
+    public Integer calculateAthleteAge(int id) {
+        var athlete = getAthleteEntity(id);
+        return Period.between(athlete.getBirthDate(), LocalDate.now()).getYears();
     }
 
     public static AthleteDto convertToDto(Athlete athlete) {
