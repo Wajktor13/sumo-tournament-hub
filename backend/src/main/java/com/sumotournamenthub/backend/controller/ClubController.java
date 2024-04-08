@@ -1,10 +1,8 @@
 package com.sumotournamenthub.backend.controller;
 
-import com.sumotournamenthub.backend.domain.Club;
 import com.sumotournamenthub.backend.dto.AthleteDto;
 import com.sumotournamenthub.backend.dto.ClubDto;
 import com.sumotournamenthub.backend.service.ClubService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,33 +17,25 @@ public class ClubController {
 
     private final ClubService clubService;
 
-    @Autowired
     public ClubController(ClubService clubService) {
         this.clubService = clubService;
     }
 
     @GetMapping
     public List<ClubDto> getAll() {
-        return clubService.getAllClubs().stream().map(this::convertToDto).toList();
+        return clubService.getAllClubs();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClubDto> getById(@PathVariable Integer id) {
-        ClubDto clubdto = convertToDto(clubService.getClubById(id));
-        return new ResponseEntity<>(clubdto, HttpStatus.OK);
+    public ResponseEntity<ClubDto> getClub(@PathVariable Integer id) {
+        var clubDto = clubService.getClub(id);
+        return new ResponseEntity<>(clubDto, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/athletes")
-    public ResponseEntity<List<AthleteDto>> getAllAthletesByClubId(@PathVariable int clubId) {
-        var athletesByClubId = clubService.getAllByClubId(clubId);
+    public ResponseEntity<List<AthleteDto>> getAllAthletes(@PathVariable int id) {
+        var athletesByClubId = clubService.getAllAthletes(id);
         return new ResponseEntity<>(athletesByClubId, HttpStatus.OK);
     }
 
-    private ClubDto convertToDto(Club club) {
-        return ClubDto.builder()
-                .id(club.getId())
-                .country(club.getCountry())
-                .name(club.getName())
-                .build();
-    }
 }
