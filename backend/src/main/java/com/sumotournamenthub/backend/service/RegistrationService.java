@@ -8,10 +8,6 @@ import com.sumotournamenthub.backend.utils.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 @Service
 @RequiredArgsConstructor
 public class RegistrationService {
@@ -19,7 +15,11 @@ public class RegistrationService {
     private final RegistrationRepository repository;
     private final AthleteService athleteService;
     private final WeightCategoryService weightCategoryService;
-    private final SeasonService seasonService;
+
+    public Registration getRegistrationEntity(int id) {
+        return repository.findById(id)
+                .orElseThrow(() -> ExceptionUtils.entityNotFound("Registration", id));
+    }
 
     public RegistrationDto registerAthleteForWeightCategory(RegistrationDto dto) {
         ensureSingleRegistrationPerCategory(dto.getAthleteId(), dto.getWeightCategoryId());
@@ -32,21 +32,9 @@ public class RegistrationService {
         return convertToDto(registration);
     }
 
-    public List<AgeCategoryDto> getAgeCategoryByRegistrationIdAndAthleteId(int athleteId) {
-        var athlete = athleteService.getAthleteEntity(athleteId);
-        Set<Registration> registrations = athlete.getRegistrations();
-        return registrations.stream()
-                .map(registration -> weightCategoryService.getAgeCategoryByWeightCategoryId(registration.getWeightCategory().getId()))
-                .toList();
-    }
-
-    public AgeCategoryDto getAgeCategoryByAthleteIdAndSeasonId(Integer athleteId, Integer seasonId) {
-        List<AgeCategoryDto> ageCategoryDtoList = getAgeCategoryByRegistrationIdAndAthleteId(athleteId);
-        var seasonAgeCategories = seasonService.getAllAgeCategories(seasonId);
-        return seasonAgeCategories.stream()
-                .filter(ageCategoryDtoList::contains)
-                .findFirst()
-                .orElse(null);
+    public AgeCategoryDto getAgeCategoryByRegistrationId(int registrationId) {
+        var registration = getRegistrationEntity(registrationId);
+        return weightCategoryService.getAgeCategoryByWeightCategoryId(registration.getWeightCategory().getId());
     }
 
     public static RegistrationDto convertToDto(Registration registration){
