@@ -8,12 +8,12 @@
         
             <div class="input-wrapper">
                 <label for="start-date-input">Start date</label>
-                <input formControlName="startDate" min="{{todayDate}}" max="{{this.addSeasonForm.value.endDate}}" type="date" name="start-date-input" id="start-date-input" />
+                <input formControlName="startDate" max="{{this.addSeasonForm.value.endDate}}" type="date" name="start-date-input" id="start-date-input" />
             </div>
             
             <div class="input-wrapper">
                 <label for="end-date-input">End date</label>
-                <input formControlName="endDate" min="{{this.addSeasonForm.value.startDate || todayDate}}" type="date" name="end-date-input" id="end-date-input" />
+                <input formControlName="endDate" min="{{this.addSeasonForm.value.startDate}}" type="date" name="end-date-input" id="end-date-input" />
             </div>
 
             <button [disabled]="!this.addSeasonForm.valid || this.createdAgeCategories.length !== 10">Add season</button>
