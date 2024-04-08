@@ -7,6 +7,9 @@ import com.sumotournamenthub.backend.repository.CompetitionRepository;
 import com.sumotournamenthub.backend.utils.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -40,5 +43,21 @@ public class CompetitionService {
 
     public void deleteCompetition(Competition competition) {
         repository.delete(competition);
+    }
+
+    public boolean addFileToCompetition(int id, MultipartFile file) {
+        Competition competition = getCompetitionEntity(id);
+        try {
+            competition.setFile(file.getBytes());
+            repository.save(competition);
+            return true;
+        }
+        catch (IOException e) {
+            return false;
+        }
+    }
+
+    public byte[] getFileByCompetitionId(int id) {
+        return getCompetitionEntity(id).getFile();
     }
 }

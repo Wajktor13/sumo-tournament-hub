@@ -42,4 +42,7 @@ public class Competition {
 
     @NonNull
     private String rank;
+
+    @Lob
+    private byte[] file;
 }
