@@ -46,11 +46,4 @@ public class AgeCategoryController {
         ageCategoryService.deleteAgeCategory(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    @GetMapping("/athlete/{athleteId}/season/{seasonId}")
-    public ResponseEntity<AgeCategoryDto> getAgeCategoryByAthleteIdAndSeasonId(@PathVariable Integer athleteId, @PathVariable Integer seasonId) {
-        var ageCategory = ageCategoryService.getAgeCategoryByAthleteIdAndSeasonId(athleteId, seasonId);
-        return new ResponseEntity<>(ageCategory, HttpStatus.OK);
-    }
-
 }

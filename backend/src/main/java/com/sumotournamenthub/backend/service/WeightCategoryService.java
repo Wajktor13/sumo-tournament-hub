@@ -2,7 +2,6 @@ package com.sumotournamenthub.backend.service;
 
 import com.sumotournamenthub.backend.domain.WeightCategory;
 import com.sumotournamenthub.backend.dto.WeightCategoryDto;
-import com.sumotournamenthub.backend.dto.AgeCategoryDto;
 import com.sumotournamenthub.backend.repository.WeightCategoryRepository;
 import com.sumotournamenthub.backend.utils.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +28,6 @@ public class WeightCategoryService {
 
     public List<WeightCategoryDto> getAllWeightCategories() {
         return repository.findAll().stream().map(WeightCategoryService::convertToDto).toList();
-    }
-
-    public AgeCategoryDto getAgeCategoryByWeightCategoryId(int weightCategoryId) {
-        var weightCategory = getWeightCategoryEntity(weightCategoryId);
-        return ageCategoryService.convertToDto(weightCategory.getAgeCategory());
     }
 
     public WeightCategoryDto createWeightCategory(WeightCategoryDto dto) {
