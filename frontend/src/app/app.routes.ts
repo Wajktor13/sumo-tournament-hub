@@ -11,9 +11,21 @@ export const routes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent },
   { path: 'add-season', pathMatch: 'full', component: AddSeasonComponent },
   { path: 'add-athlete', pathMatch: 'full', component: AddAthleteComponent },
-  { path: 'add-competition', pathMatch: 'full', component: AddCompetitionComponent },
-  { path: 'competition-registration/:competitionId', pathMatch: 'full', component: CompetitionRegistrationComponent },
-  { path: 'competitions-view', pathMatch: 'full', component: CompetitionsViewComponent },
+  {
+    path: 'add-competition',
+    pathMatch: 'full',
+    component: AddCompetitionComponent,
+  },
+  {
+    path: 'competition-registration/:competitionId',
+    pathMatch: 'full',
+    component: CompetitionRegistrationComponent,
+  },
+  {
+    path: 'competitions-view',
+    pathMatch: 'full',
+    component: CompetitionsViewComponent,
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

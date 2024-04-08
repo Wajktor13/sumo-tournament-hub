@@ -9,10 +9,9 @@ describe('AddSeasonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddSeasonModule]
-    })
-    .compileComponents();
-    
+      imports: [AddSeasonModule],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(AddSeasonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
