@@ -69,6 +69,10 @@ section {
     font-size: 19px;
     color: var(--primary-color);
   }
+
+  .input-wrapper p {
+    width: 225px;
+  }
   
   .input-wrapper label {
     font-size: 23px;
