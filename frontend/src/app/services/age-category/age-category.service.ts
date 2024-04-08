@@ -10,7 +10,7 @@ import { Gender } from '../../enums/gender';
   providedIn: 'root',
 })
 export class AgeCategoryService {
-  private apiResource = 'agecategories';
+  private apiResource = 'ageCategories';
 
   constructor(private httpClient: HttpClient) {}
 
