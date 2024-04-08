@@ -59,6 +59,14 @@ export class AddSeasonComponent implements OnInit {
     }
   }
 
+  calculateYearOfBirth(endDate: string, age: string | number) {
+    if (endDate && age) {
+      const year: number = new Date(endDate).getFullYear();
+      return year - Number(age);
+    }
+    return "???";
+  }
+
   addCategory(): void {
     const data: any = this.addAgeCategoryForm.value
 
