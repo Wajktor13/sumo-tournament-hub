@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Competition } from '../../models/competition';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Country } from '../../enums/country';
-import { CompetitionRank } from '../../enums/competition-rank';
 
 @Injectable({
   providedIn: 'root',
@@ -21,25 +19,9 @@ export class CompetitionService {
   }
 
   public getOne(id: number): Observable<Competition | undefined> {
-    // for the times, when endpoint is ready...
-    // return this.httpClient.get<Competition>(`${environment.apiUrl}/${this.apiResource}/${id}`);
-
-    console.log(id); // for lint
-
-    const defaultLimits: Partial<{ [key in Country]: number }> = {};
-    Object.values(Country).forEach((country) => {
-      defaultLimits[country] = 0;
-    });
-
-    return of({
-      id: 1,
-      name: 'Sumo Showdown: Clash of Titans',
-      startTime: new Date(2024, 7, 14),
-      endTime: new Date(2024, 7, 15),
-      countryLimits: defaultLimits as { [key in Country]: number },
-      seasonId: 2,
-      rank: CompetitionRank.European
-    });
+    return this.httpClient.get<Competition>(
+      `${environment.apiUrl}/${this.apiResource}/${id}`,
+    );
   }
 
   public add(ageCategory: Competition): Observable<Competition | undefined> {
@@ -47,17 +29,5 @@ export class CompetitionService {
       `${environment.apiUrl}/${this.apiResource}`,
       ageCategory,
     );
-  }
-
-  public registerAthlete(
-    competitionId: number,
-    ageCategoryId: number,
-    weightCategoryId: number,
-    athleteId: number,
-  ) {
-
-    console.log(competitionId, ageCategoryId, weightCategoryId, athleteId); // for lint
-    
-    return true;
   }
 }

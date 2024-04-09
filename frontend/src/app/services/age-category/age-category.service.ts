@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AgeCategory } from '../../models/age-category';
 import { environment } from '../../../environments/environment';
-import { AgeCategoryName } from '../../enums/age-category-name';
-import { Gender } from '../../enums/gender';
+import { WeightCategory } from '../../models/weight-category';
 
 @Injectable({
   providedIn: 'root',
@@ -33,18 +32,18 @@ export class AgeCategoryService {
     );
   }
 
-  public getByAthleteId(
-    athleteId: number,
-  ): Observable<AgeCategory | undefined> {
-    console.log(athleteId); // for lint
+  public getAllWeightCategories(id: number): Observable<WeightCategory[]> {
+    return this.httpClient.get<WeightCategory[]>(
+      `${environment.apiUrl}/${this.apiResource}/${id}/weightCategories`,
+    );
+  }
 
-    return of({
-      id: 1,
-      ageCategoryName: AgeCategoryName.CADET,
-      ageLowerBound: 10,
-      ageUpperBound: 15,
-      gender: Gender.M,
-      openWeightAvailable: true,
-    });
+  public getAgeCategoryByAthleteIdAndSeasonId(
+    athleteId: number,
+    seasonId: number,
+  ): Observable<AgeCategory> {
+    return this.httpClient.get<AgeCategory>(
+      `${environment.apiUrl}/${this.apiResource}/athletes/${athleteId}/seasons/${seasonId}`,
+    );
   }
 }

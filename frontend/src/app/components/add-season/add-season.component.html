@@ -1,66 +1,65 @@
 <section>
-    <div id="add-season-div">
-        <div [formGroup]="addSeasonForm" class="add-season-column-div">
-            <div class="input-wrapper">
-                <label for="name-input">Name</label>
-                <input formControlName="name" type="text" name="name-input" id="name-input" />
-            </div>
-        
-            <div class="input-wrapper">
-                <label for="start-date-input">Start date</label>
-                <input formControlName="startDate" max="{{this.addSeasonForm.value.endDate}}" type="date" name="start-date-input" id="start-date-input" />
-            </div>
-            
-            <div class="input-wrapper">
-                <label for="end-date-input">End date</label>
-                <input formControlName="endDate" min="{{this.addSeasonForm.value.startDate}}" type="date" name="end-date-input" id="end-date-input" />
-            </div>
+  <div id="add-season-div">
+      <div [formGroup]="addSeasonForm" class="add-season-column-div">
+          <div class="input-wrapper">
+              <label for="name-input">Name</label>
+              <input formControlName="name" type="text" name="name-input" id="name-input" />
+          </div>
+      
+          <div class="input-wrapper">
+              <label for="start-date-input">Start date</label>
+              <input formControlName="startDate" max="{{this.addSeasonForm.value.endDate}}" type="date" name="start-date-input" id="start-date-input" />
+          </div>
+          
+          <div class="input-wrapper">
+              <label for="end-date-input">End date</label>
+              <input formControlName="endDate" min="{{this.addSeasonForm.value.startDate}}" type="date" name="end-date-input" id="end-date-input" />
+          </div>
 
-            <button [disabled]="!this.addSeasonForm.valid || this.createdAgeCategories.length !== 10" (click)="addSeason()">Add season</button>
-        </div>
-        
-        <div class="add-season-column-div" [formGroup]="addAgeCategoryForm">
-            <div class="input-wrapper">
-                <label for="age-category-name-input">Age category name</label>
-                <select [ngModel]="ageCategoryNames.at(0)" formControlName="ageCategoryName" name="age-category-name-input" id="age-category-name-input">
-                    <option *ngFor="let name of ageCategoryNames | keyvalue">{{name.value}}</option>
-                </select>
-            </div>
+          <button [disabled]="!this.addSeasonForm.valid || this.createdAgeCategories.length !== 10" (click)="addSeason()">Add season</button>
+      </div>
+      
+      <div class="add-season-column-div" [formGroup]="addAgeCategoryForm">
+          <div class="input-wrapper">
+              <label for="age-category-name-input">Age category name</label>
+              <select [ngModel]="ageCategoryNames.at(0)" formControlName="ageCategoryName" name="age-category-name-input" id="age-category-name-input">
+                  <option *ngFor="let name of ageCategoryNames | keyvalue">{{name.value}}</option>
+              </select>
+          </div>
 
-            <div class="input-wrapper">
-                <label for="age-lower-bound-input">Age lower bound</label>
-                <input formControlName="ageLowerBound" type="number" name="age-lower-bound-input" id="age-lower-bound-input" />
-                <p>Year of birth: {{calculateYearOfBirth(this.addSeasonForm.value.endDate!, this.addAgeCategoryForm.value.ageLowerBound!)}}</p>
-            </div>
+          <div class="input-wrapper">
+              <label for="age-lower-bound-input">Age lower bound</label>
+              <input formControlName="ageLowerBound" type="number" name="age-lower-bound-input" id="age-lower-bound-input" />
+              <p>Year of birth: {{calculateYearOfBirth(this.addSeasonForm.value.endDate!, this.addAgeCategoryForm.value.ageLowerBound!)}}</p>
+          </div>
 
-            <div class="input-wrapper">
-                <label for="age-upper-bound-input">Age upper bound</label>
-                <input formControlName="ageUpperBound" min="{{this.addAgeCategoryForm.value.ageLowerBound}}" type="number" name="age-upper-bound-input" id="age-upper-bound-input" />
-                <p>Year of birth: {{calculateYearOfBirth(this.addSeasonForm.value.endDate!, this.addAgeCategoryForm.value.ageUpperBound!)}}</p>
-            </div>
+          <div class="input-wrapper">
+              <label for="age-upper-bound-input">Age upper bound</label>
+              <input formControlName="ageUpperBound" min="{{this.addAgeCategoryForm.value.ageLowerBound}}" type="number" name="age-upper-bound-input" id="age-upper-bound-input" />
+              <p>Year of birth: {{calculateYearOfBirth(this.addSeasonForm.value.endDate!, this.addAgeCategoryForm.value.ageUpperBound!)}}</p>
+          </div>
 
-            <div class="input-wrapper">
-                <label for="gender-input">Gender</label>
-                <select formControlName="gender" name="gender-input" id="gender-input">
-                    <option>M</option>
-                    <option>F</option>
-                </select>
-            </div>
+          <div class="input-wrapper">
+              <label for="gender-input">Gender</label>
+              <select formControlName="gender" name="gender-input" id="gender-input">
+                  <option>M</option>
+                  <option>F</option>
+              </select>
+          </div>
 
-            <button [disabled]="!this.addAgeCategoryForm.valid || !checkForAlreadyExistingCategory()" (click)="addCategory()">Add category</button>
+          <button [disabled]="!this.addAgeCategoryForm.valid || !checkForAlreadyExistingCategory()" (click)="addCategory()">Add category</button>
 
-        </div>
+      </div>
 
-        <div id="category-display-div">
-            <div *ngFor="let createdAgeCategory of createdAgeCategories" class="created-category">
-                <div>
-                    {{ createdAgeCategory.ageCategoryName }} ({{ createdAgeCategory.gender }}) {{ createdAgeCategory.ageLowerBound }}-{{ createdAgeCategory.ageUpperBound }}
-                     ({{calculateYearOfBirth(this.addSeasonForm.value.endDate!, createdAgeCategory.ageUpperBound!)}}-{{calculateYearOfBirth(this.addSeasonForm.value.endDate!, createdAgeCategory.ageLowerBound!)}})
-                </div>
-                <button (click)="deleteCreatedAgeCategory(createdAgeCategory)" 
-                    (keydown.enter)="deleteCreatedAgeCategory(createdAgeCategory)" class="delete-category">X</button>
-            </div>
-        </div>
-    </div>
-  </section>
-  
+      <div id="category-display-div">
+          <div *ngFor="let createdAgeCategory of createdAgeCategories" class="created-category">
+              <div>
+                  {{ createdAgeCategory.ageCategoryName }} ({{ createdAgeCategory.gender }}) {{ createdAgeCategory.ageLowerBound }}-{{ createdAgeCategory.ageUpperBound }}
+                   ({{calculateYearOfBirth(this.addSeasonForm.value.endDate!, createdAgeCategory.ageUpperBound!)}}-{{calculateYearOfBirth(this.addSeasonForm.value.endDate!, createdAgeCategory.ageLowerBound!)}})
+              </div>
+              <button (click)="deleteCreatedAgeCategory(createdAgeCategory)" 
+                  (keydown.enter)="deleteCreatedAgeCategory(createdAgeCategory)" class="delete-category">X</button>
+          </div>
+      </div>
+  </div>
+</section>

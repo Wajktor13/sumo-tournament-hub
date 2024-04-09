@@ -1,88 +1,89 @@
 section {
-    width: 100%;
-    height: 750px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 750px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#add-athlete-div {
+  width: 360px;
+  height: 600px;
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  color: white;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 17px 0px rgb(55, 55, 55);
+  -moz-box-shadow: 0px 0px 17px 0px rgb(51, 51, 51);
+  box-shadow: 0px 0px 17px 0px rgb(54, 54, 54);
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper input,
+.input-wrapper select {
+  width: 300px;
+  height: 50px;
+  border-radius: 5px;
+  border: 0;
+  font-size: 19px;
+  color: var(--primary-color);
+}
+
+.input-wrapper label {
+  font-size: 23px;
+}
+
+button {
+  width: 140px;
+  height: 40px;
+  background-color: white;
+  color: var(--primary-color);
+  font-size: 23px;
+  border-radius: 5px;
+  border: 0;
+  transition: transform 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+@media (max-width: 768px) {
+  #login-div {
+    width: 260px;
+    height: 350px;
   }
-  
-  #add-athlete-div {
-    width: 360px;
-    height: 600px;
-    background-color: var(--primary-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    color: white;
-    border-radius: 5px;
-    -webkit-box-shadow: 0px 0px 17px 0px rgb(55, 55, 55);
-    -moz-box-shadow: 0px 0px 17px 0px rgb(51, 51, 51);
-    box-shadow: 0px 0px 17px 0px rgb(54, 54, 54);
-  }
-  
-  .input-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .input-wrapper input, .input-wrapper select {
-    width: 300px;
-    height: 50px;
+
+  .input-wrapper input,
+  .input-wrapper select {
+    width: 220px;
+    height: 35px;
     border-radius: 5px;
     border: 0;
-    font-size: 19px;
-    color: var(--primary-color);
+    font-size: 16px;
   }
-  
+
   .input-wrapper label {
-    font-size: 23px;
+    font-size: 20px;
   }
-  
+
   button {
-    width: 140px;
-    height: 40px;
+    width: 125px;
+    height: 35px;
     background-color: white;
     color: var(--primary-color);
-    font-size: 23px;
-    border-radius: 5px;
-    border: 0;
-    transition: transform 0.3s;
+    font-size: 20px;
   }
-  
-  button:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-  }
-  
-  button:active {
-    transform: scale(0.9);
-  }
-  
-  @media (max-width: 768px) {
-    #login-div {
-      width: 260px;
-      height: 350px;
-    }
-  
-    .input-wrapper input, .input-wrapper select {
-      width: 220px;
-      height: 35px;
-      border-radius: 5px;
-      border: 0;
-      font-size: 16px;
-    }
-  
-    .input-wrapper label {
-      font-size: 20px;
-    }
-  
-    button {
-      width: 125px;
-      height: 35px;
-      background-color: white;
-      color: var(--primary-color);
-      font-size: 20px;
-    }
-  }
-  
+}

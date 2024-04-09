@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AgeCategoryService } from './age-category.service';
+import { RegistrationService } from './registration.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('AgeCategoryService', () => {
-  let service: AgeCategoryService;
+describe('RegistrationsService', () => {
+  let service: RegistrationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
-    service = TestBed.inject(AgeCategoryService);
+    service = TestBed.inject(RegistrationService);
   });
 
   it('should be created', () => {

@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-add-athlete',
   standalone: false,
   templateUrl: './add-athlete.component.html',
-  styleUrl: './add-athlete.component.css'
+  styleUrl: './add-athlete.component.css',
 })
 export class AddAthleteComponent implements OnInit, OnDestroy {
   date?: string;
@@ -22,25 +22,24 @@ export class AddAthleteComponent implements OnInit, OnDestroy {
   currentUserSub: Subscription | undefined;
   availableClubsSub: Subscription | undefined;
 
-  constructor (private clubService: ClubService, private authService: AuthService, private athleteService: AthleteService) { }
+  constructor(
+    private clubService: ClubService,
+    private authService: AuthService,
+    private athleteService: AthleteService,
+  ) {}
 
   ngOnInit() {
     this.date = new Date().toISOString().slice(0, 10);
 
-    this.currentUserSub = this.authService.currentUser$.subscribe(
-      {
-        next: (user: User) => 
-        {
-          this.availableClubsSub = this.clubService.getAllByUser(user).subscribe(
-            {
-              next: (clubs: Club[]) => this.availableClubs = clubs,
-              error: e => console.log(e)
-            }
-          )
-        },
-        error: e => console.log(e)
-      }
-    )
+    this.currentUserSub = this.authService.currentUser$.subscribe({
+      next: (user: User) => {
+        this.availableClubsSub = this.clubService.getAllByUser(user).subscribe({
+          next: (clubs: Club[]) => (this.availableClubs = clubs),
+          error: (e) => console.log(e),
+        });
+      },
+      error: (e) => console.log(e),
+    });
   }
 
   ngOnDestroy(): void {
@@ -51,45 +50,36 @@ export class AddAthleteComponent implements OnInit, OnDestroy {
   addAthleteForm = new FormGroup({
     firstName: new FormControl('', [
       Validators.required,
-      Validators.pattern(/^[\p{L}\s\-.']+$/u)
+      Validators.pattern(/^[\p{L}\s\-.']+$/u),
     ]),
     secondName: new FormControl('', [
       Validators.required,
-      Validators.pattern(/^[\p{L}\s\-.']+$/u)
+      Validators.pattern(/^[\p{L}\s\-.']+$/u),
     ]),
-    clubId: new FormControl('', [
-      Validators.required
-    ]),
-    gender: new FormControl('', [
-      Validators.required
-    ]),
-    birthDate: new FormControl('', [
-      Validators.required
-    ])
-  })
+    clubId: new FormControl('', [Validators.required]),
+    gender: new FormControl('', [Validators.required]),
+    birthDate: new FormControl('', [Validators.required]),
+  });
 
   submitForm() {
     if (this.addAthleteForm.valid) {
       const data: any = this.addAthleteForm.value;
-      
+
       const athlete: Athlete = {
         id: 0,
         firstName: data.firstName,
         secondName: data.secondName,
         gender: data.gender,
         birthdate: new Date(data.birthDate),
-        clubId: parseInt(data.clubId)
-      }
-      
-      this.athleteService.add(athlete).subscribe(
-        {
-          next: v => console.log(v),
-          error: e => console.log(e)  
-        }
-      )
-      
+        clubId: parseInt(data.clubId),
+      };
+
+      this.athleteService.add(athlete).subscribe({
+        next: (v) => console.log(v),
+        error: (e) => console.log(e),
+      });
     } else {
-      alert("invalid input")
+      alert('invalid input');
     }
   }
 }

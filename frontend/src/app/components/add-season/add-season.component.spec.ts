@@ -14,7 +14,6 @@ describe('AddSeasonComponent', () => {
       HttpClientTestingModule]
     })
     .compileComponents();
-    
     fixture = TestBed.createComponent(AddSeasonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
