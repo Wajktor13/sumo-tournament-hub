@@ -1,53 +1,80 @@
 <section>
-    <div id="add-competition-div" [formGroup]="addCompetitionForm">
-        <div class="form">
-            <div class="left">
-                <div class="input-wrapper">
-                    <label for="competition-name-input">Competition Name</label>
-                    <input type="text" formControlName="competitionName" id="competition-name-input">
-                </div>
-        
-                <div class="input-wrapper">
-                    <label for="start-date-input">Start Date</label>
-                    <input type="date" min="{{todayDate}}" max="{{this.addCompetitionForm.value.endDate}}" formControlName="startDate" id="start-date-input">
-                </div>
-        
-                <div class="input-wrapper">
-                    <label for="end-date-input">End Date</label>
-                    <input type="date" min="{{this.addCompetitionForm.value.startDate || todayDate}}" formControlName="endDate" id="end-date-input">
-                </div>
-        
-                <div class="input-wrapper">
-                    <label for="competition-rank-input">Competition Rank</label>
-                    <select formControlName="competitionRank" id="competition-rank-input">
-                        <option *ngFor="let rank of competitionRanks" [value]="rank">{{ rank }}</option>
-                    </select>
-                </div>
-            </div>
-           
-            <div class="right">
-                <div class="input-wrapper">
-                    <label for="season-input">Season</label>
-                    <select formControlName="season" id="season-input">
-                        <option value="summer">Summer</option>
-                        <option value="winter">Winter</option>
-                        <option value="spring">Spring</option>
-                        <option value="autumn">Autumn</option>
-                    </select>
-                </div>
-    
-                <div class="input-wrapper" >
-                    <label for="category-input">Category</label>
-                    <div id="category-input">
-                        <div class="checkbox-wrapper" *ngFor="let category of ageCategories">
-                            <label ><input type="checkbox" [formControl]="addCompetitionForm.controls.ageCategories" [value]="category">{{ category }}</label>
-                        </div>
-                    </div>    
-                </div>                
-            </div>   
+  <div id="add-competition-div" [formGroup]="addCompetitionForm">
+    <div class="form">
+      <div class="left">
+        <div class="input-wrapper">
+          <label for="competition-name-input">Competition Name</label>
+          <input
+            type="text"
+            formControlName="competitionName"
+            id="competition-name-input"
+          />
         </div>
-        
 
-        <button [disabled]="!this.addCompetitionForm.valid" (click)="submitForm()">Add Competition</button>
+        <div class="input-wrapper">
+          <label for="start-date-input">Start Date</label>
+          <input
+            type="date"
+            min="{{ todayDate }}"
+            max="{{ this.addCompetitionForm.value.endDate }}"
+            formControlName="startDate"
+            id="start-date-input"
+          />
+        </div>
+
+        <div class="input-wrapper">
+          <label for="end-date-input">End Date</label>
+          <input
+            type="date"
+            min="{{ this.addCompetitionForm.value.startDate || todayDate }}"
+            formControlName="endDate"
+            id="end-date-input"
+          />
+        </div>
+
+        <div class="input-wrapper">
+          <label for="competition-rank-input">Competition Rank</label>
+          <select formControlName="competitionRank" id="competition-rank-input">
+            <option *ngFor="let rank of competitionRanks" [value]="rank">
+              {{ rank }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="input-wrapper">
+          <label for="season-input">Season</label>
+          <select formControlName="season" id="season-input">
+            <option value="summer">Summer</option>
+            <option value="winter">Winter</option>
+            <option value="spring">Spring</option>
+            <option value="autumn">Autumn</option>
+          </select>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="category-input">Category</label>
+          <div id="category-input">
+            <div
+              class="checkbox-wrapper"
+              *ngFor="let category of ageCategories"
+            >
+              <label
+                ><input
+                  type="checkbox"
+                  [formControl]="addCompetitionForm.controls.ageCategories"
+                  [value]="category"
+                />{{ category }}</label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <button [disabled]="!this.addCompetitionForm.valid" (click)="submitForm()">
+      Add Competition
+    </button>
+  </div>
 </section>

@@ -3,6 +3,8 @@ package com.sumotournamenthub.backend.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -24,6 +26,9 @@ public class WeightCategory {
     @ManyToOne
     @JoinColumn(name = "competition_id")
     private Competition competition;
+
+    @OneToMany(mappedBy = "weightCategory")
+    private Set<Registration> registrations;
 
     @NonNull
     @Column(name = "weight_upper_limit")

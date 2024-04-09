@@ -1,4 +1,17 @@
-FROM nginx:alpine
+FROM node:latest as build
+
+WORKDIR /usr/local/app
+
+COPY ./ /usr/local/app/
+
+RUN npm install
+
+RUN npm run build
+
+FROM nginx:latest
+
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY dist/sumo-tournament-hub-frontend/browser /usr/share/nginx/html
+
+COPY --from=build /usr/local/app/dist/sumo-tournament-hub-frontend/browser /usr/share/nginx/html
+
 EXPOSE 80

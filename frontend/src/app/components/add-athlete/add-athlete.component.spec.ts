@@ -10,11 +10,9 @@ describe('AddAthleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddAthleteModule,
-      HttpClientTestingModule]
-    })
-    .compileComponents();
-    
+      imports: [AddAthleteModule, HttpClientTestingModule],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(AddAthleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

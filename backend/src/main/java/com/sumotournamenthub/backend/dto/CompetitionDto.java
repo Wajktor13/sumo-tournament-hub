@@ -17,7 +17,7 @@ public class CompetitionDto {
     LocalDate endTime;
     Map<Country, Integer> countryLimits;
     int seasonId;
-
+    String rank;
     public static CompetitionDto from(Competition competition) {
         return CompetitionDto.builder()
                 .id(competition.getId())
@@ -26,6 +26,7 @@ public class CompetitionDto {
                 .endTime(competition.getEndTime())
                 .countryLimits(competition.getCountryLimits())
                 .seasonId(competition.getSeason().getId())
+                .rank(competition.getRank())
                 .build();
     }
 }

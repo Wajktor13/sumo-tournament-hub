@@ -28,7 +28,7 @@
       Add season
     </div>
 
-      <div
+    <div
       class="nav-tile"
       (click)="navigateTo('add-competition')"
       (keydown.enter)="navigateTo('add-competition')"
@@ -37,7 +37,16 @@
       Add Competition
     </div>
 
-    <div class="nav-tile" tabindex="4">
+    <div
+      class="nav-tile"
+      tabindex="4"
+      (click)="navigateTo('competitions-view')"
+      (keydown.enter)="navigateTo('competitions-view')"
+    >
+      Competitions
+    </div>
+
+    <div class="nav-tile" tabindex="5">
       <div id="account-div">
         <p>Account</p>
         <p *ngIf="isLoggedIn" class="user-title">
@@ -51,7 +60,7 @@
             *ngIf="!isLoggedIn"
             (click)="navigateTo('login')"
             (keydown.enter)="navigateTo('login')"
-            tabindex="5"
+            tabindex="6"
           >
             Log In
           </div>
@@ -59,7 +68,7 @@
             *ngIf="isLoggedIn"
             (click)="logout()"
             (keydown.enter)="logout()"
-            tabindex="6"
+            tabindex="7"
           >
             Log Out
           </div>

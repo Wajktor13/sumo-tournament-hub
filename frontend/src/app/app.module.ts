@@ -13,11 +13,31 @@ import { CompetitionService } from './services/competition/competition.service';
 import { SeasonService } from './services/season/season.service';
 import { CompetitionRegistrationModule } from './components/competition-registration/competition-registration.module';
 import { AddCompetitionModule } from './components/add-competition/add-competition.module';
+import { CompetitionsViewModule } from './components/competitions-view/competitions-view.module';
+import { RegistrationService } from './services/registration/registration.service';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, HttpClientModule, NavigationModule, AddSeasonModule, AddAthleteModule, LoginModule, AddCompetitionModule, CompetitionRegistrationModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    NavigationModule,
+    AddSeasonModule,
+    AddAthleteModule,
+    LoginModule,
+    AddCompetitionModule,
+    CompetitionRegistrationModule,
+    CompetitionsViewModule,
+  ],
   exports: [NavigationModule, HttpClientModule],
-  providers: [ClubService, AthleteService, CompetitionService, SeasonService, AgeCategoryService, WeightCategoryService]
+  providers: [
+    ClubService,
+    AthleteService,
+    CompetitionService,
+    SeasonService,
+    AgeCategoryService,
+    WeightCategoryService,
+    RegistrationService,
+  ],
 })
 export class AppModule {}

@@ -5,6 +5,7 @@ import { User } from '../../models/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Country } from '../../enums/country';
+import { Athlete } from '../../models/athlete';
 
 @Injectable({
   providedIn: 'root',
@@ -44,5 +45,11 @@ export class ClubService {
         country: Country.GERMANY,
       },
     ]);
+  }
+
+  public getAllAthletes(clubId: number): Observable<Athlete[]> {
+    return this.httpClient.get<Athlete[]>(
+      `${environment.apiUrl}/${this.apiResource}/${clubId}/athletes`,
+    );
   }
 }
