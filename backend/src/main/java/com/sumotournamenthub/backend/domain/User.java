@@ -23,7 +23,6 @@ public class User {
     @NonNull
     private String password; // Hashed password will be stored
 
-    @NonNull
     @OneToMany(mappedBy = "coach")
     private List<Club> clubs;
 

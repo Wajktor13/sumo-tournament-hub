@@ -3,6 +3,7 @@ package com.sumotournamenthub.backend.service;
 import com.sumotournamenthub.backend.domain.User;
 import com.sumotournamenthub.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,18 +12,20 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder =passwordEncoder;
     }
 
     public User createUser(String username, String password) {
         User user = new User();
         user.setUsername(username);
-        user.setPassword(password); // You may want to hash the password here
+        user.setPassword(passwordEncoder.encode(password));
 
-        // Save the user to the database
+
         return userRepository.save(user);
     }
 
@@ -30,5 +33,4 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    // Other user management methods
 }
