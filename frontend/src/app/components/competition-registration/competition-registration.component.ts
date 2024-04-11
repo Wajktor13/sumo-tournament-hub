@@ -81,13 +81,13 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
         next: (competition: Competition | undefined) => {
           if (competition != undefined && competition.startTime <= new Date()) {
             alert('this competition expired');
-            this.router.navigate(['/home']); // should be changed to subpage with competitions
+            this.router.navigate(['/competitions-view']);
           }
 
           this.competition = competition;
           this.subscribeToSeasonService();
         },
-        error: (e) => this.handleError(e),
+        error: (e) => this.router.navigate(['/page-not-found']),
       });
   }
 
