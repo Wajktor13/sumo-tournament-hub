@@ -92,6 +92,15 @@ form {
   align-items: center;
 }
 
+#athlete-input {
+  height: 90px;
+}
+
+#multiple-users-select-info {
+  margin-top: -30px;
+  margin-bottom: -30px;
+}
+
 @media (max-width: 768px) {
   #main-div {
     width: 260px;
@@ -123,5 +132,15 @@ form {
 
   #competition-info p {
     font-size: 17px;
+  }
+
+  #athlete-input {
+    height: 65px;
+  }
+
+  #multiple-users-select-info {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 13px;
   }
 }

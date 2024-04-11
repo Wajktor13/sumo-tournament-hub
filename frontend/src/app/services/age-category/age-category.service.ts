@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AgeCategory } from '../../models/age-category';
 import { environment } from '../../../environments/environment';
 import { WeightCategory } from '../../models/weight-category';
@@ -38,12 +38,20 @@ export class AgeCategoryService {
     );
   }
 
-  public getAgeCategoryByAthleteIdAndSeasonId(
-    athleteId: number,
+  public getAgeCategoryByAthletesIdsAndSeasonId(
+    athleteIds: number[],
     seasonId: number,
   ): Observable<AgeCategory> {
+    let params = new HttpParams();
+
+    const athleteIdsString = athleteIds.join(',');
+
+    params = params.append('athleteIds', athleteIdsString);
+    params = params.append('seasonId', seasonId.toString());
+
     return this.httpClient.get<AgeCategory>(
-      `${environment.apiUrl}/${this.apiResource}/athletes/${athleteId}/seasons/${seasonId}`,
+      `${environment.apiUrl}/${this.apiResource}/byAthletesAndSeason`,
+      { params: params },
     );
   }
 }
