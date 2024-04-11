@@ -87,7 +87,7 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
           this.competition = competition;
           this.subscribeToSeasonService();
         },
-        error: (e) => this.router.navigate(['/page-not-found']),
+        error: () => this.router.navigate(['/page-not-found']),
       });
   }
 
