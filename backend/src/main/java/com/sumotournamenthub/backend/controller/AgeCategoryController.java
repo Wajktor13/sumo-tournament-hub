@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.sumotournamenthub.backend.dto.AgeCategoryDto;
+
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -44,6 +46,21 @@ public class AgeCategoryController {
     public ResponseEntity<AgeCategoryDto> getAthleteAgeCategoriesInSeason
             (@PathVariable Integer athleteId, @PathVariable Integer seasonId) {
         var ageCategory = seasonService.getAthleteAgeCategoriesInGivenSeason(seasonId, athleteId);
+        return new ResponseEntity<>(ageCategory, HttpStatus.OK);
+    }
+
+    @GetMapping("/byAthletesAndSeason")
+    public ResponseEntity<AgeCategoryDto> getAthleteAgeCategoriesInSeason(
+            @RequestParam("athleteIds") String athleteIds,
+            @RequestParam("seasonId") Integer seasonId) {
+
+        var athleteIdList = Arrays.stream(athleteIds.split(","))
+                .map(String::trim)
+                .map(Integer::parseInt)
+                .toList();
+
+        var ageCategory = seasonService.getCommonAgeCategoryForAthletesInGivenSeason(seasonId, athleteIdList);
+
         return new ResponseEntity<>(ageCategory, HttpStatus.OK);
     }
 
