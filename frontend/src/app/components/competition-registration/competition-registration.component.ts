@@ -30,7 +30,7 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
   public userClubs: Club[] | undefined;
   public athletesFromClub: Athlete[] | undefined;
   public selectedClubId: number | undefined;
-  public selectedAthleteId: number | undefined;
+  public selectedAthletesIds: number[] | undefined;
   public selectedAthleteAgeCategory: AgeCategory | undefined;
   public availableWeightCategories: WeightCategory[] | undefined;
   public selectedWeightCategoryId: number | undefined;
@@ -151,11 +151,12 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
 
   public onAthleteSelectionChange() {
     this.selectedAthleteAgeCategorySub?.unsubscribe;
+    console.log(this.selectedAthletesIds);
 
-    if (this.selectedAthleteId != undefined && this.season != undefined) {
+    if (this.selectedAthletesIds != undefined && this.season != undefined) {
       this.selectedAthleteAgeCategorySub = this.ageCategoryService
-        .getAgeCategoryByAthleteIdAndSeasonId(
-          this.selectedAthleteId,
+        .getAgeCategoryByAthletesIdsAndSeasonId(
+          this.selectedAthletesIds,
           this.season.id,
         )
         .subscribe({
@@ -199,24 +200,24 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
 
   public onButtonClick() {
     if (
-      this.competition != undefined &&
-      this.selectedAthleteAgeCategory != undefined &&
-      this.selectedWeightCategoryId != undefined &&
-      this.selectedAthleteId
+      this.competition !== undefined &&
+      this.selectedAthleteAgeCategory !== undefined &&
+      this.selectedWeightCategoryId !== undefined &&
+      this.selectedAthletesIds != undefined
     ) {
-      const registration: Partial<Registration> = {
-        athleteId: this.selectedAthleteId,
-        weightCategoryId: this.selectedWeightCategoryId,
-        registrationDate: new Date().toISOString(),
-      };
+      this.selectedAthletesIds.forEach((athleteId) => {
+        const registration: Partial<Registration> = {
+          athleteId: athleteId,
+          weightCategoryId: this.selectedWeightCategoryId,
+          registrationDate: new Date().toISOString(),
+        };
 
-      this.registartionService.addRegistration(registration);
+        this.registartionService.addRegistration(registration);
+      });
 
-      console.log(registration);
-
-      alert('successfully registered');
+      alert('Successfully registered');
     } else {
-      alert('an error occured');
+      alert('An error occurred');
     }
   }
 
