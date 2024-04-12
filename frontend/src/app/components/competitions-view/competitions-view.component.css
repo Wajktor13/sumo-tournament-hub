@@ -26,14 +26,14 @@
 }
 
 #list-title {
-  background-color: var(--secondary-color) !important;
+  color: var(--secondary-color) !important;
+  background-color: rgb(29, 29, 29) !important;
 }
 
 button {
   width: 150px;
   height: 40px;
-  background-color: white;
-  color: var(--primary-color);
+  background-color: var(--secondary-color);
   font-size: 18px;
   border-radius: 5px;
   border: 0;

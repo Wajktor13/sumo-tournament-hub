@@ -38,17 +38,18 @@ section {
 
 .input-wrapper label {
   font-size: 23px;
+  color: var(--secondary-color);
 }
 
 button {
   width: 140px;
   height: 40px;
-  background-color: white;
   color: var(--primary-color);
   font-size: 23px;
   border-radius: 5px;
   border: 0;
   transition: transform 0.3s;
+  background-color: var(--secondary-color);
 }
 
 button:hover {
@@ -82,8 +83,6 @@ button:active {
   button {
     width: 125px;
     height: 35px;
-    background-color: white;
-    color: var(--primary-color);
     font-size: 20px;
   }
 }

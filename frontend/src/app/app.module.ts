@@ -15,6 +15,7 @@ import { CompetitionRegistrationModule } from './components/competition-registra
 import { AddCompetitionModule } from './components/add-competition/add-competition.module';
 import { CompetitionsViewModule } from './components/competitions-view/competitions-view.module';
 import { RegistrationService } from './services/registration/registration.service';
+import { HomePageModule } from './components/home-page/home-page.module';
 
 @NgModule({
   declarations: [],
@@ -28,6 +29,7 @@ import { RegistrationService } from './services/registration/registration.servic
     AddCompetitionModule,
     CompetitionRegistrationModule,
     CompetitionsViewModule,
+    HomePageModule
   ],
   exports: [NavigationModule, HttpClientModule],
   providers: [

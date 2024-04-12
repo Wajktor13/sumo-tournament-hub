@@ -1,0 +1,26 @@
+p {
+    color: var(--secondary-color);
+    font-size: 90px;
+    text-align: center;
+    padding-top: 300px;
+    font-weight: 900;
+    margin: 0 20px 0 20px;
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: black;
+}
+
+@media (max-width: 768px) {
+    P {
+        font-size: 50px;
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: black;
+    }
+}
+  
+@media (max-width: 480px) {
+    p {
+        font-size: 35px;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: black;
+    }
+}

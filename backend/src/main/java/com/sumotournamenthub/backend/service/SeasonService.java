@@ -40,7 +40,18 @@ public class SeasonService {
                 .findFirst()
                 .map(ageCategoryService::convertToDto)
                 .orElseThrow(() -> new EntityNotFoundException
-                        (String.format("Age category for athlete %d in season %d not found", athleteId, seasonId)));
+                        (String.format("Age Category for athlete %d in season %d not found", athleteId, seasonId)));
+    }
+
+    public AgeCategoryDto getCommonAgeCategoryForAthletesInGivenSeason(int seasonId, List<Integer> athleteIds) {
+        var ageCategories = athleteIds.stream()
+                .map(id -> getAthleteAgeCategoriesInGivenSeason(seasonId, id))
+                .toList();
+
+        if(ageCategories.stream().distinct().count() > 1) throw new EntityNotFoundException
+                ((String.format("Common Age Category for athletes in season %d not found", seasonId)));
+
+        return ageCategories.get(0);
     }
 
     public List<SeasonDto> getAllSeasons() {

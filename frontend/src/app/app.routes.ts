@@ -6,6 +6,7 @@ import { AddSeasonComponent } from './components/add-season/add-season.component
 import { AddAthleteComponent } from './components/add-athlete/add-athlete.component';
 import { CompetitionRegistrationComponent } from './components/competition-registration/competition-registration.component';
 import { CompetitionsViewComponent } from './components/competitions-view/competitions-view.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 export const routes: Routes = [
   { path: 'login', pathMatch: 'full', component: LoginComponent },
@@ -25,6 +26,11 @@ export const routes: Routes = [
     path: 'competitions-view',
     pathMatch: 'full',
     component: CompetitionsViewComponent,
+  },
+  {
+    path: 'home',
+    pathMatch: 'full',
+    component: HomePageComponent,
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
