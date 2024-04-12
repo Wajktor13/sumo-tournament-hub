@@ -37,13 +37,13 @@ section {
 
 .input-wrapper label {
   font-size: 23px;
+  color: var(--secondary-color);
 }
 
 button {
   width: 140px;
   height: 40px;
-  background-color: white;
-  color: var(--primary-color);
+  background-color: var(--secondary-color);
   font-size: 23px;
   border-radius: 5px;
   border: 0;
@@ -63,11 +63,12 @@ p {
   font-size: 13px;
   margin: 10px;
   text-align: center;
+  color: var(--secondary-color);
 }
 
 p a {
   text-decoration: underline;
-  color: white;
+  color: var(--secondary-color);
 }
 
 @media (max-width: 768px) {
