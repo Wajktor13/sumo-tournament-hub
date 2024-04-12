@@ -3,6 +3,10 @@ nav {
   font-size: 25px;
   width: 100%;
   display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  border-bottom: 2px solid black;
 }
 
 #nav-tiles-wrapper {
