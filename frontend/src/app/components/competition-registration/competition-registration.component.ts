@@ -153,7 +153,11 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
     this.selectedAthleteAgeCategorySub?.unsubscribe;
     console.log(this.selectedAthletesIds);
 
-    if (this.selectedAthletesIds != undefined && this.season != undefined) {
+    if (
+      this.selectedAthletesIds != undefined &&
+      this.season != undefined &&
+      this.selectedAthletesIds.length > 0
+    ) {
       this.selectedAthleteAgeCategorySub = this.ageCategoryService
         .getAgeCategoryByAthletesIdsAndSeasonId(
           this.selectedAthletesIds,
