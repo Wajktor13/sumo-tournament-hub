@@ -22,6 +22,12 @@ public class SeasonService {
     private final SeasonRepository repository;
     private final AthleteService athleteService;
 
+    public void validate(SeasonDto seasonDto) {
+        if (seasonDto.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Season name cannot be empty");
+        }
+    }
+
     public List<SeasonDto> getUpcomingSeasons() {
         return repository.findByStartDateGreaterThanEqual(LocalDate.now())
                 .stream().map(this::convertToDto).toList();
