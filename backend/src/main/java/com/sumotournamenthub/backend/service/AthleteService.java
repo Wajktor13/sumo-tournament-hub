@@ -18,6 +18,28 @@ public class AthleteService {
     private final AthleteRepository repository;
     private final ClubService clubService;
 
+    public void validate(AthleteDto athleteDto) {
+        if (athleteDto.getFirstName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Athlete's first name cannot be empty");
+        }
+
+        for (char letter : athleteDto.getFirstName().toCharArray()) {
+            if (!Character.isLetter(letter) && letter != ' ') {
+                throw new IllegalArgumentException("Athlete's first name must consists only of letters or spaces");
+            }
+        }
+
+        if (athleteDto.getSecondName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Athlete's second name cannot be empty");
+        }
+
+        for (char letter : athleteDto.getSecondName().toCharArray()) {
+            if (!Character.isLetter(letter) && letter != ' ') {
+                throw new IllegalArgumentException("Athlete's second name must consists only of letters or spaces");
+            }
+        }
+    }
+
     public AthleteDto createAthlete(AthleteDto dto) {
         var club = clubService.getClubEntity(dto.getClubId());
 
