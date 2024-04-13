@@ -47,7 +47,12 @@ public class SeasonController {
     }
 
     @PostMapping
-    public ResponseEntity<SeasonDto> createSeason(@RequestBody SeasonDto seasonDto) {
+    public ResponseEntity<?> createSeason(@RequestBody SeasonDto seasonDto) {
+        try {
+            seasonService.validate(seasonDto);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
         var season = seasonService.createSeason(seasonDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(season);
