@@ -164,7 +164,9 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
             this.selectedAthleteAgeCategory = ageCategory;
             this.subscribeToCategoryWeightService();
           },
-          error: (e) => this.handleError(e),
+          error: (e) => {
+            alert('Cannot find matching age category for all athletes')
+          },
         });
     }
   }
