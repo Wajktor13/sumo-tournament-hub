@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Season } from '../../models/season';
 import { SeasonService } from '../../services/season/season.service';
 import { CompetitionRank } from '../../enums/competition-rank';
+import { AgeCategory } from '../../models/age-category'; // Update import
 import { AgeCategoryName } from '../../enums/age-category-name';
 
 @Component({
@@ -13,7 +14,7 @@ import { AgeCategoryName } from '../../enums/age-category-name';
 export class AddCompetitionComponent implements OnInit {
   todayDate?: string;
   public competitionRanks = Object.values(CompetitionRank);
-  public ageCategories = Object.values(AgeCategoryName);
+  public ageCategories: AgeCategory[] = []; // Update type
   public seasons: Season[] = [];
   addCompetitionForm: FormGroup;
 
@@ -30,7 +31,6 @@ export class AddCompetitionComponent implements OnInit {
 
   ngOnInit() {
     this.todayDate = new Date().toISOString().slice(0, 10);
-    this.initCategoryCheckboxes();
     this.fetchSeasons();
   }
 
@@ -38,6 +38,18 @@ export class AddCompetitionComponent implements OnInit {
     this.seasonService.getAll().subscribe(
       (seasons: Season[]) => {
         this.seasons = seasons;
+        const currentSeason = this.seasons.find(season => season.id === 1); // Assuming the season id is 1
+        if (currentSeason) {
+          this.seasonService.getCategories(currentSeason.id).subscribe(
+            (categories: AgeCategory[]) => { // Update type
+              this.ageCategories = categories;
+              this.initCategoryCheckboxes();
+            },
+            (error) => {
+              console.error('Error fetching categories:', error);
+            }
+          );
+        }
       },
       (error) => {
         console.error('Error fetching seasons:', error);
@@ -62,9 +74,9 @@ export class AddCompetitionComponent implements OnInit {
     if (this.addCompetitionForm.valid) {
       // Extract selected categories
       const selectedCategories = this.addCompetitionForm.value.ageCategories
-        .map((checked: boolean, i: number) => checked ? this.ageCategories[i] : null)
+        .map((checked: boolean, i: number) => checked ? this.ageCategories[i].ageCategoryName : null) // Update to access ageCategoryName
         .filter((v: string | null) => v !== null);
-      console.log(selectedCategories); 
+      console.log(selectedCategories);
       console.log(this.addCompetitionForm.value);
     } else {
       console.error("Invalid input.");
