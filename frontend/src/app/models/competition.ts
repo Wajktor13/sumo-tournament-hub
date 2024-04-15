@@ -6,7 +6,7 @@ export type Competition = {
   name: string;
   startTime: Date;
   endTime: Date;
-  countryLimits: { [key in Country]: number } | {};
+  countryLimits: { [key in Country]: number } | object;
   seasonId: number;
   rank: CompetitionRank;
 };

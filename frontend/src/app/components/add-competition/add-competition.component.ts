@@ -146,7 +146,7 @@ export class AddCompetitionComponent implements OnInit {
   
     const weightsToAdd: { [key: number]: number[] } = {};
   
-    this.categories.controls.forEach((categoryControl, index) => {
+    this.categories.controls.forEach((categoryControl) => {
       if (categoryControl.value.checked) {
         weightsToAdd[categoryControl.value.id] = [];
         const weightCategoryControls = categoryControl.get('weightCategories') as FormArray;
