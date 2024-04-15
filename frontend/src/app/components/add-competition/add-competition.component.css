@@ -77,6 +77,10 @@ section {
   color: var(--primary-color);
 }
 
+.weight-category {
+  margin-left: 20px;
+}
+
 button {
   width: 140px;
   height: 60px;
