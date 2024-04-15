@@ -28,7 +28,7 @@ section {
 
 .left,
 .right {
-  margin: 0px 20px;
+    margin: 0px 20px;
 }
 
 .input-wrapper {
@@ -38,13 +38,13 @@ section {
 
 .input-wrapper input,
 .input-wrapper select {
-  width: 300px;
-  height: 50px;
-  border-radius: 5px;
-  border: 0;
-  font-size: 19px;
-  color: var(--primary-color);
-  background-color: white;
+    width: 300px;
+    height: 50px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 19px;
+    color: var(--primary-color);
+    background-color: white;
 }
 
 .input-wrapper label {
@@ -53,10 +53,11 @@ section {
 }
 
 #category-input {
-  height: 210px;
-  border-radius: 5px;
-  border: 0;
-  background-color: white;
+    height: 210px;
+    border-radius: 5px;
+    border: 0;
+    /* Temporary fix to see categories names, before I find out how to correctly change font color. */
+    /* background-color: white; */
 }
 
 .checkbox-wrapper {
@@ -74,6 +75,10 @@ section {
 .checkbox-wrapper label {
   font-size: 19px;
   color: var(--primary-color);
+}
+
+.weight-category {
+  margin-left: 20px;
 }
 
 button {
@@ -96,9 +101,9 @@ button:active {
 }
 
 button:disabled {
-  background-color: grey;
-  color: white;
-  transform: none;
+    background-color: grey;
+    color: white;
+    transform: none;
 }
 
 @media (max-width: 768px) {
@@ -111,14 +116,14 @@ button:disabled {
     flex-direction: column;
   }
 
-  .input-wrapper input,
-  .input-wrapper select {
-    width: 220px;
-    height: 35px;
-    border-radius: 5px;
-    border: 0;
-    font-size: 16px;
-  }
+    .input-wrapper input,
+    .input-wrapper select {
+        width: 220px;
+        height: 35px;
+        border-radius: 5px;
+        border: 0;
+        font-size: 16px;
+    }
 
   .input-wrapper label {
     font-size: 20px;
