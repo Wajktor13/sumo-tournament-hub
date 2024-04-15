@@ -61,6 +61,12 @@ button:active {
   transform: scale(0.9);
 }
 
+button:disabled {
+  background-color: grey;
+  color: white;
+  transform: none;
+}
+
 @media (max-width: 768px) {
   #login-div {
     width: 260px;

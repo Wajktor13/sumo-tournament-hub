@@ -48,6 +48,8 @@
       />
     </div>
 
-    <button (click)="submitForm()">Add Athlete</button>
+    <p *ngIf="this.athleteWasAdded" style="color: lightgreen">Athlete was succesfully added</p>
+
+    <button [disabled]="!this.addAthleteForm.valid" (click)="submitForm()">Add Athlete</button>
   </div>
 </section>

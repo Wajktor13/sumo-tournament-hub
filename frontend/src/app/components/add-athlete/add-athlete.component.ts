@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { ClubService } from '../../services/club/club.service';
 import { AthleteService } from '../../services/athlete/athlete.service';
 import { AuthService } from '../../services/auth/auth.service';
@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 export class AddAthleteComponent implements OnInit, OnDestroy {
   date?: string;
   availableClubs: Club[] = [];
+  athleteWasAdded: boolean = false;
 
   // subs
   currentUserSub: Subscription | undefined;
@@ -58,8 +59,23 @@ export class AddAthleteComponent implements OnInit, OnDestroy {
     ]),
     clubId: new FormControl('', [Validators.required]),
     gender: new FormControl('', [Validators.required]),
-    birthDate: new FormControl('', [Validators.required]),
+    birthDate: new FormControl('', [
+      Validators.required,
+      this.correctDateValidator()
+    ]),
   });
+
+  correctDateValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string ]: boolean } | null => {
+      const today = new Date();
+
+      if (!(control && control.value)) {
+        return null;
+      }
+
+      return new Date(control.value) > today ? { invalidDate: true } : null;
+    }
+  }
 
   submitForm() {
     if (this.addAthleteForm.valid) {
@@ -78,8 +94,11 @@ export class AddAthleteComponent implements OnInit, OnDestroy {
         next: (v) => console.log(v),
         error: (e) => console.log(e),
       });
+
+      this.addAthleteForm.reset();
+      this.athleteWasAdded = true;
     } else {
-      alert('invalid input');
+      this.athleteWasAdded = false;
     }
   }
 }
