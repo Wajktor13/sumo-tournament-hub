@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Season } from '../../models/season';
 import { SeasonService } from '../../services/season/season.service';
 import { CompetitionRank } from '../../enums/competition-rank';
@@ -31,6 +31,7 @@ export class AddCompetitionComponent implements OnInit {
       endDate: ['', Validators.required],
       competitionRank: ['', Validators.required],
       season: ['', Validators.required],
+      categories: this.fb.array([])
     });
   }
 
@@ -54,6 +55,7 @@ export class AddCompetitionComponent implements OnInit {
     this.seasonService.getCategories(seasonId).subscribe(
       (categories: AgeCategory[]) => {
         this.ageCategories = categories;
+        this.addCompetitionForm.setControl('categories', this.buildCategoryControls());
         this.ageCategories.forEach(ageCategory => {
           this.fetchWeightCategories(ageCategory.id);
         });
@@ -64,10 +66,34 @@ export class AddCompetitionComponent implements OnInit {
     );
   }
 
+  buildCategoryControls(): FormArray {
+    return this.fb.array(this.ageCategories.map(category => 
+      this.fb.group({
+        id: category.id,
+        checked: false,
+        weightCategories: this.fb.array([])
+      })
+    ));
+  }
+
+  updateWeightCategories(ageCategoryId: number): void {
+    const index = this.ageCategories.findIndex(c => c.id === ageCategoryId);
+    const categoryControl = this.categories.at(index) as FormGroup;
+    categoryControl.setControl('weightCategories', this.fb.array(
+      this.getWeightCategories(ageCategoryId).map(wc => 
+        this.fb.group({
+          checked: false,
+          weightCategoryId: wc.id
+        })
+      )
+    ));
+  }
+
   fetchWeightCategories(ageCategoryId: number): void {
     this.ageCategoryService.getAllWeightCategories(ageCategoryId).subscribe(
       (weightCategories: WeightCategory[]) => {
         this.weightCategoriesMap[ageCategoryId] = weightCategories;
+        this.updateWeightCategories(ageCategoryId);
       },
       (error) => {
         console.error('Error fetching weight categories:', error);
@@ -75,8 +101,20 @@ export class AddCompetitionComponent implements OnInit {
     );
   }
 
+  getWeightCategoryControls(ageCategoryId: number) {
+    const index = this.ageCategories.findIndex(c => c.id === ageCategoryId);
+    if (index !== -1) {
+      const categoryControl = this.categories.at(index) as FormGroup;
+      return (categoryControl.get('weightCategories') as FormArray).controls;
+    }
+    return [];
+  }
+  
   getWeightCategories(ageCategoryId: number): WeightCategory[] {
-    return this.weightCategoriesMap[ageCategoryId] || [];
+    if (ageCategoryId !== undefined) {
+      return this.weightCategoriesMap[ageCategoryId] || [];
+    }
+    return [];
   }
 
   onSeasonChange(event: any): void {
@@ -86,11 +124,11 @@ export class AddCompetitionComponent implements OnInit {
     this.fetchCategories(seasonId);
   }
 
+  get categories(): FormArray {
+    return this.addCompetitionForm.get('categories') as FormArray;
+  }
+
   submitForm() {
-    if (this.addCompetitionForm.valid) {
-      console.log(this.addCompetitionForm.value);
-    } else {
-      console.error("Invalid input.");
-    }
+    console.log(this.addCompetitionForm.value);
   }
 }

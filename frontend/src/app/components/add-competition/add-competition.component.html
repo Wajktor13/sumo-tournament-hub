@@ -38,20 +38,26 @@
 
                 <div class="input-wrapper">
                     <label for="category-input">Category</label>
-                    <div id="category-input">
-                        <div *ngFor="let category of ageCategories; let i = index" class="age-category">
-                            <mat-checkbox class="checkbox-wrapper age-category">
-                                {{ category.ageCategoryName }} ({{ category.gender }})
-                            </mat-checkbox>
-                            <div class="weight-category">
-                                <mat-checkbox *ngFor="let weightCategory of getWeightCategories(category.id)"
-                                    class="checkbox-wrapper weight-category">
-                                    {{ weightCategory.weightUpperLimit <= 0 ? 'Open Weight' : 'Up to ' +
-                                        weightCategory.weightUpperLimit + 'kg' }} </mat-checkbox>
+                    <div id="category-input" formArrayName="categories">
+                        <ng-container *ngFor="let categoryControl of categories.controls; let i = index">
+                            <div *ngIf="ageCategories[i]?.id as categoryId" [formGroupName]="i" class="age-category">
+                                <mat-checkbox formControlName="checked">
+                                    {{ ageCategories[i].ageCategoryName }} ({{ ageCategories[i].gender }})
+                                </mat-checkbox>
+                                <div class="weight-category" formArrayName="weightCategories">
+                                    <ng-container *ngIf="getWeightCategories(categoryId) as weightCategories">
+                                        <ng-container *ngFor="let weightControl of weightCategories; let j = index" [formGroupName]="j">
+                                            <mat-checkbox formControlName="checked">
+                                                {{ weightControl.weightUpperLimit <= 0 ? 'Open Weight' : 'Up to ' + weightControl?.weightUpperLimit + 'kg' }}
+                                            </mat-checkbox>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
                             </div>
-                        </div>
+                        </ng-container>
                     </div>
                 </div>
+                                                                             
 
             </div>
         </div>
