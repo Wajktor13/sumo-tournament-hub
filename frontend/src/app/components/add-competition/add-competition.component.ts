@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Season } from '../../models/season';
 import { SeasonService } from '../../services/season/season.service';
 import { CompetitionRank } from '../../enums/competition-rank';
