@@ -1,6 +1,6 @@
 package com.sumotournamenthub.backend.domain;
 
-import com.sumotournamenthub.backend.constants.CoachRank;
+import com.sumotournamenthub.backend.constants.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +18,13 @@ public class User {
     private Integer id;
 
     @NonNull
-    private String username;
+    private String firstName;
+
+    @NonNull
+    private String lastName;
+
+    @NonNull
+    private String email;
 
     @NonNull
     private String password; // Hashed password will be stored
@@ -27,6 +33,6 @@ public class User {
     private List<Club> clubs;
 
     @NonNull
-    private CoachRank rank;
+    private Role role;
 
 }

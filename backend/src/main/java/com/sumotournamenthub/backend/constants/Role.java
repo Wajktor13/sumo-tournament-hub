@@ -1,6 +1,6 @@
 package com.sumotournamenthub.backend.constants;
 
-public enum CoachRank {
-    CLUB, COUNTRY, ADMIN;
+public enum Role {
+    COACH, STAFF_COACH, ADMIN;
 
 }
