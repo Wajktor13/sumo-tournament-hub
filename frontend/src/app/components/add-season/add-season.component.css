@@ -86,6 +86,10 @@ section {
   font-size: 19px;
 }
 
+.created-category button {
+  background-color: white;
+}
+
 button {
   width: 180px;
   height: 40px;

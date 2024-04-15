@@ -16,6 +16,7 @@ import { Season } from '../../models/season';
 export class AddSeasonComponent implements OnInit {
   todayDate?: string;
   ageCategoryNames: Array<string> = Object.values(AgeCategoryName);
+  seasonWasAdded: boolean = false;
 
   createdAgeCategories:Array<AgeCategory> = [];
 
@@ -23,6 +24,26 @@ export class AddSeasonComponent implements OnInit {
 
   ngOnInit() {
     this.todayDate = new Date().toISOString().slice(0, 10);
+
+    this.addAgeCategoryForm.controls.ageLowerBound.valueChanges.subscribe(value => {
+      if (value) {
+        if (value < 0) {
+          this.addAgeCategoryForm.controls.ageLowerBound.setValue(null);
+        }
+  
+        if (value > this.addAgeCategoryForm.value.ageUpperBound!) {
+          this.addAgeCategoryForm.controls.ageUpperBound.setValue(value);
+        }
+      }
+    });
+
+    this.addAgeCategoryForm.controls.ageUpperBound.valueChanges.subscribe(value => {
+      if (value) {
+        if (value < 0) {
+          this.addAgeCategoryForm.controls.ageUpperBound.setValue(null);
+        }
+      }
+    });
   }
 
   addSeasonForm = new FormGroup({
@@ -41,11 +62,13 @@ export class AddSeasonComponent implements OnInit {
     ageCategoryName: new FormControl('', [
       Validators.required
     ]),
-    ageLowerBound: new FormControl('', [
-      Validators.required
+    ageLowerBound: new FormControl(0, [
+      Validators.required,
+      Validators.min(0)
     ]),
-    ageUpperBound: new FormControl('', [
-      Validators.required
+    ageUpperBound: new FormControl(0, [
+      Validators.required,
+      Validators.min(0)
     ]),
     gender: new FormControl('', [
       Validators.required
@@ -107,7 +130,13 @@ export class AddSeasonComponent implements OnInit {
                   console.log(vAC);
                   this.seasonService.addAgeCategoryToSeason(vS!.id, vAC!.id).subscribe(
                     {
-                      next: v => console.log(v),
+                      next: v => {
+                        console.log(v)
+                        this.seasonWasAdded = true;
+                        this.addSeasonForm.reset()
+                        this.addAgeCategoryForm.reset()
+                        this.createdAgeCategories = []
+                      },
                       error: e => console.log(e)
                     }
                   )

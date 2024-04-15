@@ -8,15 +8,17 @@
       
           <div class="input-wrapper">
               <label for="start-date-input">Start date</label>
-              <input formControlName="startDate" max="{{this.addSeasonForm.value.endDate}}" type="date" name="start-date-input" id="start-date-input" />
+              <input formControlName="startDate" max="{{this.addSeasonForm.value.endDate || '9999-12-31' }}" type="date" name="start-date-input" id="start-date-input" />
           </div>
           
           <div class="input-wrapper">
               <label for="end-date-input">End date</label>
-              <input formControlName="endDate" min="{{this.addSeasonForm.value.startDate}}" type="date" name="end-date-input" id="end-date-input" />
+              <input formControlName="endDate" min="{{this.addSeasonForm.value.startDate}}" max="9999-12-31" type="date" name="end-date-input" id="end-date-input" />
           </div>
 
-          <button [disabled]="!this.addSeasonForm.valid || this.createdAgeCategories.length !== 10" (click)="addSeason()">Add season</button>
+          <p *ngIf="this.seasonWasAdded" style="color: lightgreen; font-size: 16px;">Season was successfully added</p>
+
+          <button [disabled]="!this.addSeasonForm.valid" (click)="addSeason()">Add season</button>
       </div>
       
       <div class="add-season-column-div" [formGroup]="addAgeCategoryForm">
