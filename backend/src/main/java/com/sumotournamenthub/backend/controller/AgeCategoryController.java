@@ -1,5 +1,6 @@
 package com.sumotournamenthub.backend.controller;
 
+import com.sumotournamenthub.backend.dto.SeasonDto;
 import com.sumotournamenthub.backend.dto.WeightCategoryDto;
 import com.sumotournamenthub.backend.service.AgeCategoryService;
 import com.sumotournamenthub.backend.service.SeasonService;
@@ -65,7 +66,12 @@ public class AgeCategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<AgeCategoryDto> createCategory(@RequestBody AgeCategoryDto categoryDto) {
+    public ResponseEntity<?> createCategory(@RequestBody AgeCategoryDto categoryDto) {
+        try {
+            ageCategoryService.validate(categoryDto);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
         var savedCategory = ageCategoryService.createAgeCategory(categoryDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }

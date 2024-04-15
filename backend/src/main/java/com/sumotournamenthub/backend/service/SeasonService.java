@@ -26,6 +26,9 @@ public class SeasonService {
         if (seasonDto.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("Season name cannot be empty");
         }
+        if (seasonDto.getStartDate().isAfter(seasonDto.getEndDate())) {
+            throw new IllegalArgumentException("Start date cannot be after end date");
+        }
     }
 
     public List<SeasonDto> getUpcomingSeasons() {
