@@ -8,7 +8,6 @@ import com.sumotournamenthub.backend.repository.AgeCategoryRepository;
 import com.sumotournamenthub.backend.utils.ExceptionUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +20,12 @@ public class AgeCategoryService {
     public AgeCategoryDto createAgeCategory(AgeCategoryDto ageCategoryDto) {
         AgeCategory newAgeCategory = createOrRetrieveCategory(ageCategoryDto);
         return convertToDto(repository.save(newAgeCategory));
+    }
+
+    public void validate(AgeCategoryDto categoryDto) {
+        if (categoryDto.getAgeCategoryName() == null) {
+            throw new IllegalArgumentException("Age category name cannot be empty");
+        }
     }
 
     public AgeCategoryDto getAgeCategory(int id) {
