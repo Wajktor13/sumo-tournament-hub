@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { User } from '../../models/user';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnDestroy {
   public isLoggedInSub: Subscription | null = null;
   public userSub: Subscription | null = null;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.authService.isLoggedIn$.subscribe({
       next: (value) => (this.isLoggedIn = value),
       error: (e) => console.log(e),
@@ -37,5 +38,6 @@ export class LoginComponent implements OnDestroy {
   public login(): void {
     this.authService.login(this.email, this.password);
     alert('successfully logged in');
+    this.router.navigateByUrl('/home');
   }
 }

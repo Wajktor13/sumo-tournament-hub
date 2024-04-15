@@ -7,9 +7,10 @@ import { AddAthleteComponent } from './components/add-athlete/add-athlete.compon
 import { CompetitionRegistrationComponent } from './components/competition-registration/competition-registration.component';
 import { CompetitionsViewComponent } from './components/competitions-view/competitions-view.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { IsSignedInGuard } from './services/auth/is-signed-in.guard';
 
 export const routes: Routes = [
-  { path: 'login', pathMatch: 'full', component: LoginComponent },
+  { path: 'login', pathMatch: 'full', component: LoginComponent, canActivate: [IsSignedInGuard] },
   { path: 'add-season', pathMatch: 'full', component: AddSeasonComponent },
   { path: 'add-athlete', pathMatch: 'full', component: AddAthleteComponent },
   {
