@@ -6,6 +6,8 @@ import { CompetitionRank } from '../../enums/competition-rank';
 import { AgeCategory } from '../../models/age-category';
 import { AgeCategoryService } from '../../services/age-category/age-category.service';
 import { WeightCategory } from '../../models/weight-category';
+import { CompetitionService } from '../../services/competition/competition.service';
+import { WeightCategoryService } from '../../services/weight-category/weight-category.service';
 
 @Component({
   selector: 'app-add-competition',
@@ -23,7 +25,9 @@ export class AddCompetitionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private seasonService: SeasonService,
-    private ageCategoryService: AgeCategoryService
+    private ageCategoryService: AgeCategoryService,
+    private competitionService: CompetitionService,
+    private weightCategoryService: WeightCategoryService
   ) {
     this.addCompetitionForm = this.fb.group({
       competitionName: ['', [Validators.required, Validators.pattern(/^[\p{L}\s\-.']+$/u)]],
@@ -129,6 +133,66 @@ export class AddCompetitionComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.addCompetitionForm.value);
+    const competitionData = this.addCompetitionForm.value;
+    const competitionToAdd = {
+      id: 0,
+      name: competitionData.competitionName,
+      startTime: competitionData.startDate,
+      endTime: competitionData.endDate,
+      countryLimits: {},
+      seasonId: competitionData.season,
+      rank: competitionData.competitionRank,
+    };
+  
+    const weightsToAdd: { [key: number]: number[] } = {};
+  
+    this.categories.controls.forEach((categoryControl, index) => {
+      if (categoryControl.value.checked) {
+        weightsToAdd[categoryControl.value.id] = [];
+        const weightCategoryControls = categoryControl.get('weightCategories') as FormArray;
+        weightCategoryControls.controls.forEach(weightControl => {
+          if (weightControl.value.checked) {
+            weightsToAdd[categoryControl.value.id].push(weightControl.value.weightCategoryId);
+          }
+        });
+      }
+    });
+  
+    this.competitionService.add(competitionToAdd).subscribe(
+      (addedCompetition) => {
+        console.log('Competition added successfully:', addedCompetition);
+        
+        // Adding weight categories after competition is added
+        Object.entries(weightsToAdd).forEach(([categoryId, weightIds]) => {
+          weightIds.forEach(weightId => {
+            const weightCategory = this.weightCategoriesMap[parseInt(categoryId)].find(wc => wc.id === weightId);
+            if (weightCategory) {
+              const weightCategoryToAdd = {
+                id: 0,
+                weightUpperLimit: weightCategory.weightUpperLimit,
+                openWeight: weightCategory.openWeight,
+                competitionId: addedCompetition!.id,
+                ageCategoryId: parseInt(categoryId),
+              };
+  
+              this.weightCategoryService.add(weightCategoryToAdd).subscribe(
+                (addedWeightCategory) => {
+                  console.log('Weight category added successfully:', addedWeightCategory);
+                },
+                (error) => {
+                  console.error('Error adding weight category:', error);
+                }
+              );
+            } else {
+              console.error(`Weight category with ID ${weightId} not found in category ${categoryId}.`);
+            }
+          });
+        });
+      },
+      (error) => {
+        console.error('Error adding competition:', error);
+      }
+    );
   }
+  
 }
