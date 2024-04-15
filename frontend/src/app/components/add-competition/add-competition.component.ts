@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Season } from '../../models/season';
 import { SeasonService } from '../../services/season/season.service';
 import { CompetitionRank } from '../../enums/competition-rank';
-import { AgeCategory } from '../../models/age-category'; // Update import
+import { AgeCategory } from '../../models/age-category';
 import { AgeCategoryName } from '../../enums/age-category-name';
 
 @Component({
@@ -14,7 +14,7 @@ import { AgeCategoryName } from '../../enums/age-category-name';
 export class AddCompetitionComponent implements OnInit {
   todayDate?: string;
   public competitionRanks = Object.values(CompetitionRank);
-  public ageCategories: AgeCategory[] = []; // Update type
+  public ageCategories: AgeCategory[] = [];
   public seasons: Season[] = [];
   addCompetitionForm: FormGroup;
 
@@ -25,7 +25,7 @@ export class AddCompetitionComponent implements OnInit {
       endDate: ['', Validators.required],
       competitionRank: ['', Validators.required],
       season: ['', Validators.required],
-      ageCategories: this.fb.array([]) // Initialize an empty FormArray
+      ageCategories: this.fb.array([]) 
     });
   }
 
@@ -38,18 +38,6 @@ export class AddCompetitionComponent implements OnInit {
     this.seasonService.getAll().subscribe(
       (seasons: Season[]) => {
         this.seasons = seasons;
-        const currentSeason = this.seasons.find(season => season.id === 1); // Assuming the season id is 1
-        if (currentSeason) {
-          this.seasonService.getCategories(currentSeason.id).subscribe(
-            (categories: AgeCategory[]) => { // Update type
-              this.ageCategories = categories;
-              this.initCategoryCheckboxes();
-            },
-            (error) => {
-              console.error('Error fetching categories:', error);
-            }
-          );
-        }
       },
       (error) => {
         console.error('Error fetching seasons:', error);
@@ -57,9 +45,21 @@ export class AddCompetitionComponent implements OnInit {
     );
   }
 
-  // Initialize checkboxes for each category
+  fetchCategories(seasonId: number): void {
+    this.seasonService.getCategories(seasonId).subscribe(
+      (categories: AgeCategory[]) => {
+        this.ageCategories = categories;
+        this.initCategoryCheckboxes();
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
+  }
+
   private initCategoryCheckboxes(): void {
     const categoryArray = this.addCompetitionForm.get('ageCategories') as FormArray;
+    categoryArray.clear(); // Clear previous checkboxes
     this.ageCategories.forEach(() => {
       categoryArray.push(this.fb.control(true)); // Initialize each checkbox as checked
     });
@@ -70,11 +70,15 @@ export class AddCompetitionComponent implements OnInit {
     categories.at(index).setValue(isChecked);
   }
 
+  onSeasonChange(event: any): void {
+    const seasonId = event.target.value;
+    this.fetchCategories(seasonId);
+  }
+
   submitForm() {
     if (this.addCompetitionForm.valid) {
-      // Extract selected categories
       const selectedCategories = this.addCompetitionForm.value.ageCategories
-        .map((checked: boolean, i: number) => checked ? this.ageCategories[i].ageCategoryName : null) // Update to access ageCategoryName
+        .map((checked: boolean, i: number) => checked ? this.ageCategories[i].ageCategoryName : null)
         .filter((v: string | null) => v !== null);
       console.log(selectedCategories);
       console.log(this.addCompetitionForm.value);

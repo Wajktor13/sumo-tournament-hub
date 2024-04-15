@@ -30,9 +30,10 @@
             <div class="right">
                 <div class="input-wrapper">
                     <label for="season-input">Season</label>
-                    <select formControlName="season" id="season-input">
+                    <select formControlName="season" id="season-input" (change)="onSeasonChange($event)">
                         <option *ngFor="let season of seasons" [value]="season.id">{{ season.name }}</option>
                     </select>
+
                 </div>
 
 
