@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Season } from '../../models/season';
+import { SeasonService } from '../../services/season/season.service';
 import { CompetitionRank } from '../../enums/competition-rank';
 import { AgeCategoryName } from '../../enums/age-category-name';
 
@@ -12,9 +14,10 @@ export class AddCompetitionComponent implements OnInit {
   todayDate?: string;
   public competitionRanks = Object.values(CompetitionRank);
   public ageCategories = Object.values(AgeCategoryName);
+  public seasons: Season[] = [];
   addCompetitionForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private seasonService: SeasonService) {
     this.addCompetitionForm = this.fb.group({
       competitionName: ['', [Validators.required, Validators.pattern(/^[\p{L}\s\-.']+$/u)]],
       startDate: ['', Validators.required],
@@ -28,6 +31,18 @@ export class AddCompetitionComponent implements OnInit {
   ngOnInit() {
     this.todayDate = new Date().toISOString().slice(0, 10);
     this.initCategoryCheckboxes();
+    this.fetchSeasons();
+  }
+
+  private fetchSeasons(): void {
+    this.seasonService.getAll().subscribe(
+      (seasons: Season[]) => {
+        this.seasons = seasons;
+      },
+      (error) => {
+        console.error('Error fetching seasons:', error);
+      }
+    );
   }
 
   // Initialize checkboxes for each category

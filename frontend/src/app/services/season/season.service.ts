@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Season } from '../../models/season';
+import { AgeCategory} from '../../models/age-category';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
@@ -27,6 +28,12 @@ export class SeasonService {
   public getUpcoming(): Observable<Season[]> {
     return this.httpClient.get<Season[]>(
       `${environment.apiUrl}/${this.apiResource}/upcoming`,
+    );
+  }
+
+  public getCategories(id: number): Observable<AgeCategory[]> {
+    return this.httpClient.get<AgeCategory[]>(
+      `${environment.apiUrl}/${this.apiResource}/${id}/categories`,
     );
   }
 

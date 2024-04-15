@@ -29,12 +29,10 @@
                 <div class="input-wrapper">
                     <label for="season-input">Season</label>
                     <select formControlName="season" id="season-input">
-                        <option value="summer">Summer</option>
-                        <option value="winter">Winter</option>
-                        <option value="spring">Spring</option>
-                        <option value="autumn">Autumn</option>
+                      <option *ngFor="let season of seasons" [value]="season.id">{{ season.name }}</option>
                     </select>
-                </div>
+                  </div>
+                  
     
                 <div class="input-wrapper" >
                     <label for="category-input">Category</label>
