@@ -40,13 +40,13 @@
                 <div class="input-wrapper">
                     <label for="category-input">Category</label>
                     <div id="category-input">
-                        <ng-container formArrayName="ageCategories">
+                        <ng-container>
                             <div *ngFor="let category of ageCategories; let i = index" class="age-category">
-                                <mat-checkbox [formControlName]="i" (change)="onCategoryChange(i, $event.checked)" class="checkbox-wrapper age-category">
+                                <mat-checkbox class="checkbox-wrapper age-category">
                                     {{ category.ageCategoryName }} ({{ category.gender }})
                                 </mat-checkbox>
-                                <div *ngIf="addCompetitionForm.value.ageCategories[i]" class="weight-category">
-                                    <mat-checkbox *ngFor="let weightCategory of getWeightCategories(category.id)" [formControlName]="'weight_' + category.id + '_' + weightCategory.id" class="checkbox-wrapper weight-category">
+                                <div class="weight-category">
+                                    <mat-checkbox *ngFor="let weightCategory of getWeightCategories(category.id)" class="checkbox-wrapper weight-category">
                                         {{ weightCategory.weightUpperLimit <= 0 ? 'Open Weight' : 'Up to ' + weightCategory.weightUpperLimit + 'kg'}}
                                     </mat-checkbox>
                                 </div>
