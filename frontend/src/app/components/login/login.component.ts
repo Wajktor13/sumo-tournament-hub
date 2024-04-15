@@ -36,6 +36,6 @@ export class LoginComponent implements OnDestroy {
 
   public login(): void {
     this.authService.login(this.email, this.password);
-    alert("successfully logged in");
+    alert('successfully logged in');
   }
 }

@@ -1,5 +1,5 @@
-import { CompetitionRank } from "../enums/competition-rank";
-import { Country } from "../enums/country";
+import { CompetitionRank } from '../enums/competition-rank';
+import { Country } from '../enums/country';
 
 export type Competition = {
   id: number;

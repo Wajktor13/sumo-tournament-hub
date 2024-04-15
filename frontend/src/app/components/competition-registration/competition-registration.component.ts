@@ -9,12 +9,12 @@ import { Club } from '../../models/club';
 import { AuthService } from '../../services/auth/auth.service';
 import { ClubService } from '../../services/club/club.service';
 import { User } from '../../models/user';
-import { AthleteService } from '../../services/athlete/athlete.service';
 import { Athlete } from '../../models/athlete';
 import { AgeCategory } from '../../models/age-category';
 import { AgeCategoryService } from '../../services/age-category/age-category.service';
-import { WeightCategoryService } from '../../services/weight-category/weight-category.service';
 import { WeightCategory } from '../../models/weight-category';
+import { RegistrationService } from '../../services/registration/registration.service';
+import { Registration } from '../../models/registration';
 
 @Component({
   selector: 'app-competition-registration',
@@ -30,10 +30,10 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
   public userClubs: Club[] | undefined;
   public athletesFromClub: Athlete[] | undefined;
   public selectedClubId: number | undefined;
-  public selectedAthleteId: number | undefined;
+  public selectedAthletesIds: number[] | undefined;
   public selectedAthleteAgeCategory: AgeCategory | undefined;
   public availableWeightCategories: WeightCategory[] | undefined;
-  public selectedWeightCategory: WeightCategory | undefined;
+  public selectedWeightCategoryId: number | undefined;
 
   // subs
   private competitionSub: Subscription | undefined;
@@ -52,9 +52,8 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private clubService: ClubService,
     private router: Router,
-    private athleteService: AthleteService,
     private ageCategoryService: AgeCategoryService,
-    private weightCategoryService: WeightCategoryService,
+    private registartionService: RegistrationService,
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +61,6 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
     const competitionId: number = Number(routeParams.get('competitionId'));
 
     this.subscribeToCompetitionService(competitionId);
-    this.subscribeToSeasonService();
     this.subscribeToUserService();
     this.subscribeToClubService();
   }
@@ -81,14 +79,15 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
       .getOne(competitionId)
       .subscribe({
         next: (competition: Competition | undefined) => {
-          this.competition = competition;
-
           if (competition != undefined && competition.startTime <= new Date()) {
             alert('this competition expired');
-            this.router.navigate(['/home']); // should be changed to subpage with competitions
+            this.router.navigate(['/competitions-view']);
           }
+
+          this.competition = competition;
+          this.subscribeToSeasonService();
         },
-        error: (e) => this.handleError(e),
+        error: () => this.router.navigate(['/page-not-found']),
       });
   }
 
@@ -139,11 +138,12 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
     this.athletesFromClubSub?.unsubscribe();
 
     if (this.selectedClubId != undefined) {
-      this.athletesFromClubSub = this.athleteService
-        .getAllByClubId(this.selectedClubId)
+      this.athletesFromClubSub = this.clubService
+        .getAllAthletes(this.selectedClubId)
         .subscribe({
-          next: (athletes: Athlete[] | undefined) =>
-            (this.athletesFromClub = athletes),
+          next: (athletes: Athlete[] | undefined) => {
+            this.athletesFromClub = athletes;
+          },
           error: (e) => this.handleError(e),
         });
     }
@@ -151,52 +151,79 @@ export class CompetitionRegistrationComponent implements OnInit, OnDestroy {
 
   public onAthleteSelectionChange() {
     this.selectedAthleteAgeCategorySub?.unsubscribe;
-
-    if (this.selectedAthleteId != undefined) {
-      this.selectedAthleteAgeCategorySub = this.ageCategoryService
-        .getByAthleteId(this.selectedAthleteId)
-        .subscribe({
-          next: (ageCategory: AgeCategory | undefined) =>
-            (this.selectedAthleteAgeCategory = ageCategory),
-          error: (e) => this.handleError(e),
-        });
-    }
-
-    this.availableWeightCategoriesSub?.unsubscribe();
+    console.log(this.selectedAthletesIds);
 
     if (
-      this.selectedAthleteAgeCategory != undefined &&
-      this.competition != undefined
+      this.selectedAthletesIds != undefined &&
+      this.season != undefined &&
+      this.selectedAthletesIds.length > 0
     ) {
-      this.availableWeightCategoriesSub = this.weightCategoryService
-        .getAllByAgeCategoryIdAndCompetitionId(
-          this.selectedAthleteAgeCategory.id,
-          this.competition.id,
+      this.selectedAthleteAgeCategorySub = this.ageCategoryService
+        .getAgeCategoryByAthletesIdsAndSeasonId(
+          this.selectedAthletesIds,
+          this.season.id,
         )
         .subscribe({
-          next: (weightCategories: WeightCategory[] | undefined) =>
-            (this.availableWeightCategories = weightCategories),
-          error: (e) => this.handleError(e),
+          next: (ageCategory: AgeCategory | undefined) => {
+            this.selectedAthleteAgeCategory = ageCategory;
+            this.subscribeToCategoryWeightService();
+          },
+          error: () => {
+            alert('Cannot find matching age category for all athletes')
+          },
         });
     }
   }
 
+  private subscribeToCategoryWeightService() {
+    this.availableWeightCategoriesSub?.unsubscribe;
+
+    if (this.selectedAthleteAgeCategory == undefined) {
+      return;
+    }
+
+    this.availableWeightCategoriesSub = this.ageCategoryService
+      .getAllWeightCategories(this.selectedAthleteAgeCategory.id)
+      .subscribe({
+        next: (weightCategories: WeightCategory[] | undefined) =>
+          (this.availableWeightCategories = weightCategories?.sort(
+            (wc1: WeightCategory, wc2: WeightCategory) => {
+              const wc1_ul: number = wc1.weightUpperLimit;
+              const wc2_ul: number = wc2.weightUpperLimit;
+
+              if (wc1_ul != -1 && wc2_ul != -1) {
+                return wc1_ul - wc2_ul;
+              } else if (wc1_ul == -1) {
+                return 1;
+              } else {
+                return -1;
+              }
+            },
+          )),
+        error: (e) => this.handleError(e),
+      });
+  }
+
   public onButtonClick() {
     if (
-      this.competition != undefined &&
-      this.selectedAthleteAgeCategory != undefined &&
-      this.selectedWeightCategory != undefined &&
-      this.selectedAthleteId &&
-      this.competitionService.registerAthlete(
-        this.competition?.id,
-        this.selectedAthleteAgeCategory.id,
-        this.selectedWeightCategory.id,
-        this.selectedAthleteId,
-      )
+      this.competition !== undefined &&
+      this.selectedAthleteAgeCategory !== undefined &&
+      this.selectedWeightCategoryId !== undefined &&
+      this.selectedAthletesIds != undefined
     ) {
-      alert('successfully registered');
+      this.selectedAthletesIds.forEach((athleteId) => {
+        const registration: Partial<Registration> = {
+          athleteId: athleteId,
+          weightCategoryId: this.selectedWeightCategoryId,
+          registrationDate: new Date().toISOString(),
+        };
+
+        this.registartionService.addRegistration(registration);
+      });
+
+      alert('Successfully registered');
     } else {
-      alert('an error occured');
+      alert('An error occurred');
     }
   }
 

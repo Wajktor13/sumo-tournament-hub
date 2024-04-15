@@ -6,7 +6,7 @@ import { AgeCategoryName } from '../../enums/age-category-name';
 @Component({
   selector: 'app-add-competition',
   templateUrl: './add-competition.component.html',
-  styleUrls: ['./add-competition.component.css']
+  styleUrls: ['./add-competition.component.css'],
 })
 export class AddCompetitionComponent implements OnInit {
   todayDate?: string;

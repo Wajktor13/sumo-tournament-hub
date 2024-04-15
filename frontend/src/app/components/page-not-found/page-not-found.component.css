@@ -1,15 +1,18 @@
 div {
-  margin-top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 120px;
 }
 
 p {
-  color: var(--primary-color);
+  color: var(--secondary-color);
   margin-top: 40px;
-  font-size: 35px;
+  font-size: 42px;
   text-align: center;
   margin: 20px 10px 0 10px;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+  font-weight: 900;
 }

@@ -1,35 +1,55 @@
 <section>
-    <div id="add-athlete-div" [formGroup]="addAthleteForm">
-        <div class="input-wrapper">
-            <label for="first-name-input">First name</label>
-            <input formControlName="firstName" type="text" name="first-name-input" id="first-name-input">
-        </div>
-
-        <div class="input-wrapper">
-            <label for="second-name-input">Second name</label>
-            <input formControlName="secondName" type="text" name="second-name-input" id="second-name-input">
-        </div>
-
-        <div class="input-wrapper">
-            <label for="club-input">Club</label>
-            <select formControlName="clubId" name="club-input" id="club-input">
-                <option *ngFor="let club of availableClubs" [value]="club.id">{{ club.name }}</option>
-            </select>
-        </div>
-
-        <div class="input-wrapper">
-            <label for="gender-input">Gender</label>
-            <select formControlName="gender" name="gender-input" id="gender-input">
-                <option>M</option>
-                <option>F</option>
-            </select>
-        </div>
-        
-        <div class="input-wrapper">
-            <label for="birth-date-input">Birth date</label>
-            <input formControlName="birthDate" type="date" max="{{date}}" name="birth-date-input" id="birth-date-input">
-        </div>
-
-        <button (click)="submitForm()">Add Athlete</button>
+  <div id="add-athlete-div" [formGroup]="addAthleteForm">
+    <div class="input-wrapper">
+      <label for="first-name-input">First name</label>
+      <input
+        formControlName="firstName"
+        type="text"
+        name="first-name-input"
+        id="first-name-input"
+      />
     </div>
+
+    <div class="input-wrapper">
+      <label for="second-name-input">Second name</label>
+      <input
+        formControlName="secondName"
+        type="text"
+        name="second-name-input"
+        id="second-name-input"
+      />
+    </div>
+
+    <div class="input-wrapper">
+      <label for="club-input">Club</label>
+      <select formControlName="clubId" name="club-input" id="club-input">
+        <option *ngFor="let club of availableClubs" [value]="club.id">
+          {{ club.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="input-wrapper">
+      <label for="gender-input">Gender</label>
+      <select formControlName="gender" name="gender-input" id="gender-input">
+        <option>M</option>
+        <option>F</option>
+      </select>
+    </div>
+
+    <div class="input-wrapper">
+      <label for="birth-date-input">Birth date</label>
+      <input
+        formControlName="birthDate"
+        type="date"
+        max="{{ date }}"
+        name="birth-date-input"
+        id="birth-date-input"
+      />
+    </div>
+
+    <p *ngIf="this.athleteWasAdded" style="color: lightgreen">Athlete was succesfully added</p>
+
+    <button [disabled]="!this.addAthleteForm.valid" (click)="submitForm()">Add Athlete</button>
+  </div>
 </section>

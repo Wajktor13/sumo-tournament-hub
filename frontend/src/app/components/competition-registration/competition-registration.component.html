@@ -27,14 +27,23 @@
         <select
           name="athlete-input"
           id="athlete-input"
-          [(ngModel)]="selectedAthleteId"
+          [(ngModel)]="selectedAthletesIds"
           (ngModelChange)="onAthleteSelectionChange()"
+          multiple
         >
-          <option *ngFor="let athlete of athletesFromClub" [value]="athlete.id">
+          <option
+            *ngFor="let athlete of athletesFromClub"
+            [value]="athlete.id"
+            class="athlete-option"
+          >
             {{ athlete.firstName }} {{ athlete.secondName }}
           </option>
         </select>
       </div>
+
+      <p id="multiple-users-select-info">
+        👇⌨ hold ctrl to select multiple athletes
+      </p>
 
       <div class="input-wrapper">
         <label for="age-category-input">Age Category</label>
@@ -54,7 +63,7 @@
         <select
           name="weight-category-input"
           id="weight-category-input"
-          [(ngModel)]="selectedWeightCategory"
+          [(ngModel)]="selectedWeightCategoryId"
         >
           <ng-container
             *ngFor="let weightCategory of availableWeightCategories"

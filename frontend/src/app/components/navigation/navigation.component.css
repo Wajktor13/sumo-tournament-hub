@@ -3,6 +3,10 @@ nav {
   font-size: 25px;
   width: 100%;
   display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  border-bottom: 2px solid black;
 }
 
 #nav-tiles-wrapper {
@@ -29,6 +33,11 @@ nav {
 
 #nav-tile-logo {
   width: 400px;
+  color: var(--secondary-color);
+}
+
+#nav-tile-logo:hover {
+  color: black;
 }
 
 .dropdown-content {
@@ -41,6 +50,7 @@ nav {
   width: 100%;
   transition: opacity 0.4s ease;
   opacity: 0;
+  border: 2px solid black;
 }
 
 .nav-tile:hover .dropdown-content {

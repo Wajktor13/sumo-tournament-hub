@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #288fb4;
-  --secondary-color: #226585;
+  --primary-color: rgb(53, 53, 53);
+  --secondary-color: rgb(212, 182, 13);
 }
 
 * {
@@ -11,7 +11,7 @@
 body {
   margin: 0;
   width: 100%;
-  min-width: 300px;
+  min-width: 400px;
 }
 
 html, body { height: 100%; }
