@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 export const IsSignedInGuard: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  _route: ActivatedRouteSnapshot,
+  _state: RouterStateSnapshot
 ):
   Observable<boolean | UrlTree> 
   | Promise<boolean | UrlTree> 
