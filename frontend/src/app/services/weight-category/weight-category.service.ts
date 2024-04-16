@@ -8,7 +8,7 @@ import { WeightCategory } from '../../models/weight-category';
   providedIn: 'root',
 })
 export class WeightCategoryService {
-  private apiResource = 'weightcategories';
+  private apiResource = 'weightCategories';
 
   constructor(private httpClient: HttpClient) {}
 

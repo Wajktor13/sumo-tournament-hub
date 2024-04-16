@@ -21,10 +21,9 @@
 
                 <div class="input-wrapper">
                     <label for="competition-rank-input">Competition Rank</label>
-                    <select formControlName="competitionRank" id="competition-rank-input">
-                        <option *ngFor="let rank of competitionRanks" [value]="rank">{{ rank }}</option>
-                    </select>
-                </div>
+                    <input type="text" formControlName="competitionRank" id="competition-rank-input">
+                </div>                
+
             </div>
 
             <div class="right">
