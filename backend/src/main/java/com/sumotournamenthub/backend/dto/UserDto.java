@@ -1,5 +1,6 @@
 package com.sumotournamenthub.backend.dto;
 
+import com.sumotournamenthub.backend.constants.Role;
 import lombok.Builder;
 import lombok.Value;
 
@@ -10,6 +11,6 @@ public class UserDto {
     String email;
     String firstName;
     String lastName;
-    UserRolesDto roles;
-    int clubId;
+    String password;
+    Role role;
 }

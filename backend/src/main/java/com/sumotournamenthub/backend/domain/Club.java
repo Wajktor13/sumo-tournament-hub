@@ -29,6 +29,8 @@ public class Club {
     @OneToMany(mappedBy = "club")
     private Set<Athlete> athletes = new HashSet<>();
 
-//    TODO: club coach
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User coach;
 
 }
